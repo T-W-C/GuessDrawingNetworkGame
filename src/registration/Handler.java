@@ -20,8 +20,11 @@ public class Handler implements Runnable {
             in = new Scanner(socket.getInputStream()); // create a scanner to read in from the socket
             out = new PrintWriter(socket.getOutputStream(), true); // create a writer to write to the socket
 
-            if(message_type.equals("REGISTRATION")) {
-                registrationCode();
+            if(message_type.equals("REGISTRATION")) { // checks that the action is a registration action
+                synchronized (Server.getAllWriters()) { // synchronized so threads have to wait for this to add in the writer before they can
+                    Server.addWriter("REGISTRATION", out); // add the writer with its type to the writer hashMap
+                }
+                registrationCode(); // run the registration code since the action is to do with registration
             }
         }
         catch(Exception e) {
@@ -29,9 +32,12 @@ public class Handler implements Runnable {
         }
         finally {
             try {
+                System.out.println("size before closing socket is: " + Server.getTypeOfWriters("REGISTRATION").size());
                 socket.close();
                 if(socket.isClosed()) {
                     System.out.println("The socket " + socket + " is now closed!");
+                    Server.getTypeOfWriters("REGISTRATION").remove(out); // the client has closed so remove the writer from the registration set of writers
+                    System.out.println("size after closing socket is: " + Server.getTypeOfWriters("REGISTRATION").size());
                 }
             }
             catch(Exception e) {
