@@ -1,0 +1,67 @@
+package email;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+public class EmailHandler {
+
+    /**
+     * This method will connect to the Google's SMTP Server and allow the application to send emails
+     * @param targetEmail Target email to send email to, this is an array, so you can a email to multiple addresses
+     * @param subject The subject title of the email
+     * @param body Body of the email
+     */
+    public static void SendEmail(String[] targetEmail, String subject, String body) {
+
+        Properties emailProperties = System.getProperties();
+
+        /* Credentials for Email Server */
+        String emailHost = "smtp.gmail.com";
+        String emailUsername = "group1swproject";
+        String emailPassword = "Lol123!$!";
+
+        /* Set the information into the properties */
+        emailProperties.put("mail.smtp.starttls.enable", "true");
+        emailProperties.put("mail.smtp.host", emailHost);
+        emailProperties.put("mail.smtp.user", emailUsername);
+        emailProperties.put("mail.smtp.password", emailPassword);
+        emailProperties.put("mail.smtp.port", "587"); // Google SMTP Port
+        emailProperties.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(emailProperties);
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+            message.setFrom(new InternetAddress(emailHost));
+            InternetAddress[] toAddress = new InternetAddress[targetEmail.length];
+
+            // To get the array of addresses
+            for( int i = 0; i < targetEmail.length; i++ ) {
+                toAddress[i] = new InternetAddress(targetEmail[i]);
+            }
+
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            message.setSubject(subject);
+            message.setText(body);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(emailHost, emailUsername, emailPassword);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }
+        catch (AddressException ae) {
+            ae.printStackTrace();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+    }
+}
