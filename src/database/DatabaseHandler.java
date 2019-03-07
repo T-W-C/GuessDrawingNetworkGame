@@ -28,11 +28,11 @@ public class DatabaseHandler {
                     .setDriverClass("org.postgresql.Driver");
             comboPooledDataSource
                     // URI, Which includes the Host (IP+PORT) of Database Server + Database Name
-                    .setJdbcUrl("jdbc:postgresql://localhost:3306/canvasdatabase");
+                    .setJdbcUrl("jdbc:postgresql://mod-msc-sw1.cs.bham.ac.uk:5432/group1");
             // Username of Database
-            comboPooledDataSource.setUser("root");
+            comboPooledDataSource.setUser("group1");
             // Password of Database
-            comboPooledDataSource.setPassword("secret");
+            comboPooledDataSource.setPassword("accm1ziurm");
         } catch (PropertyVetoException ex1) {
             ex1.printStackTrace();
         }
