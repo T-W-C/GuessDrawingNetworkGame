@@ -2,6 +2,7 @@ package database.dao;
 
 import database.DatabaseHandler;
 import database.domain.Player;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ public class PlayerDAO implements IDAO<Player> {
         return this;
     }
 
-    @Override
     public List<Player> getAll() {
         ArrayList<Player> playerList = new ArrayList<>();
         try (Connection activeConnection = DatabaseHandler.getInstance()
@@ -95,11 +95,11 @@ public class PlayerDAO implements IDAO<Player> {
             preparedStatement = activeConnection.prepareStatement("DELETE FROM player WHERE pid = '" + currentPlayer.getPlayerID() + "'");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
     }
 
-    private boolean isPlayerExisting(int playerID) {
+    public static boolean isPlayerExisting(int playerID) {
         Boolean result = false;
         try (Connection con = DatabaseHandler.getInstance()
                 .getConnection()) {
@@ -112,12 +112,12 @@ public class PlayerDAO implements IDAO<Player> {
         return result;
     }
 
-    private boolean isPlayerExisting(String username) {
+    public static boolean isPlayerExisting(String username) {
         Boolean result = false;
         try (Connection con = DatabaseHandler.getInstance()
                 .getConnection()) {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT pid FROM player HWERE username = '" + username + "'");
+            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE username = '" + username + "'");
             result = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
