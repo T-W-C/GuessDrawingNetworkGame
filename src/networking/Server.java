@@ -1,4 +1,4 @@
-package registration2;
+package networking;
 
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -9,13 +9,13 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server2 {
+public class Server {
     private static int port = 1254;
     private static Set<String> chatNames = new HashSet<>(); // set of all client names so we can check for dupes upon registration
     private static Map<String, Set<ObjectOutputStream>> writers = new HashMap<>(); // hash map of all printers with the key being the type of client the writer is for
     static enum QueryType { REGISTRATION; }
 
-    public Server2(int port) {
+    public Server(int port) {
         this.port = port;
     }
 
@@ -48,7 +48,7 @@ public class Server2 {
 
         try(ServerSocket listener = new ServerSocket(port)) {
             while(true) {
-                pool.execute(new Handler2(listener.accept())); // execute the runnable object
+                pool.execute(new Handler(listener.accept())); // execute the runnable object
             }
         }
         catch(Exception e) {

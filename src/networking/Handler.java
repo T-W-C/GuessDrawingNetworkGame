@@ -1,4 +1,4 @@
-package registration2;
+package networking;
 
 import database.dao.PlayerDAO;
 import database.manager.PasswordManager;
@@ -11,14 +11,14 @@ import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Handler2 implements Runnable {
+public class Handler implements Runnable {
     private Socket socket;
     private InputStream is;
     private OutputStream os;
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    public Handler2(Socket socket) {
+    public Handler(Socket socket) {
         this.socket = socket;
     }
 
@@ -30,7 +30,7 @@ public class Handler2 implements Runnable {
             in = new ObjectInputStream(is); // create a scanner to read in from the socket
 
             Message m = (Message)in.readObject();
-            if (m.getType().equals(Server2.QueryType.REGISTRATION)) { // checks that the action is a registration action
+            if (m.getType().equals(Server.QueryType.REGISTRATION)) { // checks that the action is a registration action
                 registrationCode(); // run the registration code since the action is to do with registration
             }
         }
@@ -63,44 +63,44 @@ public class Handler2 implements Runnable {
 
         StringBuffer sb = new StringBuffer();
         Message m;
-        out.writeObject(new Message(Server2.QueryType.REGISTRATION, "Please enter an email address!"));
+        out.writeObject(new Message(Server.QueryType.REGISTRATION, "Please enter an email address!"));
         while (true) { // while a line is coming in from the socket (keeps reading in)
             sb.setLength(0); // clear buffer before appending new input
             m = (Message)in.readObject();
             sb.append(m.getMessage()); // adds the read in message to the StringBuffer
             if (!usernamePhase) { // reading in email
                 if (!isValidEmail(sb.toString())) {
-                    out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The email address provided is not valid! Please enter a new email address."));
+                    out.writeObject(new Message(Server.QueryType.REGISTRATION, "The email address provided is not valid! Please enter a new email address."));
                 } else {
                     email = sb.toString(); // update email field
-                    out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The email provided is of valid format! Now please enter a username that is one word in length and contains only numbers and letters."));
+                    out.writeObject(new Message(Server.QueryType.REGISTRATION, "The email provided is of valid format! Now please enter a username that is one word in length and contains only numbers and letters."));
                     usernamePhase = true;
                 }
             } else if (!passwordPhase) { // in username phase
                 if (!isValidUsername(sb.toString())) {
-                    out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The username provided is not valid or is already in use! Please enter a new username" +
+                    out.writeObject(new Message(Server.QueryType.REGISTRATION, "The username provided is not valid or is already in use! Please enter a new username" +
                             " that is only one word long and contains only numbers and letters."));
                 } else {
                     username = sb.toString(); // update username variable
-                    out.writeObject(new Message(Server2.QueryType.REGISTRATION, "Congratulations! Your username is now: " + sb.toString() + ". Now please enter a password!")); // print out that line to the client
+                    out.writeObject(new Message(Server.QueryType.REGISTRATION, "Congratulations! Your username is now: " + sb.toString() + ". Now please enter a password!")); // print out that line to the client
                     passwordPhase = true; // set passwordPhase to true since we will be entering it next
                 }
             } else { // in password phase
                 if (passwordInputCount == 1) { // already entered password before so this time we want to verify it
                     if (confirmHashOfPassword(sb.toString(), hashedPassword)) {
                         PlayerDAO.createPlayer(username, hashedPassword, email);
-                        out.writeObject(new Message(Server2.QueryType.REGISTRATION, "You have successfully verified your password, your account has now been created!"));
+                        out.writeObject(new Message(Server.QueryType.REGISTRATION, "You have successfully verified your password, your account has now been created!"));
                         break;
                     } else {
                         System.out.println(confirmHashOfPassword(sb.toString(), hashedPassword));
-                        out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The password you have entered does not match the one previously entered! Please input " +
+                        out.writeObject(new Message(Server.QueryType.REGISTRATION, "The password you have entered does not match the one previously entered! Please input " +
                                 "a new password and then make sure that you input the same password to verify."));
                         passwordInputCount = 0;
                     }
                 }
                 hashedPassword = computeHashOfPassword(sb.toString()); // update password field
                 passwordInputCount++; // update the password counter to 1 so we can then verify it
-                out.writeObject(new Message(Server2.QueryType.REGISTRATION, "Now please verify your password!"));
+                out.writeObject(new Message(Server.QueryType.REGISTRATION, "Now please verify your password!"));
             }
         }
     }

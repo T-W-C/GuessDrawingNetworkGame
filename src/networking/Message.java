@@ -1,4 +1,4 @@
-package registration2;
+package networking;
 
 import java.io.Serializable;
 

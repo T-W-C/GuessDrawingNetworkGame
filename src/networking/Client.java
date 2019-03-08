@@ -1,14 +1,14 @@
-package registration2;
+package networking;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client2 {
+public class Client {
     private static String host =  "127.0.0.1";
     private static int port = 1254;
 
-    public Client2(String host, int ip) {
+    public Client(String host, int ip) {
         this.host = host;
         this.port = ip;
     }
@@ -22,11 +22,11 @@ public class Client2 {
              ObjectOutputStream out = new ObjectOutputStream(os) // objectOutputStream to write to the server
         ) {
             Message m;
-            out.writeObject(new Message(Server2.QueryType.REGISTRATION, "New client is registering")); // initial message to tell the server that the client is of type registration
+            out.writeObject(new Message(Server.QueryType.REGISTRATION, "New client is registering")); // initial message to tell the server that the client is of type registration
             while (true) { // while server is sending something
                 m = (Message)in.readObject();
                 System.out.println(m.getMessage()); // read in line from server detailing user what to do
-                out.writeObject(new Message(Server2.QueryType.REGISTRATION, scanner.nextLine())); // send that input to the server
+                out.writeObject(new Message(Server.QueryType.REGISTRATION, scanner.nextLine())); // send that input to the server
             }
         } catch (Exception e) {
             System.out.println("oopsie");

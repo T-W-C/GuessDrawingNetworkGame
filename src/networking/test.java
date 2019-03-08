@@ -1,6 +1,5 @@
-package registration2;
+package networking;
 
-import database.dao.PlayerDAO;
 import database.manager.PasswordManager;
 
 public class test {
