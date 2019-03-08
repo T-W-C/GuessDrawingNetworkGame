@@ -8,6 +8,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.Random;
 
 public class EmailHandler {
 
@@ -63,5 +64,14 @@ public class EmailHandler {
         catch (MessagingException me) {
             me.printStackTrace();
         }
+    }
+
+    public static void SendActivationEmail(String email){
+        Random rand = new Random();
+        int activationCode = rand.nextInt(90000) + 10000;
+        String subject = "Canvas Application Activation Code!";
+        String body = "Thank you for signing up! \n\nYour activation code is: " + activationCode;
+
+        SendEmail(new String[]{email}, subject, body);
     }
 }
