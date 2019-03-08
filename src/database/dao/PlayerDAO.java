@@ -20,7 +20,7 @@ public class PlayerDAO implements IDAO<Player> {
                 statement = activeConnection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM player WHERE pid='" + playerID + "'");
                 while (resultSet.next()) {
-                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
                 }
             }
         } catch (SQLException e) {
@@ -43,7 +43,7 @@ public class PlayerDAO implements IDAO<Player> {
         }
     }
 
-    public PlayerDAO CreatePlayer(String username, String password, String email){
+    public static void createPlayer(String username, String password, String email){
         if(!isPlayerExisting(username)){
             // Player doesn't exist, so we can insert them into database
             try (Connection activeConnection = DatabaseHandler.getInstance()
@@ -61,7 +61,6 @@ public class PlayerDAO implements IDAO<Player> {
         else {
             System.out.println("Username already exists!");
         }
-        return this;
     }
 
     public List<Player> getAll() {

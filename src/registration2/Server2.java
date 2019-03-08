@@ -19,19 +19,19 @@ public class Server2 {
         this.port = port;
     }
 
-    static Set<String> getChatNames() {
+    public static Set<String> getChatNames() {
         return chatNames;
     }
 
-    static Map<String, Set<ObjectOutputStream>> getAllWriters() {
+    public static Map<String, Set<ObjectOutputStream>> getAllWriters() {
         return writers; // return the hashMap of writers
     }
 
-    static Set<ObjectOutputStream> getTypeOfWriters(String type) {
+    public static Set<ObjectOutputStream> getTypeOfWriters(String type) {
         return writers.get(type); // return the set of writers for a given type e.g. type "REGISTRATION"
     }
 
-    static void addWriter(String type, ObjectOutputStream os) {
+    public static void addWriter(String type, ObjectOutputStream os) {
         if(getTypeOfWriters(type) == null) { // checks to see if a set of a certain type of writers already exists
             writers.put(type, new HashSet<ObjectOutputStream>()); // if it doesnt create a new set in the hashMap
             getTypeOfWriters(type).add(os); // add the provided writer to it

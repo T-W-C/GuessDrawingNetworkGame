@@ -1,5 +1,8 @@
 package registration2;
 
+import database.dao.PlayerDAO;
+import database.manager.PasswordManager;
+
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -70,7 +73,6 @@ public class Handler2 implements Runnable {
                     out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The email address provided is not valid! Please enter a new email address."));
                 } else {
                     email = sb.toString(); // update email field
-                    setEmailInDatabase(email);
                     out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The email provided is of valid format! Now please enter a username that is one word in length and contains only numbers and letters."));
                     usernamePhase = true;
                 }
@@ -79,19 +81,18 @@ public class Handler2 implements Runnable {
                     out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The username provided is not valid or is already in use! Please enter a new username" +
                             " that is only one word long and contains only numbers and letters."));
                 } else {
-                    System.out.println("didnt get here");
                     username = sb.toString(); // update username variable
-                    setUsernameInDatabase(username);
                     out.writeObject(new Message(Server2.QueryType.REGISTRATION, "Congratulations! Your username is now: " + sb.toString() + ". Now please enter a password!")); // print out that line to the client
                     passwordPhase = true; // set passwordPhase to true since we will be entering it next
                 }
             } else { // in password phase
                 if (passwordInputCount == 1) { // already entered password before so this time we want to verify it
                     if (confirmHashOfPassword(sb.toString(), hashedPassword)) {
-                        setPasswordInDatabase(hashedPassword);
+                        PlayerDAO.createPlayer(username, hashedPassword, email);
                         out.writeObject(new Message(Server2.QueryType.REGISTRATION, "You have successfully verified your password, your account has now been created!"));
                         break;
                     } else {
+                        System.out.println(confirmHashOfPassword(sb.toString(), hashedPassword));
                         out.writeObject(new Message(Server2.QueryType.REGISTRATION, "The password you have entered does not match the one previously entered! Please input " +
                                 "a new password and then make sure that you input the same password to verify."));
                         passwordInputCount = 0;
@@ -119,28 +120,16 @@ public class Handler2 implements Runnable {
 
     public boolean isValidUsername(String username) {
         // check if not existing in database already and that it is only one word and that it is not blank
-        return username.matches("^[a-zA-Z0-9]+");
-    }
-
-    public void setEmailInDatabase(String email) {
-        // set username in database
-    }
-
-    public void setUsernameInDatabase(String username) {
-        // set username in database
-    }
-
-    public void setPasswordInDatabase(String password) {
-        // set hashed password in database
+        return username.matches("^[a-zA-Z0-9]+") && !(PlayerDAO.isPlayerExisting(username));
     }
 
     public String computeHashOfPassword(String password) {
-        return password;
+        return PasswordManager.HashPassword(password);
     }
 
     public boolean confirmHashOfPassword(String passwordToVerify, String hashOfPassword) {
         // check if the second password input matches the first given one
-        //return passwordToVerify.equals(hashOfPassword);
-        return true;
+        String secondHash = PasswordManager.HashPassword(passwordToVerify);
+        return secondHash.equals(hashOfPassword);
     }
 }

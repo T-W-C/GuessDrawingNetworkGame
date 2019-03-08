@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class PasswordManager {
-    private static String HashPassword(String plainTextPassword){
+    public static String HashPassword(String plainTextPassword) {
         String hashedPassword = DigestUtils.sha512Hex(plainTextPassword);
         return hashedPassword;
     }
