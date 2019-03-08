@@ -4,27 +4,29 @@ public class Player {
     /**
      * The ID of the Player, this variable will be unique and cannot be modified
      */
-    public int playerID;
+    private int playerID;
 
     /**
      * The username of the Player, this can be used for signing into the game
      */
-    public String username;
+    private String username;
 
     /**
      * The password of the user, they will not be able to get this variable normally, as it contains secure information
      */
-    public String password;
+    private String password;
+
+    private String email;
 
     /**
      * This variable will store the Level of the user
      */
-    public int level;
+    private int level;
 
     /**
      * The accumulative score from all the matches combined
      */
-    public int totalScore;
+    private int totalScore;
 
     /**
      * The constructor to create an instance to set the data
@@ -33,9 +35,10 @@ public class Player {
      * @param level to set
      * @param totalScore to set
      */
-    public Player(int playerID, String username, int level, int totalScore) {
+    public Player(int playerID, String username, String email, int level, int totalScore) {
         this.playerID = playerID;
         this.username = username;
+        this.email = email;
         this.level = level;
         this.totalScore = totalScore;
     }
@@ -50,6 +53,14 @@ public class Player {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getLevel() {

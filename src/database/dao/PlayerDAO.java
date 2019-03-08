@@ -35,7 +35,7 @@ public class PlayerDAO implements IDAO<Player> {
                 statement = activeConnection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM player WHERE username='" + username + "'");
                 while (resultSet.next()) {
-                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
                 }
             }
         } catch (SQLException e) {
@@ -43,7 +43,24 @@ public class PlayerDAO implements IDAO<Player> {
         }
     }
 
-    public PlayerDAO CreatePlayer(){
+    public PlayerDAO CreatePlayer(String username, String password, String email){
+        if(!isPlayerExisting(username)){
+            // Player doesn't exist, so we can insert them into database
+            try (Connection activeConnection = DatabaseHandler.getInstance()
+                    .getConnection()) {
+                PreparedStatement preparedStatement = null;
+                preparedStatement = activeConnection.prepareStatement("INSERT INTO player (username, password, email)" + " values (?, ?, ?)");
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
+                preparedStatement.execute();
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
+        }
+        else {
+            System.out.println("Username already exists!");
+        }
         return this;
     }
 
@@ -55,7 +72,7 @@ public class PlayerDAO implements IDAO<Player> {
             statement = activeConnection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM player");
             while (resultSet.next()) {
-                Player tempPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                Player tempPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
 
                 playerList.add(tempPlayer);
             }
