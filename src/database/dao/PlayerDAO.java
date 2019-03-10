@@ -140,4 +140,17 @@ public class PlayerDAO implements IDAO<Player> {
         }
         return result;
     }
+
+    public static boolean isEmailExisting(String email) {
+        Boolean result = false;
+        try (Connection con = DatabaseHandler.getInstance()
+                .getConnection()) {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE email = '" + email + "'");
+            result = rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
