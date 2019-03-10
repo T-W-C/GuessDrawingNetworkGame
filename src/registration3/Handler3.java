@@ -1,8 +1,5 @@
 package registration3;
 
-import registration2.Message;
-import registration2.Server2;
-
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,7 +24,7 @@ public class Handler3 implements Runnable {
             is = socket.getInputStream();
             in = new ObjectInputStream(is); // create a scanner to read in from the socket
 
-            registration2.Message m = (Message)in.readObject();
+            Message m = (Message)in.readObject();
             if (m.getType().equals(Server3.QueryType.REGISTRATION)) { // checks that the action is a registration action
                 RegistrationHandler.run(in, out, socket); // run the registration code since the action is to do with registration
             }

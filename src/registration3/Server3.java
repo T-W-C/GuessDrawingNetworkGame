@@ -1,7 +1,5 @@
 package registration3;
 
-import registration2.Handler2;
-
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.util.HashMap;

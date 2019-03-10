@@ -1,8 +1,5 @@
 package registration3;
 
-import registration2.Message;
-import registration2.Server2;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;

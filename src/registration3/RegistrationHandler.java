@@ -2,8 +2,6 @@ package registration3;
 
 import database.dao.PlayerDAO;
 import database.manager.PasswordManager;
-import registration2.Message;
-import registration2.Server2;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,38 +23,38 @@ public class RegistrationHandler {
         System.out.println("Connected to socket: " + socket); // connection message
 
         StringBuffer sb = new StringBuffer();
-        registration2.Message m;
-        out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "Please enter an email address!"));
+        Message m;
+        out.writeObject(new Message(Server3.QueryType.REGISTRATION, "Please enter an email address!"));
         while (true) { // while a line is coming in from the socket (keeps reading in)
             sb.setLength(0); // clear buffer before appending new input
-            m = (registration2.Message)in.readObject();
+            m = (Message)in.readObject();
             sb.append(m.getMessage()); // adds the read in message to the StringBuffer
             if (!usernamePhase) { // reading in email
                 if (!isValidEmail(sb.toString())) {
-                    out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "The email address provided is not valid! Please enter a new email address."));
+                    out.writeObject(new Message(Server3.QueryType.REGISTRATION, "The email address provided is not valid! Please enter a new email address."));
                 } else {
                     email = sb.toString(); // update email field
-                    out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "The email provided is of valid format! Now please enter a username that is one word in length and contains only numbers and letters."));
+                    out.writeObject(new Message(Server3.QueryType.REGISTRATION, "The email provided is of valid format! Now please enter a username that is one word in length and contains only numbers and letters."));
                     usernamePhase = true;
                 }
             } else if (!passwordPhase) { // in username phase
                 if (!isValidUsername(sb.toString())) {
-                    out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "The username provided is not valid or is already in use! Please enter a new username" +
+                    out.writeObject(new Message(Server3.QueryType.REGISTRATION, "The username provided is not valid or is already in use! Please enter a new username" +
                             " that is only one word long and contains only numbers and letters."));
                 } else {
                     username = sb.toString(); // update username variable
-                    out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "Congratulations! Your username is now: " + sb.toString() + ". Now please enter a password!")); // print out that line to the client
+                    out.writeObject(new Message(Server3.QueryType.REGISTRATION, "Congratulations! Your username is now: " + sb.toString() + ". Now please enter a password!")); // print out that line to the client
                     passwordPhase = true; // set passwordPhase to true since we will be entering it next
                 }
             } else { // in password phase
                 if (passwordInputCount == 1) { // already entered password before so this time we want to verify it
                     if (confirmHashOfPassword(sb.toString(), hashedPassword)) {
                         PlayerDAO.createPlayer(username, hashedPassword, email);
-                        out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "You have successfully verified your password, your account has now been created!"));
+                        out.writeObject(new Message(Server3.QueryType.REGISTRATION, "You have successfully verified your password, your account has now been created!"));
                         break;
                     } else {
                         System.out.println(confirmHashOfPassword(sb.toString(), hashedPassword));
-                        out.writeObject(new registration2.Message(Server3.QueryType.REGISTRATION, "The password you have entered does not match the one previously entered! Please input " +
+                        out.writeObject(new Message(Server3.QueryType.REGISTRATION, "The password you have entered does not match the one previously entered! Please input " +
                                 "a new password and then make sure that you input the same password to verify."));
                         passwordInputCount = 0;
                     }
