@@ -50,9 +50,9 @@ public class PlayerDAO implements IDAO<Player> {
                     .getConnection()) {
                 PreparedStatement preparedStatement = null;
                 preparedStatement = activeConnection.prepareStatement("INSERT INTO player (username, password, email)" + " values (?, ?, ?)");
-                preparedStatement.setString(1, username);
+                preparedStatement.setString(1, username.toLowerCase());
                 preparedStatement.setString(2, password);
-                preparedStatement.setString(3, email);
+                preparedStatement.setString(3, email.toLowerCase());
                 preparedStatement.execute();
             } catch (SQLException e) {
                 System.out.println(e.toString());
@@ -133,7 +133,7 @@ public class PlayerDAO implements IDAO<Player> {
         try (Connection con = DatabaseHandler.getInstance()
                 .getConnection()) {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE username = '" + username + "'");
+            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE username = '" + username.toLowerCase() + "'");
             result = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,7 +146,7 @@ public class PlayerDAO implements IDAO<Player> {
         try (Connection con = DatabaseHandler.getInstance()
                 .getConnection()) {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE email = '" + email + "'");
+            ResultSet rs = stmt.executeQuery("SELECT pid FROM player WHERE email = '" + email.toLowerCase() + "'");
             result = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
