@@ -44,6 +44,7 @@ public class CanvasHandler extends Thread {
             DrawCommand dc = (DrawCommand) o;
 
         }
+        return false;
     }
 
 
