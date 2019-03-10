@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class Controller {
     private ArrayList<DrawCommand> drawCommands = new ArrayList<>();
 
+
+
     @FXML
     private Canvas canvas;
     @FXML
@@ -83,6 +85,14 @@ public class Controller {
                 drawCommands.add(new DrawCommand(size,x,y,colorPicker.getValue()));
             }
         });
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public Color getBrushColor() {
+        return colorPicker.getValue();
     }
 
 
