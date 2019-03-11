@@ -2,8 +2,10 @@ package networking;
 
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.AddConnectionPacket;
+import networking.packets.incoming.CheckEmailPacket;
 import networking.packets.incoming.CheckUsernamePacket;
 import networking.packets.incoming.RemoveConnectionPacket;
+import networking.packets.outgoing.SendEmailCheckResult;
 import networking.packets.outgoing.SendUsernameCheckResult;
 
 import static networking.helper.ClassMatcher.match;
@@ -19,6 +21,7 @@ public class EventListener {
 				() -> match().with(AddConnectionPacket.class, this::handleAddConnection)
 						.with(RemoveConnectionPacket.class, this::handleRemoveConnection)
 						.with(CheckUsernamePacket.class, this::handleCheckUsername)
+						.with(CheckEmailPacket.class, this::handleCheckEmail)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -48,6 +51,15 @@ public class EventListener {
 		System.out.println("Got Packet to Check Username....  " + p.username);
 		SendUsernameCheckResult response = new SendUsernameCheckResult(p.playerID);
 		response.result = RegistrationHandler.isValidUsername(p.username);
+		System.out.println("Sending Result... " + response.result);
+		// Send back result
+		connection.sendObject(response);
+	}
+
+	private void handleCheckEmail(CheckEmailPacket p) {
+		System.out.println("Got Packet to Check Email....  " + p.email);
+		SendEmailCheckResult response = new SendEmailCheckResult(p.playerSession);
+		response.result = RegistrationHandler.isValidEmail(p.email);
 		System.out.println("Sending Result... " + response.result);
 		// Send back result
 		connection.sendObject(response);

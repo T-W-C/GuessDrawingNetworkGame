@@ -1,10 +1,17 @@
 package gui.registration;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.Socket;
+import java.util.Timer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class Controller {
     @FXML
@@ -24,12 +31,30 @@ public class Controller {
     public void createAndSubmitClient() throws Exception {
         // Passed First Check (Email Valid Phase)
         RegistrationHandler registrationHandler = new RegistrationHandler();
-        registrationHandler.SendPacket(usernameText.getText());
-        if (registrationHandler.Result()) {
-            System.out.println("GUI Result is also true");
-        } else {
-            System.out.println("Not fast enough :/");
-        }
+
+        /* Packet Sends for Checks */
+        registrationHandler.SendEmailPacket(emailText.getText());
+        registrationHandler.SendUsernamePacket(usernameText.getText());
+
+        /* */
+
+        Timer t = new java.util.Timer();
+
+        t.schedule(
+                new java.util.TimerTask() {
+                    public void run() {
+                        // Check Email
+                        if(registrationHandler.emailResult) {
+                            // Username Passed
+                            if (registrationHandler.userResult) {
+                                System.out.println("It worked");
+                            }
+                        }
+                        t.cancel();
+                    }
+                },
+                50
+        );
         /*
         if(RegistrationHandler.isValidEmail(emailText.toString())){
             // Passed Second Check (Username Valid Check)
@@ -38,7 +63,7 @@ public class Controller {
                 String hashedPassword = passwordText.toString();
                 // Passed Third Check (Password Matching Check)
                 if (RegistrationHandler.confirmHashOfPassword(verifyPasswordText.toString(), hashedPassword)){
-                    
+
                 }
                 // Failed Password Matching Check
                 else {

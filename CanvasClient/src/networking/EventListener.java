@@ -4,6 +4,7 @@ import gui.registration.RegistrationHandler;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.AddConnectionPacket;
 import networking.packets.incoming.RemoveConnectionPacket;
+import networking.packets.outgoing.SendEmailCheckResult;
 import networking.packets.outgoing.SendUsernameCheckResult;
 
 import static networking.helper.ClassMatcher.match;
@@ -17,6 +18,7 @@ public class EventListener {
 				() -> match().with(AddConnectionPacket.class, this::handleAddConnection)
 						.with(RemoveConnectionPacket.class, this::handleRemoveConnection)
 						.with(SendUsernameCheckResult.class, this::handleSendUsernameCheckResult)
+						.with(SendEmailCheckResult.class, this::handleSendEmailCheckResult)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -39,6 +41,13 @@ public class EventListener {
 
 	private void handleSendUsernameCheckResult(SendUsernameCheckResult p) {
 		// Push Result to RegistrationHandler
-		System.out.println("Got Result "+ p.result);
+		System.out.println("Got Username Result "+ p.result);
+		RegistrationHandler.userResult = p.result;
+	}
+
+	private void handleSendEmailCheckResult(SendEmailCheckResult p) {
+		// Push Result to RegistrationHandler
+		System.out.println("Got Email Result "+ p.result);
+		RegistrationHandler.emailResult = p.result;
 	}
 }

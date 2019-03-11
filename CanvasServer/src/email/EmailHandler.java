@@ -66,6 +66,10 @@ public class EmailHandler {
         }
     }
 
+    public static void main(String[] args){
+        SendActivationEmail("ZakAmir@outlook.com");
+    }
+
     public static void SendActivationEmail(String email){
         Random rand = new Random();
         int activationCode = rand.nextInt(90000) + 10000;

@@ -1,14 +1,12 @@
 package networking.packets.outgoing;
 
-import gui.registration.RegistrationHandler;
-
 import java.io.Serializable;
 
-public class SendUsernameCheckResult implements Serializable {
+public class SendEmailCheckResult implements Serializable {
     public int playerID;
     public boolean result;
 
-    public SendUsernameCheckResult(int playerID){
+    public SendEmailCheckResult(int playerID){
         this.playerID = playerID;
     }
 }

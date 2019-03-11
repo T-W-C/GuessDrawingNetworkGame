@@ -1,19 +1,23 @@
 package gui.registration;
 
 import networking.Client;
-import networking.CurrentSession;
+import networking.packets.incoming.CheckEmailPacket;
 import networking.packets.incoming.CheckUsernamePacket;
-import networking.packets.outgoing.SendUsernameCheckResult;
+
 
 public class RegistrationHandler {
-    public void SendPacket(String username) {
+    public static boolean userResult = false;
+    public static boolean emailResult = false;
+
+    public void SendUsernamePacket(String username) {
         CheckUsernamePacket packet = new CheckUsernamePacket();
         packet.username = username;
         Client.sendObject(packet);
     }
 
-    public boolean Result(){
-        SendUsernameCheckResult result = new SendUsernameCheckResult(CurrentSession.id);
-        return result.result;
+    public void SendEmailPacket(String email) {
+        CheckEmailPacket packet = new CheckEmailPacket();
+        packet.email = email;
+        Client.sendObject(packet);
     }
 }

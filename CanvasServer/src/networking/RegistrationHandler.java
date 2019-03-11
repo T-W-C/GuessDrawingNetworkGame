@@ -3,9 +3,6 @@ package networking;
 import database.dao.PlayerDAO;
 import database.manager.PasswordManager;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
