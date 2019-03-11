@@ -1,19 +1,22 @@
 package canvas;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class CanvasClient extends Application /*implements Runnable*/ {
+
+public class CanvasClient extends Application implements Runnable /*implements Runnable*/ {
 
     private static int PORT = 8888;
     private ObjectInputStream in;
@@ -25,24 +28,70 @@ public class CanvasClient extends Application /*implements Runnable*/ {
     private Scene scene;
     private Controller controller;
     private Canvas canvas;
+    private Thread t;
+    private Socket s;
+    private String bob = "test";
+    private ObjectInputStream is;
+    private ObjectOutputStream os;
+//    private Thread t = new Thread(new CanvasClient());
+
+//    private Player p;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("canvas.fxml"));
-        rootLayout = (BorderPane) loader.load();
 
-        root = FXMLLoader.load(getClass().getResource("canvas.fxml"));
-        this.primaryStage = primaryStage;
-        primaryStage.setTitle("Canvas mockup");
-        scene = new Scene(root);
-        primaryStage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("canvas.fxml"));
 
+        System.out.println(Thread.currentThread());
+        root = (Parent)loader.load();
         controller = loader.getController();
 
-        canvas = controller.getCanvas();
+//        controller.setCanvasClient(this);
+
+        primaryStage.setScene(new Scene(root));
+
+
+        primaryStage.setTitle("canvas");
 
         primaryStage.show();
+
+//        t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    s = new Socket("127.0.0.1", PORT);
+//
+//                    is = new ObjectInputStream(s.getInputStream());
+//
+//                    try {
+//                        while(true) {
+//                            //message handling usually done here for the specific packet
+//                            DrawCommand response = (DrawCommand) in.readObject();
+//                            if(checkBufferFull()) {
+//                                drawInputBufferedCommands();
+//                                drawCommandBuffer.add(response);
+//                            } else {
+//                                drawCommandBuffer.add(response);
+//                            }
+//                        }
+//
+//                    } catch(Exception e) {
+//                        System.out.println("hmmmmm");
+//                        e.printStackTrace();
+//                    }
+//
+//                } catch (IOException e) {
+//                    System.out.println("hmm");
+//                     e.printStackTrace();
+//                }
+//            }
+//        });
+//        t.start();
+
+
+
+
+
 
 
 
@@ -75,20 +124,7 @@ public class CanvasClient extends Application /*implements Runnable*/ {
 
     }
 
-    public CanvasClient(String serverAddress) {
-        try {
-            Socket s = new Socket(serverAddress, PORT);
 
-            in = new ObjectInputStream(s.getInputStream());
-            out = new ObjectOutputStream(s.getOutputStream());
-
-            play();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
     public void play() {
@@ -97,8 +133,7 @@ public class CanvasClient extends Application /*implements Runnable*/ {
                 //message handling usually done here for the specific packet
                 DrawCommand response = (DrawCommand) in.readObject();
                 if(checkBufferFull()) {
-                    drawBufferedCommands();
-                    drawCommandBuffer.clear();
+                    drawInputBufferedCommands();
                     drawCommandBuffer.add(response);
                 } else {
                     drawCommandBuffer.add(response);
@@ -106,6 +141,7 @@ public class CanvasClient extends Application /*implements Runnable*/ {
             }
 
         } catch(Exception e) {
+            System.out.println("hmmmmm");
             e.printStackTrace();
         }
     }
@@ -118,20 +154,45 @@ public class CanvasClient extends Application /*implements Runnable*/ {
         }
     }
 
-    public void drawBufferedCommands() {
+    public void drawInputBufferedCommands() {
         // draw the buffered draw commands on client
         GraphicsContext g = canvas.getGraphicsContext2D();
-
+    System.out.println("yes it gets here ");
         drawCommandBuffer.forEach((command) -> {
-            g.setFill(controller.getBrushColor());
+            g.setFill(Color.BLACK);
             g.fillOval(command.getX(), command.getY(), command.getSize(), command.getSize());
         });
+
+        drawCommandBuffer.clear();
     }
+
+//    public void sendDrawCommand(DrawCommand c) {
+//        try {
+//        out = new ObjectOutputStream(s.getOutputStream());
+//            out.writeObject(c);
+//            out.flush();
+////        System.out.
+////        println(bob);
+////            System.out.println(s);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 
     public static void main(String[] args) {
-        launch(args);
-        CanvasClient c = new CanvasClient("127.0.0.1");
+            launch(args);
+//            CanvasClient c = new CanvasClient("127.0.0.1");
+//            c.play();
+//        CanvasClient c = new CanvasClient();
+//        c.start();
+
+
+    }
+
+    @Override
+    public void run() {
 
     }
 /*

@@ -8,13 +8,19 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
     private ArrayList<DrawCommand> drawCommands = new ArrayList<>();
 
+//    private CanvasClient clientRef;
 
+    private double oldX, oldY, newX, newY;
 
     @FXML
     private Canvas canvas;
@@ -62,6 +68,9 @@ public class Controller {
         /**
          * TODO: create custom asset brush size icons attributed each to a specific set size
          */
+
+
+
         canvas.setOnMouseDragged(e -> {
             double size = Double.parseDouble(brushSize.getText());
             //get the x and y from the mouse event, and offset it to half of the brush size
@@ -72,7 +81,7 @@ public class Controller {
                 // clears the rectangular shape of size size underneath the current x, y
                 g.setFill(Color.WHITE);
                 g.fillOval(x, y, size, size);
-                DrawCommand dc = new DrawCommand(size,x,y,Color.WHITE);
+                DrawCommand dc = new DrawCommand(size,x,y);
                 drawCommands.add(dc);
                 dc.send();
 
@@ -82,7 +91,9 @@ public class Controller {
                 g.setFill(colorPicker.getValue());
                 //fills the rectangle
                 g.fillOval(x,y,size,size);
-                drawCommands.add(new DrawCommand(size,x,y,colorPicker.getValue()));
+//                System.out.println(clientRef == null);
+//                clientRef.sendDrawCommand(new DrawCommand(size,x,y));
+                drawCommands.add(new DrawCommand(size,x,y));
             }
         });
     }
@@ -95,5 +106,8 @@ public class Controller {
         return colorPicker.getValue();
     }
 
+//    public void setCanvasClient(CanvasClient c) {
+//        clientRef = c;
+//    }
 
 }

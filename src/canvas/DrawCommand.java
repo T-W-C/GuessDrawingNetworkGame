@@ -8,13 +8,12 @@ public class DrawCommand implements Serializable {
     private double size;
     private double x;
     private double y;
-    private Paint fill;
 
-    public DrawCommand(double size, double x, double y, Paint fill) {
+    public DrawCommand(double size, double x, double y) {
         this.size = size;
         this.x = x;
         this.y = y;
-        this.fill = fill;
+//        this.fill = fill;
     }
 
     public double getSize() {
@@ -29,9 +28,9 @@ public class DrawCommand implements Serializable {
         return y;
     }
 
-    public Paint getFill() {
-        return fill;
-    }
+//    public Paint getFill() {
+//        return fill;
+//    }
 
 
     public void send() {
@@ -40,3 +39,4 @@ public class DrawCommand implements Serializable {
 
 
 }
+

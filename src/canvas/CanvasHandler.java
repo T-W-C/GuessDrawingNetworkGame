@@ -7,10 +7,13 @@ public class CanvasHandler extends Thread {
     private Socket clientSocket;
     private ObjectInputStream is;
     private ObjectOutputStream os;
-    private Object o;
+    private DrawCommand command;
 
-    public CanvasHandler(Socket clientSocket) {
+    private Server server;
+
+    public CanvasHandler(Socket clientSocket, Server server) {
         this.clientSocket = clientSocket;
+        this.server = server;
     }
 
 
@@ -19,32 +22,34 @@ public class CanvasHandler extends Thread {
         try {
             is = new ObjectInputStream(clientSocket.getInputStream());
             os = new ObjectOutputStream(clientSocket.getOutputStream());
-            while(this.readCommand()) {
-
+            while (this.readCommand()) {
             }
+        } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
 
-        } catch(IOException e) {
+        public boolean readCommand() {
+            try {
+                command = (DrawCommand) is.readObject();
+
+            } catch(Exception e) {
+                return false;
+            }
+            if(command == null) {
+
+            } else {
+            }
+            return true;
+        }
+
+    public void writeCommand(DrawCommand command) {
+        try {
+            os.writeObject(command);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean readCommand() {
-        try {
-            o = is.readObject();
-        } catch(Exception e) {
-            o = null;
-        }
-        if (o == null) {
-            // close the socket here through a custom
-            // close socket method that I'll need to write.
-        }
-
-        if(o.getClass() == DrawCommand.class) {
-            DrawCommand dc = (DrawCommand) o;
-
-        }
-        return false;
     }
 
 
