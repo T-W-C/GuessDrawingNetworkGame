@@ -1,17 +1,16 @@
 package gui.registration;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import org.apache.commons.codec.digest.DigestUtils;
 
-import java.net.Socket;
+import java.awt.*;
+import java.io.IOException;
 import java.util.Timer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 public class Controller {
     @FXML
@@ -19,67 +18,59 @@ public class Controller {
     @FXML
     public TextField usernameText;
     @FXML
-    public TextField passwordText;
+    public PasswordField passwordText;
     @FXML
-    public TextField verifyPasswordText;
+    public PasswordField verifyPasswordText;
     @FXML
-    public Label Message1;
-    @FXML
-    public Label Message2;
+    public CheckBox termsCheckBox;
 
     @FXML
     public void createAndSubmitClient() throws Exception {
-        // Passed First Check (Email Valid Phase)
-        RegistrationHandler registrationHandler = new RegistrationHandler();
 
-        /* Packet Sends for Checks */
-        registrationHandler.SendEmailPacket(emailText.getText());
-        registrationHandler.SendUsernamePacket(usernameText.getText());
+        if (termsCheckBox.isSelected()) {
+            // Passed First Check (Email Valid Phase)
+            RegistrationHandler registrationHandler = new RegistrationHandler();
 
-        /* */
+            /* Packet Sends for Checks */
+            registrationHandler.SendEmailPacket(emailText.getText());
+            registrationHandler.SendUsernamePacket(usernameText.getText());
+            String hashedPassword = HashPassword(passwordText.getText());
+            /* */
 
-        Timer t = new java.util.Timer();
+            Timer t = new java.util.Timer();
 
-        t.schedule(
-                new java.util.TimerTask() {
-                    public void run() {
-                        // Check Email
-                        if(registrationHandler.emailResult) {
-                            // Username Passed
-                            if (registrationHandler.userResult) {
-                                System.out.println("It worked");
+            t.schedule(
+                    new java.util.TimerTask() {
+                        public void run() {
+                            // Check Email
+                            if (registrationHandler.emailResult) {
+                                // Username Passed
+                                if (registrationHandler.userResult) {
+                                    System.out.println("It worked");
+                                    // Check Passwords Match
+                                    if (hashedPassword.equals(HashPassword(verifyPasswordText.getText()))) {
+                                        // Done, create user now
+                                        registrationHandler.SendCreateAccountPacket(emailText.getText(), usernameText.getText(), hashedPassword);
+                                        System.out.println("Created Account for username " + usernameText.getText());
+                                    } else {
+                                        System.out.println("Passwords don't match!");
+                                    }
+                                } else {
+                                    System.out.println("Username is not valid!");
+                                }
+                            } else {
+                                System.out.println("Email is not valid!");
                             }
+                            t.cancel();
                         }
-                        t.cancel();
-                    }
-                },
-                50
-        );
-        /*
-        if(RegistrationHandler.isValidEmail(emailText.toString())){
-            // Passed Second Check (Username Valid Check)
-            if (RegistrationHandler.isValidUsername(usernameText.toString())){
-                // Get hashed password
-                String hashedPassword = passwordText.toString();
-                // Passed Third Check (Password Matching Check)
-                if (RegistrationHandler.confirmHashOfPassword(verifyPasswordText.toString(), hashedPassword)){
-
-                }
-                // Failed Password Matching Check
-                else {
-                    // Output password error
-                }
-            }
-            // Failed Username Check
-            else {
-                // Output username error
-            }
+                    },
+                    100
+            );
         }
-        // Failed Email Check
         else {
-            //Output email error
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please Tick the User Agreement Checkbox!", ButtonType.OK);
+            alert.showAndWait();
         }
-        */
     }
 
     @FXML
@@ -108,5 +99,10 @@ public class Controller {
         if (verifyPasswordText.getText().equals("Re-enter password here")) {
             verifyPasswordText.clear();
         }
+    }
+
+    public static String HashPassword(String plainTextPassword) {
+        String hashedPassword = DigestUtils.sha512Hex(plainTextPassword);
+        return hashedPassword;
     }
 }

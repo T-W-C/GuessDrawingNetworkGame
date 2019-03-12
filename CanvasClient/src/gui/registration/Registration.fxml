@@ -3,37 +3,83 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.registration.Controller">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="510.0" prefWidth="447.0">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.registration.Controller">
+   <children>
+      <AnchorPane prefHeight="659.0" prefWidth="593.0" style="-fx-background-color: #2A363F;">
          <children>
-            <Button id="SubmitButton" layoutX="144.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#createAndSubmitClient" text="Submit" />
-            <Button layoutX="246.0" layoutY="347.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="50.0" text="Reset" />
-            <Label layoutX="57.0" layoutY="120.0" text="Email Address: " />
-            <Label layoutX="82.0" layoutY="180.0" prefHeight="24.0" prefWidth="70.0" text="Username: " />
-            <TextField fx:id="emailText" text="Enter email here" layoutX="171.0" layoutY="115.0" onMouseClicked="#clearEmailText" />
-            <TextField fx:id="usernameText" text="Enter username here" layoutX="171.0" layoutY="180.0" prefHeight="16.0" prefWidth="167.0" onMouseClicked="#clearUserText" />
-            <Label layoutX="85.0" layoutY="221.0" text="Password: " />
-            <TextField fx:id="passwordText" text="Enter password here" layoutX="171.0" layoutY="216.0" onMouseClicked="#clearPasswordText" />
-            <Label layoutX="53.0" layoutY="259.0" text="Verify Password: " />
-            <TextField fx:id="verifyPasswordText" text="Re-enter password here" layoutX="171.0" layoutY="255.0" onMouseClicked="#clearVerifyText" />
-            <CheckBox layoutX="139.0" layoutY="302.0" mnemonicParsing="false" text="I agree to the terms and conditions" />
-            <Label fx:id="Message1" layoutX="33.0" layoutY="150.0" text="Note: The Username and Password should only be one word in length and contain only numbers and letters." textFill="#eb0c0c" />
-            <Label fx:id="Message2" visible="false" layoutX="33.0" layoutY="150.0" text="Note: The Username/Password were incorrect or the passwords did not match. Please try again" textFill="#eb0c0c" >
+            <Button id="SubmitButton" onMouseClicked="#createAndSubmitClient" layoutX="173.0" layoutY="500.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #1e90ff;" text="SIGN UP" textFill="#fafafa">
                <font>
-                  <Font size="12.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
-            </Label>
-            <Label layoutX="133.0" layoutY="32.0" text="Canvas.io">
+            </Button>
+            <Pane layoutX="173.0" layoutY="5.0" prefHeight="103.0" prefWidth="237.0">
+               <children>
+                  <Label layoutX="54.0" layoutY="33.0" prefHeight="44.0" prefWidth="176.0" text="Canvas.io">
+                     <textFill>
+                        <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="0.5625">
+                           <stops>
+                              <Stop color="#34c251" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="#ff401f" layoutX="38.0" layoutY="68.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="14.0" layoutY="40.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#e0ff1f" layoutX="14.0" layoutY="68.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#1fff81" layoutX="38.0" layoutY="40.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </Pane>
+            <Line endX="300.0" layoutX="194.0" layoutY="100.0" startX="-100.0" stroke="#465058" strokeWidth="2.0" />
+            <TextField fx:id="usernameText" layoutX="173.0" layoutY="207.0" prefHeight="44.0" prefWidth="237.0" promptText="Username" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
                <font>
-                  <Font size="48.0" />
+                  <Font size="18.0" />
                </font>
-            </Label>
+            </TextField>
+            <TextField fx:id="emailText" layoutX="173.0" layoutY="125.0" prefHeight="44.0" prefWidth="237.0" promptText="Email Address" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button layoutX="173.0" layoutY="575.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #ff401f;" text="RESET" textFill="#fafafa">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <CheckBox fx:id="termsCheckBox" layoutX="173.0" layoutY="421.0" mnemonicParsing="false" text="I Agree with the Term &amp; Conditions" textFill="#fbfcfc" />
+            <Label layoutX="137.0" layoutY="182.0" prefHeight="17.0" prefWidth="357.0" text="*Remember Username and Password should be in 1 word!" textFill="#eb0c0c" wrapText="true" />
+            <PasswordField fx:id="passwordText" layoutX="173.0" layoutY="275.0" prefHeight="44.0" prefWidth="237.0" promptText="Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="verifyPasswordText" layoutX="173.0" layoutY="350.0" prefHeight="44.0" prefWidth="237.0" promptText="Verify Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
          </children></AnchorPane>
-  </content>
-</ScrollPane>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

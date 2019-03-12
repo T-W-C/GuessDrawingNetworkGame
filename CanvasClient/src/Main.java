@@ -1,5 +1,4 @@
-package networking;
-
+import networking.Client;
 import networking.packets.incoming.AddConnectionPacket;
 
 public class Main {
