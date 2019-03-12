@@ -29,18 +29,35 @@ public class GameScreen extends JFrame {
     }
 
     public GameScreen() {
-        this.setSize(600,600);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        // set size and properties of the main game frame:
+        setSize(600,600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        // creates main component panel for the game frame
         JPanel componentPanel = new JPanel();
-
-        this.setContentPane(componentPanel);
+        setContentPane(componentPanel);
 
         componentPanel.setLayout(new BorderLayout());
 
+        // create the main menu component
+        drawNewScreenComponents(createMainMenu());
 
 
+
+    }
+
+
+    public void drawNewScreenComponents(JPanel panel) {
+        getContentPane().removeAll();
+        getContentPane().add(panel, BorderLayout.CENTER);
+        revalidate();
+        //calls the paint Component
+        repaint();
+    }
+
+    public GameMenu createMainMenu() {
+        return new GameMenu();
     }
 
 
