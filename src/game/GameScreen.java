@@ -1,66 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
-public class GameScreen extends JFrame {
+public class GameScreen extends JPanel {
+    private ArrayList<Player> players = new ArrayList<>();
 
-    private static GameScreen ref = null;
+    public GameScreen(Player p) {
+        super();
+        if(isValidPlayer(p)) {
+            players.add(p);
+        }
+
+        setLayout(new BorderLayout(10,10));
+        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+
+
+
+    }
 
     /**
-     *  Swing data structures not thread safe - launch on the event dispatching
-     *  thread through invoke later.
-     * @param args
+     * checks valid player - only null check rest of checks to be done in player class
+     * @param p
+     * @return
      */
-    public static void main(String[] args) {
-//        Runnable gameRunnable = () -> {
-//            GameScreen gameScreen = GameScreen.getRef();
-//            gameScreen.setVisible(true);
-//        };
-        SwingUtilities.invokeLater(() -> {
-                GameScreen gameScreen = GameScreen.getRef();
-                gameScreen.setVisible(true);
-        });
-    }
-
-    public static GameScreen getRef() {
-        if(GameScreen.ref == null) {
-            GameScreen.ref = new GameScreen();
+    public boolean isValidPlayer(Player p) {
+        if(p != null) {
+            return true;
         }
-        return GameScreen.ref;
+        return false;
     }
 
-    public GameScreen() {
-        // set size and properties of the main game frame:
-        setSize(600,600);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        // creates main component panel for the game frame
-        JPanel componentPanel = new JPanel();
-        setContentPane(componentPanel);
-
-        componentPanel.setLayout(new BorderLayout());
-
-        // create the main menu component
-        drawNewScreenComponents(createMainMenu());
-
-
+    public void initialiseGame(String serverAddress, int port) {
 
     }
-
-
-    public void drawNewScreenComponents(JPanel panel) {
-        getContentPane().removeAll();
-        getContentPane().add(panel, BorderLayout.CENTER);
-        revalidate();
-        //calls the paint Component
-        repaint();
-    }
-
-    public GameMenu createMainMenu() {
-        return new GameMenu();
-    }
-
-
-
-
 }
