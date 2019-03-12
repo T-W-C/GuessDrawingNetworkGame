@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+
+<!--FXML file for the Chatroom scene. It contains a TextArea for previous messages and a TextField for writing new messages.-->
+
+<Pane prefHeight="180.0" prefWidth="350.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Chatroom">
+    <TextArea fx:id="messageArea" editable="false" prefHeight="143.0" prefWidth="350.0" />
+    <TextField fx:id="messageField" layoutX="8.0" layoutY="150.0" onKeyPressed="#onButtonPress" prefHeight="25.0" prefWidth="335.0" />
+</Pane>
