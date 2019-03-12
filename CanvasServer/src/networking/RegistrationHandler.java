@@ -1,6 +1,7 @@
 package networking;
 
 import database.dao.PlayerDAO;
+import database.domain.Player;
 import database.manager.PasswordManager;
 
 import java.util.regex.Matcher;
@@ -9,6 +10,10 @@ import java.util.regex.Pattern;
 public class RegistrationHandler {
     public static boolean isValidEmail(String email) {
         if (email.equals("")) {
+            return false;
+        }
+        else if(PlayerDAO.isEmailExisting(email)){
+            System.out.println("EmailL " + email + " already exists");
             return false;
         }
         else {

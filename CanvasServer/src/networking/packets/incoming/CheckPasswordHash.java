@@ -2,12 +2,12 @@ package networking.packets.incoming;
 
 import java.io.Serializable;
 
-public class CheckUsernamePacket implements Serializable {
+public class CheckPasswordHash implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public int playerSession;
 
-    public String username;
+    public String password;
 
-    public boolean usernameCheckResult;
+    public boolean passwordCheckResult;
 }
