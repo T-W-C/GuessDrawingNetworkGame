@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class CanvasComponent extends JPanel {
@@ -13,6 +15,7 @@ public class CanvasComponent extends JPanel {
      */
     private JPanel tools;
     private CanvasDrawingBoard drawingBoard;
+    private BrushTools brushTools;
     private Stroke brushSize = new BasicStroke(10, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 30f);
     private BrushColor brushColor;
 
@@ -20,10 +23,11 @@ public class CanvasComponent extends JPanel {
         super();
         drawingBoard = new CanvasDrawingBoard();
         tools = new CanvasToolsComponent();
-
+        tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
+//        brushTools = new BrushTools();
 
         add(drawingBoard, BorderLayout.CENTER);
-
+//        add(brushTools, BorderLayout.WEST);
         add(tools, BorderLayout.SOUTH);
 
     }
