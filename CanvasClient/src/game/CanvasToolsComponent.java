@@ -1,11 +1,10 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class CanvasToolsComponent extends JPanel {
 
-    private Color selectedColor;
-    private int selectedBrushSize;
+    private static Color selectedColor;
+    private static int selectedBrushSize;
 
     private int[] brushSizes = {
             5,
@@ -14,7 +13,6 @@ public class CanvasToolsComponent extends JPanel {
             40
     };
 
-    private int brushSize;
 
     private Color[] brushColors = {
             Color.BLACK,
@@ -25,9 +23,6 @@ public class CanvasToolsComponent extends JPanel {
             Color.MAGENTA
     };
 
-
-
-    private Color brushColor = Color.BLACK;
 
     public CanvasToolsComponent() {
 
@@ -76,12 +71,8 @@ public class CanvasToolsComponent extends JPanel {
 //            colorPaletteButtons[i] = new CircleButton(brushColors[i], 20);
             colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
 
-            colorPaletteButtons[i].addActionListener((e) -> {
-                this.brushColor = brushColors[j];
-                // handle network stuff here
-            });
 //            System.out.println(colorPaletteButtons[i].getColor());
-            brushColor = brushColors[i];
+//            brushColor = brushColors[i];
             /**
              * TODO: add in the action event listener for when the color is chosen:
              */
@@ -89,14 +80,13 @@ public class CanvasToolsComponent extends JPanel {
             colorPaletteButtons[i].addActionListener((e) -> {
                 System.out.println("The Color: " + brushColors[j].toString() + " has been selected");
                 // also to dispatch an event here
+                selectedColor = brushColors[j];
+
             });
             colorPalette.add(colorPaletteButtons[i]);
         }
 
 
-        public Color getColor() {
-            return brushColor;
-        }
 
 
 //        CircleButton[] brushSizeButtons = new CircleButton[brushSizes.length];
@@ -122,35 +112,37 @@ public class CanvasToolsComponent extends JPanel {
         for(int i = 0; i<3; i++) {
             final int j = i;
             brushSizes[i] = new JButton(brushSizeLabels[i]);
+            //event listener for each of the brush size buttons
             brushSizes[i].addActionListener((e) -> {
-                String buttonText = brushSizes[i].getText();
+                String buttonText = brushSizes[j].getText();
                 switch(buttonText) {
                     /**
-                     * TODO: still to send the server information for this
+                     * TODO: still to send the server information for the brush size
                      */
                     case "S":
-                        this.brushSize = 10;
+                        selectedBrushSize = 10;
                     case "M":
-                        this.brushSize = 20;
+                        selectedBrushSize = 20;
                     case "L":
-                        this.brushSize = 40;
+                        selectedBrushSize = 40;
                 }
+
+
 
             });
 
-
+            colorPalette.add(brushSizes[i]);
         }
-
-        JButton smallBrushSize = new JButton("S");
-        JButton mediumBrushSize = new JButton("M");
-        JButton largeBrushSize = new JButton("L");
-
-
-
-        colorPalette.add(smallBrushSize);
-        colorPalette.add(mediumBrushSize);
-        colorPalette.add(largeBrushSize);
 
         return colorPalette;
     }
+
+    public static Color getSelectedColor() {
+        return selectedColor;
+    }
+
+    public static int getBrushSize() {
+        return selectedBrushSize;
+    }
+
 }

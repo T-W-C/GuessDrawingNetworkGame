@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class CanvasDrawingBoard extends JPanel {
+
+    private final static int screenWidth = 400;
+    private final static int screenHeight = 400;
+
     private BufferedImage canvasImage;
     //connection to socket to be stored
     private Stroke stroke = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f);

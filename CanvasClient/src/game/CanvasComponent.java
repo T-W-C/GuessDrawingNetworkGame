@@ -15,6 +15,10 @@ public class CanvasComponent extends JPanel {
      */
     private JPanel tools;
     private CanvasDrawingBoard drawingBoard;
+    /**
+     * brush tools not implemented atm, since they were included with the original
+     * tool panel in one big tool panel.
+     */
     private BrushTools brushTools;
     private Stroke brushSize = new BasicStroke(10, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 30f);
     private BrushColor brushColor;
