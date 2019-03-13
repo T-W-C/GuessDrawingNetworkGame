@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class CanvasToolsComponent extends JPanel {
 
+    private Color selectedColor;
+    private int selectedBrushSize;
 
     private int[] brushSizes = {
             5,
@@ -33,7 +35,8 @@ public class CanvasToolsComponent extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
 
-        CircleButton clearCanvas = new CircleButton(Color.WHITE, "Clear", 20);
+//        CircleButton clearCanvas = new CircleButton(Color.WHITE, "Clear", 20);
+        SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
             clearCanvas();
@@ -61,20 +64,28 @@ public class CanvasToolsComponent extends JPanel {
         JPanel colorPalette = new JPanel();
 
         colorPalette.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        colorPalette.setPreferredSize(new Dimension(width*6, height*2));
-        colorPalette.setMaximumSize(new Dimension(width*6, height*2));
-        colorPalette.setLayout(new GridLayout(2, 5));
+        colorPalette.setPreferredSize(new Dimension(width*4, height));
+        colorPalette.setMaximumSize(new Dimension(width*4, height));
+        colorPalette.setLayout(new GridLayout(2, 7));
 //        int colorNumber = BrushColor.values().length;
         int colorNumber = brushColors.length;
-        CircleButton[] colorPaletteButtons = new CircleButton[colorNumber];
+//        CircleButton[] colorPaletteButtons = new CircleButton[colorNumber];
+        SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
         for(int i = 0; i<colorNumber; i++) {
             final int j = i;
-            colorPaletteButtons[i] = new CircleButton(brushColors[i], 20);
+//            colorPaletteButtons[i] = new CircleButton(brushColors[i], 20);
+            colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
+
+            colorPaletteButtons[i].addActionListener((e) -> {
+                this.brushColor = brushColors[j];
+                // handle network stuff here
+            });
 //            System.out.println(colorPaletteButtons[i].getColor());
             brushColor = brushColors[i];
             /**
              * TODO: add in the action event listener for when the color is chosen:
              */
+
             colorPaletteButtons[i].addActionListener((e) -> {
                 System.out.println("The Color: " + brushColors[j].toString() + " has been selected");
                 // also to dispatch an event here
@@ -82,6 +93,10 @@ public class CanvasToolsComponent extends JPanel {
             colorPalette.add(colorPaletteButtons[i]);
         }
 
+
+        public Color getColor() {
+            return brushColor;
+        }
 
 
 //        CircleButton[] brushSizeButtons = new CircleButton[brushSizes.length];
@@ -100,9 +115,37 @@ public class CanvasToolsComponent extends JPanel {
 //            colorPalette.add(brushSizeButtons[i]);
 //        }
 
-        JButton smallBrushSize = new JButton("Small");
-        JButton mediumBrushSize = new JButton("Medium");
-        JButton largeBrushSize = new JButton("Large");
+        JButton[] brushSizes = new JButton[3];
+        String[] brushSizeLabels = {"S", "M", "L"};
+
+
+        for(int i = 0; i<3; i++) {
+            final int j = i;
+            brushSizes[i] = new JButton(brushSizeLabels[i]);
+            brushSizes[i].addActionListener((e) -> {
+                String buttonText = brushSizes[i].getText();
+                switch(buttonText) {
+                    /**
+                     * TODO: still to send the server information for this
+                     */
+                    case "S":
+                        this.brushSize = 10;
+                    case "M":
+                        this.brushSize = 20;
+                    case "L":
+                        this.brushSize = 40;
+                }
+
+            });
+
+
+        }
+
+        JButton smallBrushSize = new JButton("S");
+        JButton mediumBrushSize = new JButton("M");
+        JButton largeBrushSize = new JButton("L");
+
+
 
         colorPalette.add(smallBrushSize);
         colorPalette.add(mediumBrushSize);

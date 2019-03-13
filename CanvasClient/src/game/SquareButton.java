@@ -7,7 +7,7 @@ public class SquareButton extends JButton {
 
     public SquareButton(Color color, String text) {
         super(text);
-        setOpaque(false);
+        setOpaque(true);
         setFocusPainted(false);
         setBorderPainted(false);
 //        switch() {
