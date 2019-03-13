@@ -11,12 +11,22 @@ public class CanvasComponent extends JPanel {
      * point allows one to utilise lines to draw between the points
      * rendered by the users drawing
      */
-    private CanvasToolsComponent tools;
+    private JPanel tools;
     private CanvasDrawingBoard drawingBoard;
     private Stroke brushSize = new BasicStroke(10, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 30f);
     private BrushColor brushColor;
 
+    public CanvasComponent() {
+        super();
+        drawingBoard = new CanvasDrawingBoard();
+        tools = new CanvasToolsComponent();
 
+
+        add(drawingBoard, BorderLayout.CENTER);
+
+        add(tools, BorderLayout.SOUTH);
+
+    }
 
 
 

@@ -13,6 +13,7 @@ public class GameHomeScreen extends JFrame {
     private static final String SERVER_ADDRESS = "127.0.0.1";
 
 
+
     /**
      *  Swing data structures not thread safe - launch on the event dispatching
      *  thread through invoke later.
@@ -38,24 +39,20 @@ public class GameHomeScreen extends JFrame {
 
     public GameHomeScreen() {
         // set size and properties of the main game frame:
-        setSize(600,600);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setSize(600,600);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // creates main component panel for the game frame
         JPanel componentPanel = new JPanel();
-        setContentPane(componentPanel);
+        this.setContentPane(componentPanel);
 
         componentPanel.setLayout(new BorderLayout());
 
 
 
         // create the main menu component
-        drawNewScreenComponents(createMainMenu());
-
-
-
-
+        this.drawNewScreenComponents(createMainMenu());
 
     }
 
@@ -67,12 +64,12 @@ public class GameHomeScreen extends JFrame {
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
-        CircleButton cBtn = new CircleButton(Color.YELLOW);
-        panel.add(cBtn);
-
-        cBtn.addActionListener((e) -> {
-            System.out.println("pressed the button ennit");
-        });
+//        CircleButton cBtn = new CircleButton(Color.YELLOW);
+//        panel.add(cBtn);
+//
+//        cBtn.addActionListener((e) -> {
+//            System.out.println("pressed the button ennit");
+//        });
         getContentPane().add(panel, BorderLayout.CENTER);
         revalidate();
         //calls the paint Component

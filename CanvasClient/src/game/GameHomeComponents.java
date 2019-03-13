@@ -42,9 +42,11 @@ public class GameHomeComponents extends JPanel {
 
         // if user clicks on create game button - launch create game logic
         createGame.addActionListener((e) -> {
-            remove(centredComponents);
-            remove(title);
-            add(createGame, BorderLayout.CENTER);
+//            remove(centredComponents);
+//            remove(title);
+//            add(createGame, BorderLayout.CENTER);
+            GameHomeScreen.getRef().createNewGame(new Player("fjoi", 2903, true));
+
             revalidate();
             repaint();
         });
@@ -53,7 +55,7 @@ public class GameHomeComponents extends JPanel {
         privateGame.addActionListener((e) -> {
             remove(centredComponents);
             remove(title);
-            add(privateGame, BorderLayout.CENTER);
+            this.add(privateGame, BorderLayout.CENTER);
             revalidate();
             repaint();
         });

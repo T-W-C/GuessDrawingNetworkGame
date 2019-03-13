@@ -5,14 +5,22 @@ import java.util.ArrayList;
 public class GameScreen extends JPanel {
     private ArrayList<Player> players = new ArrayList<>();
 
+    private CanvasComponent canvasComponent;
+
     public GameScreen(Player p) {
         super();
         if(isValidPlayer(p)) {
             players.add(p);
         }
 
-        setLayout(new BorderLayout(10,10));
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.setLayout(new BorderLayout(10,10));
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+
+        canvasComponent = new CanvasComponent();
+        this.add(canvasComponent, BorderLayout.CENTER);
+
+
 
 
 
