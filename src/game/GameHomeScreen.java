@@ -1,3 +1,5 @@
+import javafx.scene.shape.Circle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -46,8 +48,12 @@ public class GameHomeScreen extends JFrame {
 
         componentPanel.setLayout(new BorderLayout());
 
+
+
         // create the main menu component
         drawNewScreenComponents(createMainMenu());
+
+
 
 
 
@@ -61,6 +67,12 @@ public class GameHomeScreen extends JFrame {
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
+        CircleButton cBtn = new CircleButton(Color.YELLOW);
+        panel.add(cBtn);
+
+        cBtn.addActionListener((e) -> {
+            System.out.println("pressed the button ennit");
+        });
         getContentPane().add(panel, BorderLayout.CENTER);
         revalidate();
         //calls the paint Component
