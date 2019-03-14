@@ -35,11 +35,6 @@ public class ConnectionHandler {
 
     }
 
-    private Socket connectToServer() throws IOException {
-        clientConnection = new Socket(InetAddress.getByName(this.serverAddress), this.port);
-        return clientConnection;
-    }
-
 
 
     public void initiateServer(Runnable onClientConnection) {
@@ -70,6 +65,19 @@ public class ConnectionHandler {
                System.out.println("Something went wrong");
            }
         }).start();
+    }
+
+    public void startClient() {
+        this.isHost = false;
+        try {
+            this.clientConnection = new Socket(serverAddress, port);
+            System.out.println("Connected to: " + clientConnection.getInetAddress().getHostName());
+            addOutputStream(this.clientConnection);
+            new Thread(() -> this.listen(this.clientConnection)).start();
+        } catch(IOException e) {
+            e.printStackTrace();
+            //close all
+        }
     }
 
     /**

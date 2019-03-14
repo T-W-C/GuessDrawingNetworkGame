@@ -66,7 +66,7 @@ public class GameScreen extends JPanel {
     public void joinExistingGame(String serverAddress, int port) {
         this.connectionHandler = new ConnectionHandler(this.p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
-//        connectionHandler.startClient();
+        connectionHandler.startClient();
         // start thte chat client when join the game also;
 
 

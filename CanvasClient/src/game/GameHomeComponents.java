@@ -35,7 +35,7 @@ public class GameHomeComponents extends JPanel {
         joinGame.addActionListener((e) -> {
             remove(centredComponents);
             remove(title);
-//            GameHomeScreen.getRef().joinGame(
+            GameHomeScreen.getRef().joinExistingGame(new Player("tr", 23, false));
             revalidate();
             repaint();
         });

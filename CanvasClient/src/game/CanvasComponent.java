@@ -148,6 +148,7 @@ public class CanvasComponent extends JPanel {
             public void mouseDragged(MouseEvent e)
             {
                 onDrag(e.getPoint());
+                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, e.getPoint()));
 
             }
 
@@ -168,12 +169,15 @@ public class CanvasComponent extends JPanel {
             public void mousePressed(MouseEvent e)
             {
                 onPress(e.getPoint());
+                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
+
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
                 onRelease(e.getPoint());
+                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.RELEASED, e.getPoint()));
 
             }
 
@@ -255,6 +259,8 @@ public class CanvasComponent extends JPanel {
         g.setColor(Color.WHITE);
         g.setStroke(stroke);
         g.fillRect(0, 0, canvasImage.getWidth(), canvasImage.getHeight());
+
+        connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.CLEAR, e.getPoint()));
 
         g.dispose();
         this.repaint();
