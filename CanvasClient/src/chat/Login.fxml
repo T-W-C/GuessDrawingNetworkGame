@@ -7,11 +7,10 @@
 
 <!--FXML file for the login scene. It contains a TextField for the username and a button for logging in.-->
 
-<Pane prefHeight="180.0" prefWidth="350.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="sample.Login">
+<Pane prefHeight="180.0" prefWidth="350.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="chat.Login">
     <Label layoutX="110.0" layoutY="29.0" text="Please enter a username" />
     <Label layoutX="40.0" layoutY="84.0" text="Username" />
     <TextField fx:id="username" onKeyPressed="#onLoginPress" layoutX="120" layoutY="80" />
-    username.setStyle("-fx-text-inner-color: red;");
     <Button layoutX="152.0" layoutY="132.0"
             mnemonicParsing="false" onAction="#onLoginClick" text="Login" />
 </Pane>

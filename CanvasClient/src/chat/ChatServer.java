@@ -1,4 +1,4 @@
-package sample;
+package chat;
 
 import java.util.ArrayList;
 import java.util.List;

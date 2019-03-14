@@ -1,4 +1,4 @@
-package sample;
+package chat;
 
 public class Data {
 
