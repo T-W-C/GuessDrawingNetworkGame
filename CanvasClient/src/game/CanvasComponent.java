@@ -260,8 +260,6 @@ public class CanvasComponent extends JPanel {
         g.setStroke(stroke);
         g.fillRect(0, 0, canvasImage.getWidth(), canvasImage.getHeight());
 
-        connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.CLEAR, e.getPoint()));
-
         g.dispose();
         this.repaint();
     }
