@@ -91,6 +91,7 @@ public class CanvasToolsComponent extends JPanel {
 
 
 
+
 //        CircleButton[] brushSizeButtons = new CircleButton[brushSizes.length];
 //        for(int i = 0; i<brushSizes.length; i++) {
 //            final int j = i;
@@ -143,6 +144,11 @@ public class CanvasToolsComponent extends JPanel {
         }
 
         return colorPalette;
+    }
+
+
+    public void setSelectedColor(int index) {
+        selectedColor = brushColors[index];
     }
 
     public Color getSelectedColor() {

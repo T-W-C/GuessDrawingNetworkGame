@@ -90,6 +90,14 @@ public class GameHomeScreen extends JFrame {
         gameInstance.initialiseGame(SERVER_ADDRESS, randomInactivePort());
     }
 
+    public void joinExistingGame(Player p) {
+        GameScreen gameInstance = new GameScreen(p);
+        this.drawNewScreenComponents(gameInstance);
+        int port = getRandomActivePort();
+        gameInstance.joinExistingGame(SERVER_ADDRESS, port);
+
+    }
+
     public int randomInactivePort() {
         Random random = new Random();
         int randomNum = random.nextInt(1000);
@@ -98,6 +106,10 @@ public class GameHomeScreen extends JFrame {
         } else {
             return randomInactivePort();
         }
+    }
+
+    public int getRandomActivePort() {
+        return 8987;
     }
 
 

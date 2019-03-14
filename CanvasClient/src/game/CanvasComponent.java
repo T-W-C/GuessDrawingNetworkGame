@@ -27,8 +27,13 @@ public class CanvasComponent extends JPanel {
     private BrushColor brushColor;
 
 
-    public CanvasComponent() {
+
+    private ConnectionHandler connectionHandler;
+
+
+    public CanvasComponent(ConnectionHandler connectionHandler) {
         super();
+        this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
 
 //        drawingBoard = new CanvasDrawingBoard();
@@ -52,15 +57,20 @@ public class CanvasComponent extends JPanel {
         this.setEnabled(false);
     }
 
-    public void start(String serverAddress, int port) {
+    public void start(ConnectionHandler connectionHandler) {
         //create new Socket handler then pass into the start method
-        System.out.println("1 here");
+
+        this.connectionHandler = connectionHandler;
+
         this.setEnabled(true);
         this.mouseListenerSetup();
         this.clear();
     }
 
 
+    public CanvasToolsComponent getToolsPanel() {
+        return tools;
+    }
 
 
 

@@ -44,12 +44,15 @@ public class ConnectionHandler {
 
     public void initiateServer(Runnable onClientConnection) {
         this.isHost = true;
+        System.out.println("Started initiation of server...");
         //launch new thread for initiation of server
         new Thread(() -> {
            try {
                server = new ServerSocket(port, 4);
+               System.out.println("Server " + server.toString() + " has initiated.");
                while(true) {
                    try {
+                       System.out.println("Waiting to accept sockets...");
                        Socket socket = server.accept();
                        addOutputStream(socket);
                        // create a new thread to handle the inputs from the socket
@@ -66,7 +69,7 @@ public class ConnectionHandler {
            } catch(IOException e) {
                System.out.println("Something went wrong");
            }
-        });
+        }).start();
     }
 
     /**
@@ -80,11 +83,12 @@ public class ConnectionHandler {
         os = new ObjectOutputStream(socket.getOutputStream());
         os.flush();
         outputStreams.add(os);
+        System.out.println("Output streams have been added");
     }
 
     public void listen(Socket socket) {
         Thread listener = new Thread(() -> {
-            Object m;
+            Object packet = "";
             ObjectInputStream is = null;
 
             try {
@@ -95,8 +99,8 @@ public class ConnectionHandler {
             }
             do {
                 try {
-                    m = is.readObject();
-                    packetHandler.handlePacket(m);
+                    packet = is.readObject();
+                    packetHandler.handlePacket(packet);
                     /*
                     TODO: still to send to all the other connecting clients
                      */
@@ -106,16 +110,17 @@ public class ConnectionHandler {
                 } catch(ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-            } while(!m.equals("/E"));
+            } while(!packet.equals("/E"));
             // close all
-        }).start();
+        });
+        listener.start();
     }
 
     public void sendPacket(Object packet) {
         try {
             if(isHost) {
                 for(ObjectOutputStream os: outputStreams) {
-                    os.writeObject(packet):
+                    os.writeObject(packet);
                     os.flush();
                 }
             } else {
