@@ -173,31 +173,30 @@ public class CanvasDrawingBoard extends JPanel {
             lastDrawnPoint = null;
         }
     }
-
-    public void draw(Point point)
-    {
-        Graphics2D g = this.canvasImage.createGraphics();
-        g.setColor(CanvasToolsComponent.getSelectedColor());
-        g.setStroke(stroke);
-
-        int x = point.x * canvasImage.getWidth() / drawingBoard.getWidth();
-        int y = point.y * canvasImage.getHeight() / drawingBoard.getHeight();
-
-        int x2 = x;
-        int y2 = y;
-
-        if (lastDrawnPoint != null)
-        {
-            x2 = lastDrawnPoint.x * canvasImage.getWidth() / drawingBoard.getWidth();
-            y2 = lastDrawnPoint.y * canvasImage.getHeight() / drawingBoard.getHeight();
-        }
-
-        g.drawLine(x, y, x2, y2);
-
-        g.dispose();
-        drawingBoard.repaint();
-
-        this.lastDrawnPoint = point;
+//
+    public void draw(Point point) {
+//        Graphics2D g = this.canvasImage.createGraphics();
+//        g.setColor(tools.getSelectedColor());
+//        g.setStroke(stroke);
+//
+//        int x = point.x * canvasImage.getWidth() / drawingBoard.getWidth();
+//        int y = point.y * canvasImage.getHeight() / drawingBoard.getHeight();
+//
+//        int x2 = x;
+//        int y2 = y;
+//
+//        if (lastDrawnPoint != null)
+//        {
+//            x2 = lastDrawnPoint.x * canvasImage.getWidth() / drawingBoard.getWidth();
+//            y2 = lastDrawnPoint.y * canvasImage.getHeight() / drawingBoard.getHeight();
+//        }
+//
+//        g.drawLine(x, y, x2, y2);
+//
+//        g.dispose();
+//        drawingBoard.repaint();
+//
+//        this.lastDrawnPoint = point;
     }
 
     public void clear()

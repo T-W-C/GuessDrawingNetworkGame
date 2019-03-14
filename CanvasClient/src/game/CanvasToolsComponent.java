@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class CanvasToolsComponent extends JPanel {
 
-    private static Color selectedColor;
+    private Color selectedColor;
     private static int selectedBrushSize;
 
     private int[] brushSizes = {
@@ -23,9 +23,12 @@ public class CanvasToolsComponent extends JPanel {
             Color.WHITE
     };
 
+    CanvasComponent cc;
 
-    public CanvasToolsComponent() {
+
+    public CanvasToolsComponent(CanvasComponent cc) {
         super();
+        this.cc = cc;
         selectedColor = Color.BLACK;
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
@@ -51,7 +54,7 @@ public class CanvasToolsComponent extends JPanel {
      * TODO: implement clear canvas functionality
      */
     public void clearCanvas() {
-        System.out.println("Cleared the canvas...");
+        cc.clear();
     }
 
     private JPanel colorPalette(int width, int height ) {
@@ -142,7 +145,7 @@ public class CanvasToolsComponent extends JPanel {
         return colorPalette;
     }
 
-    public static Color getSelectedColor() {
+    public Color getSelectedColor() {
         return selectedColor;
     }
 

@@ -17,7 +17,7 @@ public class CanvasComponent extends JPanel {
      * point allows one to utilise lines to draw between the points
      * rendered by the users drawing
      */
-    private JPanel tools;
+    private CanvasToolsComponent tools;
     /**
      * brush tools not implemented atm, since they were included with the original
      * tool panel in one big tool panel.
@@ -36,7 +36,7 @@ public class CanvasComponent extends JPanel {
         this.drawingBoard = initialiseDrawingBoard();
 
 
-        tools = new CanvasToolsComponent();
+        tools = new CanvasToolsComponent(this);
         tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         JLabel test = new JLabel("this is just a title test");
@@ -214,7 +214,7 @@ public class CanvasComponent extends JPanel {
     public void draw(Point point)
     {
         Graphics2D g = this.canvasImage.createGraphics();
-        g.setColor(CanvasToolsComponent.getSelectedColor());
+        g.setColor(tools.getSelectedColor());
         g.setStroke(stroke);
 
         //get the corrected x coord based upon image and drawing board width/height
