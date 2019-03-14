@@ -40,6 +40,8 @@ public class GameScreen extends JPanel {
     }
 
     public void initialiseGame(String serverAddress, int port) {
+        //create socket handler with the server address and port
 
+        this.canvasComponent.start(serverAddress, port);
     }
 }

@@ -121,10 +121,16 @@ public class CanvasToolsComponent extends JPanel {
                      */
                     case "S":
                         selectedBrushSize = 10;
+                        CanvasDrawingBoard.updateStroke(10);
+                        break;
                     case "M":
                         selectedBrushSize = 20;
+                        CanvasDrawingBoard.updateStroke(20);
+                        break;
                     case "L":
                         selectedBrushSize = 40;
+                        CanvasDrawingBoard.updateStroke(40);
+                        break;
                 }
 
 

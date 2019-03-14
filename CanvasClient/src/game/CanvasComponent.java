@@ -25,7 +25,9 @@ public class CanvasComponent extends JPanel {
 
     public CanvasComponent() {
         super();
+        System.out.println("Teststtst");
         drawingBoard = new CanvasDrawingBoard();
+        System.out.println("2 heres");
         tools = new CanvasToolsComponent();
         tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
 //        brushTools = new BrushTools();
@@ -34,6 +36,13 @@ public class CanvasComponent extends JPanel {
 //        add(brushTools, BorderLayout.WEST);
         add(tools, BorderLayout.SOUTH);
 
+
+    }
+
+    public void start(String serverAddress, int port) {
+        //create new Socket handler then pass into the start method
+        System.out.println("1 here");
+        drawingBoard.start();
     }
 
 
