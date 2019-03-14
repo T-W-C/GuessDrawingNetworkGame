@@ -20,13 +20,13 @@ public class CanvasToolsComponent extends JPanel {
             Color.RED,
             Color.GREEN,
             Color.YELLOW,
-            Color.MAGENTA
+            Color.WHITE
     };
 
 
     public CanvasToolsComponent() {
-
         super();
+        selectedColor = Color.BLACK;
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
 
@@ -37,7 +37,6 @@ public class CanvasToolsComponent extends JPanel {
             clearCanvas();
             revalidate();
             repaint();
-
         });
 
         this.add(clearCanvas);
@@ -121,15 +120,15 @@ public class CanvasToolsComponent extends JPanel {
                      */
                     case "S":
                         selectedBrushSize = 10;
-                        CanvasDrawingBoard.updateStroke(10);
+                        CanvasComponent.updateStroke(10);
                         break;
                     case "M":
                         selectedBrushSize = 20;
-                        CanvasDrawingBoard.updateStroke(20);
+                        CanvasComponent.updateStroke(20);
                         break;
                     case "L":
                         selectedBrushSize = 40;
-                        CanvasDrawingBoard.updateStroke(40);
+                        CanvasComponent.updateStroke(40);
                         break;
                 }
 

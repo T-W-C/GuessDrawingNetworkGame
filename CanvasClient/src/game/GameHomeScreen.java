@@ -86,7 +86,7 @@ public class GameHomeScreen extends JFrame {
 
     public void createNewGame(Player p) {
         GameScreen gameInstance = new GameScreen(p);
-        drawNewScreenComponents(gameInstance);
+        this.drawNewScreenComponents(gameInstance);
         gameInstance.initialiseGame(SERVER_ADDRESS, randomInactivePort());
     }
 

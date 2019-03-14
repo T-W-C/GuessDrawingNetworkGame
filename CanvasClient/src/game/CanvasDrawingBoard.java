@@ -20,7 +20,7 @@ public class CanvasDrawingBoard extends JPanel {
     private Point selectionEndPoint = new Point(0, 0);
 
     //connection to socket to be stored
-    private static Stroke stroke = new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f);
+    private static Stroke stroke = new BasicStroke(30, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f);
 
     private Stroke[] strokes = {new BasicStroke(10, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f),
             new BasicStroke(20, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f),
@@ -38,9 +38,14 @@ public class CanvasDrawingBoard extends JPanel {
         System.out.println("width:" + getWidth() + " height: " + getHeight());
         this.drawingBoard = initialiseDrawingBoard();
 
-
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        this.add(this.drawingBoard, BorderLayout.CENTER);
         this.canvasImage = new BufferedImage(CanvasDrawingBoard.screenWidth, CanvasDrawingBoard.screenHeight, BufferedImage.TYPE_INT_ARGB);
-        this.add(drawingBoard);
+
+        System.out.println("Added drawing board");
+
+        this.clear();
+        this.setEnabled(false);
     }
 
     public static void updateStroke(int brushSize) {
@@ -55,12 +60,9 @@ public class CanvasDrawingBoard extends JPanel {
             {
                 System.out.println("this is actually getting called");
                 super.paintComponent(g);
-                if (canvasImage == null){
-                    System.out.println("does it get here");
-                    return;
-                }
+                if (canvasImage == null) return;
                 System.out.println("width: " + getWidth() + " height: " + getHeight());
-                g.drawImage(canvasImage, 0, 0, getWidth(), getHeight(), null);
+                g.drawImage(canvasImage, 0, 0, 400, 400, null);
             }
         };
     }
@@ -198,5 +200,17 @@ public class CanvasDrawingBoard extends JPanel {
         this.lastDrawnPoint = point;
     }
 
+    public void clear()
+    {
+        //send the socket event
+
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setColor(Color.WHITE);
+        g.setStroke(stroke);
+        g.fillRect(0, 0, canvasImage.getWidth(), canvasImage.getHeight());
+
+        g.dispose();
+        this.repaint();
+    }
 
 }
