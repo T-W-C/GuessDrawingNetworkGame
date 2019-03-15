@@ -1,6 +1,7 @@
 package networking;
 
 import database.dao.PlayerDAO;
+import email.EmailHandler;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.*;
 import networking.packets.outgoing.SendEmailCheckResult;
@@ -18,6 +19,7 @@ public class EventListener {
 	public void received(Object packet, Connection connection) {
 		this.connection = connection;
 		mainDispatcher.cache(
+				/* Register Packets and their functionality here */
 				() -> match().with(AddConnectionPacket.class, this::handleAddConnection)
 						.with(RemoveConnectionPacket.class, this::handleRemoveConnection)
 						.with(CheckUsernamePacket.class, this::handleCheckUsername)
@@ -25,6 +27,7 @@ public class EventListener {
 						.with(CheckPasswordHash.class, this::handleCheckPasswordHash)
 						.with(CheckPasswordHashConfirmation.class, this::handleCheckPasswordHashConfirmation)
 						.with(CheckCreateAccountPacket.class, this::handleCheckCreateAccountPacket)
+						.with(CheckActivationEmail.class, this::handleCheckActivationEmail)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -89,5 +92,13 @@ public class EventListener {
 	private void handleCheckCreateAccountPacket(CheckCreateAccountPacket p){
 		System.out.println("Creating account for username " + p.username);
 		PlayerDAO.createPlayer(p.username, p.hashedPassword, p.email);
+	}
+
+	private void handleCheckActivationEmail(CheckActivationEmail p){
+		EmailHandler emailHandler = new EmailHandler();
+		// Send activation email
+		emailHandler.SendActivationEmail(p.email);
+
+		System.out.println("Send activation email to " + p.email + " with activation code: " + emailHandler.getActivationCode());
 	}
 }

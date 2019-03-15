@@ -1,6 +1,7 @@
 package gui.registration;
 
 import networking.Client;
+import networking.packets.incoming.CheckActivationEmail;
 import networking.packets.incoming.CheckCreateAccountPacket;
 import networking.packets.incoming.CheckEmailPacket;
 import networking.packets.incoming.CheckUsernamePacket;
@@ -28,6 +29,13 @@ public class RegistrationHandler {
         packet.email = email;
         packet.username = username;
         packet.hashedPassword = hashedPassword;
+        Client.sendObject(packet);
+    }
+
+    public void SendEmailActivationPacket(String email){
+        CheckActivationEmail packet = new CheckActivationEmail();
+        packet.email = email;
+
         Client.sendObject(packet);
     }
 }

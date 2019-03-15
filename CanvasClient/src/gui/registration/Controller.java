@@ -41,7 +41,7 @@ public class Controller {
                         /* Packet Sends for Checks */
                         registrationHandler.SendEmailPacket(emailText.getText());
                         registrationHandler.SendUsernamePacket(usernameText.getText());
-                        Thread.sleep(100);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                     }
                     return null;
@@ -62,7 +62,9 @@ public class Controller {
                                 registrationHandler.SendCreateAccountPacket(emailText.getText(), usernameText.getText(), hashedPassword);
                                 alert.showAndWait();
                                 System.out.println("Created Account for username " + usernameText.getText());
-                                 Main.getPrimaryStage().setScene(new Scene(ActivationParent.getInstance().getParent(), 590, 360));
+                                Main.getPrimaryStage().setScene(new Scene(ActivationParent.getInstance().getParent(), 590, 360));
+                                /* Send Activation Email */
+                                registrationHandler.SendEmailActivationPacket(emailText.getText());
                             } else {
                                 Alert alert = new Alert(Alert.AlertType.ERROR, "Passwords do not match!", ButtonType.OK);
                                 alert.showAndWait();

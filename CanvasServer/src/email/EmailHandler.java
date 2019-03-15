@@ -12,13 +12,23 @@ import java.util.Random;
 
 public class EmailHandler {
 
+    private int activationCode;
+
+    public int getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(int activationCode) {
+        this.activationCode = activationCode;
+    }
+
     /**
      * This method will connect to the Google's SMTP Server and allow the application to send emails
      * @param targetEmail Target email to send email to, this is an array, so you can a email to multiple addresses
      * @param subject The subject title of the email
      * @param body Body of the email
      */
-    public static void SendEmail(String[] targetEmail, String subject, String body) {
+    public void SendEmail(String[] targetEmail, String subject, String body) {
 
         Properties emailProperties = System.getProperties();
 
@@ -66,16 +76,13 @@ public class EmailHandler {
         }
     }
 
-    public static void main(String[] args){
-        SendActivationEmail("ZakAmir@outlook.com");
-    }
-
-    public static void SendActivationEmail(String email){
+    public void SendActivationEmail(String email){
         Random rand = new Random();
         int activationCode = rand.nextInt(90000) + 10000;
         String subject = "Canvas Application Activation Code!";
         String body = "Thank you for signing up! \n\nYour activation code is: " + activationCode;
-
+        // Store it, so we can input it into the database
+        this.setActivationCode(activationCode);
         SendEmail(new String[]{email}, subject, body);
     }
 }
