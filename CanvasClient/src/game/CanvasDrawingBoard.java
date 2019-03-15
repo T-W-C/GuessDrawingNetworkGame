@@ -58,7 +58,6 @@ public class CanvasDrawingBoard extends JPanel {
             @Override
             protected void paintComponent(Graphics g)
             {
-                System.out.println("this is actually getting called");
                 super.paintComponent(g);
                 if (canvasImage == null) return;
                 System.out.println("width: " + getWidth() + " height: " + getHeight());

@@ -73,6 +73,10 @@ public class CanvasComponent extends JPanel {
     }
 
 
+    public ConnectionHandler getConnectionHandler() {
+        return connectionHandler;
+    }
+
 
     private final static int screenWidth = 600;
     private final static int screenHeight = 400;
@@ -100,10 +104,9 @@ public class CanvasComponent extends JPanel {
             @Override
             protected void paintComponent(Graphics g)
             {
-                System.out.println("this is actually getting called");
+                System.out.println("testing");
                 super.paintComponent(g);
                 if (canvasImage == null) return;
-                System.out.println("width: " + getWidth() + " height: " + getHeight());
                 g.drawImage(canvasImage, 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -123,9 +126,10 @@ public class CanvasComponent extends JPanel {
         };
     }
 
-    public static void updateStroke(int brushSize) {
+    public void updateStroke(int brushSize) {
         stroke = new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f);
         System.out.println("Paint brush updated to size: " + brushSize);
+
     }
 
     public void start() {
@@ -136,7 +140,6 @@ public class CanvasComponent extends JPanel {
     }
 
     private void mouseListenerSetup() {
-        System.out.println(drawingBoard.getWidth() + "sfsojfois  " + drawingBoard.getHeight());
         this.canvasImage = new BufferedImage(drawingBoard.getWidth(), drawingBoard.getHeight(), BufferedImage.TYPE_INT_ARGB);
         drawingBoard.addMouseMotionListener(new MouseMotionListener()
         {

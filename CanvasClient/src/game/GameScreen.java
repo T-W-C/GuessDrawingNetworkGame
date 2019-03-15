@@ -98,11 +98,14 @@ public class GameScreen extends JPanel {
                     canvasComponent.clear();
                     break;
                 case CHANGE_COLOR:
+                    System.out.println("Event Dispatched: Changed Color");
                     this.canvasComponent.getToolsPanel().setSelectedColor(p.index);
                     break;
                 case PRESSED:
                     this.canvasComponent.onPress(p.point);
                     break;
+                case CHANGE_BRUSH_SIZE:
+                    this.canvasComponent.updateStroke(p.index);
             } // else if packet is instance of the game event
             // game events such as:
             // - change player turn

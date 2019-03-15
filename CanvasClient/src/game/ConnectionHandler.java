@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public class ConnectionHandler {
 
     private ObjectOutputStream os;
 
-    private Boolean isHost;
+    private Boolean isDrawer;
 
     private PacketHandler packetHandler;
 
@@ -38,7 +37,7 @@ public class ConnectionHandler {
 
 
     public void initiateServer(Runnable onClientConnection) {
-        this.isHost = true;
+        this.isDrawer = false;
         System.out.println("Started initiation of server...");
         //launch new thread for initiation of server
         new Thread(() -> {
@@ -68,7 +67,7 @@ public class ConnectionHandler {
     }
 
     public void startClient() {
-        this.isHost = false;
+        this.isDrawer = true;
         try {
             this.clientConnection = new Socket(serverAddress, port);
             System.out.println("Connected to: " + clientConnection.getInetAddress().getHostName());
@@ -126,7 +125,11 @@ public class ConnectionHandler {
 
     public void sendPacket(Object packet) {
         try {
-            if(isHost) {
+            if(PaintPacket.class.isInstance(packet)) {
+                System.out.println("YES IT IS AN INST");
+            }
+            System.out.println("connection is: " + isDrawer);
+            if(isDrawer) {
                 for(ObjectOutputStream os: outputStreams) {
                     os.writeObject(packet);
                     os.flush();

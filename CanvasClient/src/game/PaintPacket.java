@@ -8,7 +8,8 @@ public class PaintPacket implements Serializable {
         CLEAR,
         DRAG,
         PRESSED,
-        CHANGE_COLOR
+        CHANGE_COLOR,
+        CHANGE_BRUSH_SIZE
     }
 
     public PaintEvents eventType;

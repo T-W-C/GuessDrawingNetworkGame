@@ -37,6 +37,7 @@ public class CanvasToolsComponent extends JPanel {
         SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
+            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CLEAR, 0));
             clearCanvas();
             revalidate();
             repaint();
@@ -82,8 +83,8 @@ public class CanvasToolsComponent extends JPanel {
             colorPaletteButtons[i].addActionListener((e) -> {
                 System.out.println("The Color: " + brushColors[j].toString() + " has been selected");
                 // also to dispatch an event here
+                cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_COLOR, j));
                 selectedColor = brushColors[j];
-
             });
             colorPalette.add(colorPaletteButtons[i]);
         }
@@ -124,15 +125,18 @@ public class CanvasToolsComponent extends JPanel {
                      */
                     case "S":
                         selectedBrushSize = 10;
-                        CanvasComponent.updateStroke(10);
+                        cc.updateStroke(10);
+                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 10));
                         break;
                     case "M":
                         selectedBrushSize = 20;
-                        CanvasComponent.updateStroke(20);
+                        cc.updateStroke(20);
+                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 20));
                         break;
                     case "L":
                         selectedBrushSize = 40;
-                        CanvasComponent.updateStroke(40);
+                        cc.updateStroke(40);
+                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 40));
                         break;
                 }
 
