@@ -10,8 +10,11 @@ import networking.packets.incoming.AddConnectionPacket;
 
 public class Main extends Application {
 
+    private static Stage primaryStageMain;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+        primaryStageMain = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
         primaryStage.setTitle("Canvas Application");
         primaryStage.setScene(new Scene(root, 580, 655));
@@ -26,5 +29,9 @@ public class Main extends Application {
         client.sendObject(packet);
 
         launch(args);
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStageMain;
     }
 }

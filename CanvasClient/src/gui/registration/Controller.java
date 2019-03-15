@@ -1,5 +1,9 @@
 package gui.registration;
 
+import gui.activation.ActivationParent;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,47 +34,63 @@ public class Controller {
         if (termsCheckBox.isSelected()) {
             // Passed First Check (Email Valid Phase)
             RegistrationHandler registrationHandler = new RegistrationHandler();
-
-            /* Packet Sends for Checks */
-            registrationHandler.SendEmailPacket(emailText.getText());
-            registrationHandler.SendUsernamePacket(usernameText.getText());
-            String hashedPassword = HashPassword(passwordText.getText());
-            /* */
-
-            Timer t = new java.util.Timer();
-
-            t.schedule(
-                    new java.util.TimerTask() {
-                        public void run() {
-                            // Check Email
-                            if (registrationHandler.emailResult) {
-                                // Username Passed
-                                if (registrationHandler.userResult) {
-                                    System.out.println("It worked");
-                                    // Check Passwords Match
-                                    if (hashedPassword.equals(HashPassword(verifyPasswordText.getText()))) {
-                                        // Done, create user now
-                                        registrationHandler.SendCreateAccountPacket(emailText.getText(), usernameText.getText(), hashedPassword);
-                                        System.out.println("Created Account for username " + usernameText.getText());
-                                    } else {
-                                        System.out.println("Passwords don't match!");
-                                    }
-                                } else {
-                                    System.out.println("Username is not valid!");
-                                }
+            Task<Void> sleeper = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    try {
+                        /* Packet Sends for Checks */
+                        registrationHandler.SendEmailPacket(emailText.getText());
+                        registrationHandler.SendUsernamePacket(usernameText.getText());
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                    }
+                    return null;
+                }
+            };
+            sleeper.setOnSucceeded(event -> {
+                // Check Email
+                if (registrationHandler.emailResult) {
+                    // Username Passed
+                    if (registrationHandler.userResult) {
+                        System.out.println("It worked");
+                        String hashedPassword = HashPassword(passwordText.getText());
+                        // Check Passwords Match
+                        if(!passwordText.getText().isEmpty()){
+                            if (hashedPassword.equals(HashPassword(verifyPasswordText.getText()))) {
+                                // Done, create user now
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Congratulations your user " + usernameText.getText() + "", ButtonType.OK);
+                                registrationHandler.SendCreateAccountPacket(emailText.getText(), usernameText.getText(), hashedPassword);
+                                alert.showAndWait();
+                                System.out.println("Created Account for username " + usernameText.getText());
+                                 Main.getPrimaryStage().setScene(new Scene(ActivationParent.getInstance().getParent(), 590, 360));
                             } else {
-                                System.out.println("Email is not valid!");
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "Passwords do not match!", ButtonType.OK);
+                                alert.showAndWait();
+                                System.out.println("Passwords don't match!");
                             }
-                            t.cancel();
                         }
-                    },
-                    100
-            );
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Password cannot be empty!", ButtonType.OK);
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Username is either invalid or in use!", ButtonType.OK);
+                        alert.showAndWait();
+                        System.out.println("Username is not valid!");
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Email is either invalid or in use!", ButtonType.OK);
+                    alert.showAndWait();
+                    System.out.println("Email is not valid!");
+                }
+            });
+            new Thread(sleeper).start();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please Tick the User Agreement Checkbox!", ButtonType.OK);
             alert.showAndWait();
         }
+
     }
 
     @FXML
