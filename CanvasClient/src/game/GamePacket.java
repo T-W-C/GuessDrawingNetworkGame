@@ -10,7 +10,7 @@ public class GamePacket implements Serializable {
 
     private GameEvents eventTypes;
 
-    
+
 
 
 }

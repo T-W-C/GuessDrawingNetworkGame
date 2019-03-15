@@ -53,6 +53,7 @@ public class GameScreen extends JPanel {
             //if it is equal to 4 then call the startGameLogic method.
             if(!isGameStarted) {
                 //
+                System.out.println("woop");
                 this.canvasComponent.start(this.connectionHandler);
                 System.out.println("Started server...");
                 startGameLogic();
@@ -66,6 +67,7 @@ public class GameScreen extends JPanel {
     public void joinExistingGame(String serverAddress, int port) {
         this.connectionHandler = new ConnectionHandler(this.p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
+        canvasComponent.start(this.connectionHandler);
         connectionHandler.startClient();
         // start thte chat client when join the game also;
 
@@ -74,7 +76,7 @@ public class GameScreen extends JPanel {
 
     public void startGameLogic() {
         // decide on random word
-
+        System.out.println("game logic started");
         // ...
     }
 
@@ -83,7 +85,7 @@ public class GameScreen extends JPanel {
     public void handlePacket(Object packet) {
         if(packet instanceof String) {
             //show message in chat
-
+            System.out.println(packet);
             // handle all of the game events and the messages in the chat client
         } else if(packet instanceof PaintPacket) {
             PaintPacket p = (PaintPacket) packet;

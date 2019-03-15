@@ -34,15 +34,20 @@ public class ConnectionHandler {
 
     }
 
+    public boolean getIsDrawer() {
+        return isDrawer;
+    }
+
 
 
     public void initiateServer(Runnable onClientConnection) {
-        this.isDrawer = false;
+        this.isDrawer = true;
+        this.isServer = true;
         System.out.println("Started initiation of server...");
         //launch new thread for initiation of server
         new Thread(() -> {
            try {
-               server = new ServerSocket(port, 4);
+               server = new ServerSocket(port, 2);
                System.out.println("Server " + server.toString() + " has initiated.");
                while(true) {
                    try {
@@ -55,6 +60,10 @@ public class ConnectionHandler {
                            onClientConnection.run();
                            this.listen(socket);
                        }).start();
+
+//                       new Thread(() -> {
+//                           socket.getInputS
+//                       })
                        //start the above thread.
                    } catch(IOException e) {
                         // close the application
@@ -67,11 +76,13 @@ public class ConnectionHandler {
     }
 
     public void startClient() {
-        this.isDrawer = true;
+        this.isDrawer = false;
+        this.isServer = false;
         try {
             this.clientConnection = new Socket(serverAddress, port);
             System.out.println("Connected to: " + clientConnection.getInetAddress().getHostName());
             addOutputStream(this.clientConnection);
+            System.out.println(outputStreams.size());
             new Thread(() -> this.listen(this.clientConnection)).start();
         } catch(IOException e) {
             e.printStackTrace();
@@ -93,13 +104,15 @@ public class ConnectionHandler {
         System.out.println("Output streams have been added");
     }
 
+    private boolean isServer;
+
     public void listen(Socket socket) {
         Thread listener = new Thread(() -> {
             Object packet = "";
             ObjectInputStream is = null;
 
             try {
-                is = new ObjectInputStream(clientConnection.getInputStream());
+                is = new ObjectInputStream(socket.getInputStream());
                 inputStreams.add(is);
             } catch(IOException e) {
                 e.printStackTrace();
@@ -108,6 +121,9 @@ public class ConnectionHandler {
                 try {
                     packet = is.readObject();
                     packetHandler.handlePacket(packet);
+                    if(isServer) {
+                        sendPacket(packet);
+                    }
                     /*
                     TODO: still to send to all the other connecting clients
                      */
@@ -135,6 +151,7 @@ public class ConnectionHandler {
                     os.flush();
                 }
             } else {
+                System.out.println(os.toString() + " is the output stream");
                 os.writeObject(packet);
                 os.flush();
             }

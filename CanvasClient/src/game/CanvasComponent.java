@@ -150,9 +150,11 @@ public class CanvasComponent extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                onDrag(e.getPoint());
-                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, e.getPoint()));
 
+                if(connectionHandler.getIsDrawer()) {
+                    onDrag(e.getPoint());
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, e.getPoint()));
+                }
             }
 
             @Override
@@ -171,17 +173,21 @@ public class CanvasComponent extends JPanel {
             @Override
             public void mousePressed(MouseEvent e)
             {
-                onPress(e.getPoint());
-                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
+                if(connectionHandler.getIsDrawer()) {
+                    onPress(e.getPoint());
+
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
+                }
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                onRelease(e.getPoint());
-                connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.RELEASED, e.getPoint()));
-
+                if(connectionHandler.getIsDrawer()) {
+                    onRelease(e.getPoint());
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.RELEASED, e.getPoint()));
+                }
             }
 
             @Override

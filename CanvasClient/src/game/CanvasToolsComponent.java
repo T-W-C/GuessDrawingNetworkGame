@@ -83,7 +83,10 @@ public class CanvasToolsComponent extends JPanel {
             colorPaletteButtons[i].addActionListener((e) -> {
                 System.out.println("The Color: " + brushColors[j].toString() + " has been selected");
                 // also to dispatch an event here
-                cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_COLOR, j));
+
+                if(cc.getConnectionHandler().getIsDrawer()) {
+                    cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_COLOR, j));
+                }
                 selectedColor = brushColors[j];
             });
             colorPalette.add(colorPaletteButtons[i]);
@@ -124,19 +127,26 @@ public class CanvasToolsComponent extends JPanel {
                      * TODO: still to send the server information for the brush size
                      */
                     case "S":
-                        selectedBrushSize = 10;
-                        cc.updateStroke(10);
-                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 10));
+                        selectedBrushSize = 5;
+                        cc.updateStroke(5);
+                       if(cc.getConnectionHandler().getIsDrawer()) {
+                           cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 5));
+                       }
                         break;
                     case "M":
                         selectedBrushSize = 20;
                         cc.updateStroke(20);
-                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 20));
+                        if(cc.getConnectionHandler().getIsDrawer()) {
+                            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 20));
+                        }
                         break;
                     case "L":
                         selectedBrushSize = 40;
                         cc.updateStroke(40);
-                        cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 40));
+
+                        if(cc.getConnectionHandler().getIsDrawer()) {
+                            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 40));
+                        }
                         break;
                 }
 
