@@ -19,6 +19,7 @@ public class CanvasComponent extends JPanel {
      * rendered by the users drawing
      */
     private CanvasToolsComponent tools;
+    private ChatComponent chatComponent;
     /**
      * brush tools not implemented atm, since they were included with the original
      * tool panel in one big tool panel.
@@ -26,7 +27,6 @@ public class CanvasComponent extends JPanel {
     private BrushTools brushTools;
     private Stroke brushSize = new BasicStroke(10, BasicStroke.JOIN_ROUND, BasicStroke.JOIN_ROUND, 30f);
     private BrushColor brushColor;
-
 
 
     private ConnectionHandler connectionHandler;
@@ -40,6 +40,7 @@ public class CanvasComponent extends JPanel {
 //        drawingBoard = new Client.CanvasDrawingBoard();
 
         this.drawingBoard = initialiseDrawingBoard();
+//        this.chatComponent = new ChatComponent(new Player("Bob", 90, true));
 
 
         tools = new CanvasToolsComponent(this);
@@ -54,6 +55,7 @@ public class CanvasComponent extends JPanel {
 //        add(brushTools, BorderLayout.WEST);
         this.add(test, BorderLayout.NORTH);
         this.add(tools, BorderLayout.SOUTH);
+//        this.add(chatComponent, BorderLayout.EAST);
 
         this.canvasImage = new BufferedImage(CanvasComponent.screenWidth, CanvasComponent.screenHeight, BufferedImage.TYPE_INT_ARGB);
 

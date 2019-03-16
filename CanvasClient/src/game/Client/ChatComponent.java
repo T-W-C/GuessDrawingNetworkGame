@@ -30,12 +30,20 @@ public class ChatComponent extends JPanel {
                     userMessage.setText("");
                 }
         );
+        chatArea = new JTextArea();
+        chatArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(chatArea);
+        scrollPane.setPreferredSize(new Dimension((int) scrollPane.getPreferredSize().getWidth(), 150));
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.add(userMessage, BorderLayout.SOUTH);
+
+
     }
 
     private void sendMessage(String message) {
         message = player.getPlayerName() + ": " + message;
         this.connectionHandler.sendPacket(message);
-        showMessage(message);
+//        showMessage(message);
     }
 
     public void showMessage(String message) {

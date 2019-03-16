@@ -13,6 +13,7 @@ public class GameScreen extends JPanel {
 
 
     private CanvasComponent canvasComponent;
+    private ChatComponent chatComponent;
 
     public GameScreen(Player p) {
         super();
@@ -26,8 +27,9 @@ public class GameScreen extends JPanel {
 
 
         canvasComponent = new CanvasComponent(this.connectionHandler);
+        chatComponent = new ChatComponent(p);
         this.add(canvasComponent, BorderLayout.CENTER);
-
+        this.add(chatComponent, BorderLayout.EAST);
 
 
     }
@@ -72,6 +74,7 @@ public class GameScreen extends JPanel {
         this.connectionHandler = new ConnectionHandler(this.p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
         canvasComponent.start(this.connectionHandler);
+        chatComponent.start(this.connectionHandler);
         connectionHandler.startClient();
         // start thte chat client when join the game also;
 
@@ -90,6 +93,7 @@ public class GameScreen extends JPanel {
         if(packet instanceof String) {
             //show message in chat
             System.out.println(packet);
+            chatComponent.showMessage((String)packet);
             // handle all of the game events and the messages in the chat client
         } else if(packet instanceof PaintPacket) {
             PaintPacket p = (PaintPacket) packet;

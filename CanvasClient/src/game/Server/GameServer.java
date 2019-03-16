@@ -136,6 +136,7 @@ public class GameServer extends Thread {
         if(packet instanceof String) {
             //show message in chat
             System.out.println(packet);
+            sendPacket(packet);
             // handle all of the game events and the messages in the chat client
         } else if(packet.getClass().equals(PaintPacket.class)) {
             sendPacket(packet);
@@ -180,6 +181,7 @@ public class GameServer extends Thread {
 //            if(Client.PaintPacket.class.isInstance(packet)) {
                 //handle if the player is a drawer
                 for(ObjectOutputStream os: outputStreams) {
+                    System.out.println("writing: " + packet + ", to client: " + os.toString());
                     os.writeObject(packet);
                     os.flush();
                 }
