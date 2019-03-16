@@ -1,6 +1,7 @@
+package Client;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -36,13 +37,16 @@ public class CanvasComponent extends JPanel {
         this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
 
-//        drawingBoard = new CanvasDrawingBoard();
+//        drawingBoard = new Client.CanvasDrawingBoard();
 
         this.drawingBoard = initialiseDrawingBoard();
 
 
         tools = new CanvasToolsComponent(this);
         tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+
+
 
         JLabel test = new JLabel("this is just a title test");
 

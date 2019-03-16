@@ -1,7 +1,11 @@
+package Client;
+
 import java.awt.*;
 import java.io.Serializable;
 
 public class PaintPacket implements Serializable {
+
+    private static final long serialVersionUID = 4L;
 
     public enum PaintEvents {
         RELEASED,

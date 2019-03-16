@@ -1,3 +1,5 @@
+package Client;
+
 import java.io.Serializable;
 
 public class GamePacket implements Serializable {

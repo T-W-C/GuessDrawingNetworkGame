@@ -1,3 +1,5 @@
+package Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,17 +50,19 @@ public class GameScreen extends JPanel {
         System.out.println("Attempting to initiate Server...");
         this.connectionHandler = new ConnectionHandler(p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
-        this.connectionHandler.initiateServer(() -> {
-            // could do another check to see if the amount of players is equal to 4
-            //if it is equal to 4 then call the startGameLogic method.
-            if(!isGameStarted) {
-                //
-                System.out.println("woop");
-                this.canvasComponent.start(this.connectionHandler);
-                System.out.println("Started server...");
-                startGameLogic();
-            }
-        });
+
+
+
+//        this.connectionHandler.initiateServer(() -> {
+//            // could do another check to see if the amount of players is equal to 4
+//            //if it is equal to 4 then call the startGameLogic method.
+//            if(!isGameStarted) {
+//        //        this.canvasComponent.start(this.connectionHandler);        //
+//                System.out.println("woop");
+//                System.out.println("Started server...");
+//                startGameLogic();
+//            }
+//        });
 
 
         this.canvasComponent.start(this.connectionHandler);
