@@ -6,9 +6,11 @@ import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Main {
+public class StartServer {
 	public static void main(String[] args) {
-
+		Server server = new Server(1337);
+		server.start();
+		/*
 		try (Connection activeConnection = DatabaseHandler.getInstance()
 				.getConnection()) {
 			if (!activeConnection.isClosed()){
@@ -19,5 +21,6 @@ public class Main {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 }

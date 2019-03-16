@@ -1,4 +1,4 @@
-package gui.registration;
+package gui.login;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +15,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStageMain = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setTitle("Canvas Application");
-        primaryStage.setScene(new Scene(root, 580, 655));
+        primaryStage.setScene(new Scene(root, 730, 435));
         primaryStage.show();
     }
 

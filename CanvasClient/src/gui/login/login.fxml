@@ -24,7 +24,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <PasswordField layoutX="442.0" layoutY="180.0" prefHeight="44.0" prefWidth="237.0" promptText="Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+            <PasswordField fx:id="passwordText" layoutX="442.0" layoutY="180.0" prefHeight="44.0" prefWidth="237.0" promptText="Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
                <font>
                   <Font size="18.0" />
                </font>
@@ -51,12 +51,12 @@
                </children>
             </Pane>
             <Line endX="150.0" layoutX="346.0" layoutY="235.0" rotate="90.0" startX="-100.0" stroke="#465058" strokeWidth="2.0" />
-            <TextField layoutX="443.0" layoutY="115.0" prefHeight="44.0" prefWidth="237.0" promptText="Username" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+            <TextField fx:id="usernameText" layoutX="443.0" layoutY="115.0" prefHeight="44.0" prefWidth="237.0" promptText="Username" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button layoutX="439.0" layoutY="243.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #6ED9A0;" text="LOGIN" textFill="#fafafa">
+            <Button onMouseClicked="#loginAction" layoutX="439.0" layoutY="243.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #6ED9A0;" text="LOGIN" textFill="#fafafa">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>

@@ -1,11 +1,13 @@
 package networking;
 
+import gui.login.LoginHandler;
 import gui.registration.RegistrationHandler;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.AddConnectionPacket;
 import networking.packets.incoming.RemoveConnectionPacket;
 import networking.packets.outgoing.SendEmailCheckResult;
-import networking.packets.outgoing.SendPasswordHashRequest;
+import networking.packets.outgoing.SendLoginUsernameResult;
+import networking.packets.outgoing.SendPasswordHashConfirmation;
 import networking.packets.outgoing.SendUsernameCheckResult;
 
 import static networking.helper.ClassMatcher.match;
@@ -20,7 +22,7 @@ public class EventListener {
 						.with(RemoveConnectionPacket.class, this::handleRemoveConnection)
 						.with(SendUsernameCheckResult.class, this::handleSendUsernameCheckResult)
 						.with(SendEmailCheckResult.class, this::handleSendEmailCheckResult)
-						.with(SendPasswordHashRequest.class, this::handlePasswordHashRequest)
+						.with(SendLoginUsernameResult.class, this::handleSendLoginUsernameResult)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -53,8 +55,11 @@ public class EventListener {
 		RegistrationHandler.emailResult = p.result;
 	}
 
-	private void handlePasswordHashRequest(SendPasswordHashRequest p) {
-		// Push Result to RegistrationHandler
-		System.out.println("Got Email Result "+ p.password);
+	private void handleSendLoginUsernameResult(SendLoginUsernameResult p){
+		LoginHandler.userExisting = p.result;
+	}
+
+	private void handleSendPasswordHashConfirmation(SendPasswordHashConfirmation p){
+		LoginHandler.passwordMatches = p.passwordResult;
 	}
 }

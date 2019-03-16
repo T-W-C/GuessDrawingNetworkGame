@@ -87,6 +87,7 @@ public class PlayerDAO implements IDAO<Player> {
         return currentPlayer;
     }
 
+
     @Override
     public void saveOrUpdate() {
         try (Connection activeConnection = DatabaseHandler.getInstance()

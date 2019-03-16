@@ -1,20 +1,13 @@
 package gui.registration;
 
 import gui.activation.ActivationParent;
+import gui.login.Main;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
-
-import java.awt.*;
-import java.io.IOException;
-import java.util.Timer;
 
 public class Controller {
     @FXML
