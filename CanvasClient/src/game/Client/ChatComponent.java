@@ -1,4 +1,6 @@
-package Client;
+package game.Client;
+
+import networking.Client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +35,9 @@ public class ChatComponent extends JPanel {
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
-        scrollPane.setPreferredSize(new Dimension((int) scrollPane.getPreferredSize().getWidth(), 150));
+        scrollPane.setMinimumSize(new Dimension( 120, 150));
+        scrollPane.setPreferredSize(new Dimension( 120, 150));
+        scrollPane.setMaximumSize(new Dimension( 120, 150));
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(userMessage, BorderLayout.SOUTH);
 
