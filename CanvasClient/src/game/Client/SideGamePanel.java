@@ -1,3 +1,5 @@
+package Client;
+
 /**
  * this is to contain the players information who is in a game
  * it is to be passed the socket of a game...

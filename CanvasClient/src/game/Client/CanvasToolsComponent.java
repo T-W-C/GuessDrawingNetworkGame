@@ -1,3 +1,5 @@
+package Client;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -33,10 +35,11 @@ public class CanvasToolsComponent extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
 
-//        CircleButton clearCanvas = new CircleButton(Color.WHITE, "Clear", 20);
+//        Client.CircleButton clearCanvas = new Client.CircleButton(Color.WHITE, "Clear", 20);
         SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
+            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CLEAR, 0));
             clearCanvas();
             revalidate();
             repaint();
@@ -64,13 +67,13 @@ public class CanvasToolsComponent extends JPanel {
         colorPalette.setPreferredSize(new Dimension(width*4, height));
         colorPalette.setMaximumSize(new Dimension(width*4, height));
         colorPalette.setLayout(new GridLayout(2, 7));
-//        int colorNumber = BrushColor.values().length;
+//        int colorNumber = Client.BrushColor.values().length;
         int colorNumber = brushColors.length;
-//        CircleButton[] colorPaletteButtons = new CircleButton[colorNumber];
+//        Client.CircleButton[] colorPaletteButtons = new Client.CircleButton[colorNumber];
         SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
         for(int i = 0; i<colorNumber; i++) {
             final int j = i;
-//            colorPaletteButtons[i] = new CircleButton(brushColors[i], 20);
+//            colorPaletteButtons[i] = new Client.CircleButton(brushColors[i], 20);
             colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
 
 //            System.out.println(colorPaletteButtons[i].getColor());
@@ -82,8 +85,11 @@ public class CanvasToolsComponent extends JPanel {
             colorPaletteButtons[i].addActionListener((e) -> {
                 System.out.println("The Color: " + brushColors[j].toString() + " has been selected");
                 // also to dispatch an event here
-                selectedColor = brushColors[j];
 
+                if(cc.getConnectionHandler().getIsDrawer()) {
+                    cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_COLOR, j));
+                }
+                selectedColor = brushColors[j];
             });
             colorPalette.add(colorPaletteButtons[i]);
         }
@@ -91,10 +97,11 @@ public class CanvasToolsComponent extends JPanel {
 
 
 
-//        CircleButton[] brushSizeButtons = new CircleButton[brushSizes.length];
+
+//        Client.CircleButton[] brushSizeButtons = new Client.CircleButton[brushSizes.length];
 //        for(int i = 0; i<brushSizes.length; i++) {
 //            final int j = i;
-//            brushSizeButtons[i] = new CircleButton(brushSizes[i]);
+//            brushSizeButtons[i] = new Client.CircleButton(brushSizes[i]);
 ////            System.out.println(colorPaletteButtons[i].getColor());
 //            brushSize = brushSizes[i];
 //            /**
@@ -122,16 +129,26 @@ public class CanvasToolsComponent extends JPanel {
                      * TODO: still to send the server information for the brush size
                      */
                     case "S":
-                        selectedBrushSize = 10;
-                        CanvasComponent.updateStroke(10);
+                        selectedBrushSize = 5;
+                        cc.updateStroke(5);
+                       if(cc.getConnectionHandler().getIsDrawer()) {
+                           cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 5));
+                       }
                         break;
                     case "M":
                         selectedBrushSize = 20;
-                        CanvasComponent.updateStroke(20);
+                        cc.updateStroke(20);
+                        if(cc.getConnectionHandler().getIsDrawer()) {
+                            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 20));
+                        }
                         break;
                     case "L":
                         selectedBrushSize = 40;
-                        CanvasComponent.updateStroke(40);
+                        cc.updateStroke(40);
+
+                        if(cc.getConnectionHandler().getIsDrawer()) {
+                            cc.getConnectionHandler().sendPacket(new PaintPacket(PaintPacket.PaintEvents.CHANGE_BRUSH_SIZE, 40));
+                        }
                         break;
                 }
 
@@ -143,6 +160,11 @@ public class CanvasToolsComponent extends JPanel {
         }
 
         return colorPalette;
+    }
+
+
+    public void setSelectedColor(int index) {
+        selectedColor = brushColors[index];
     }
 
     public Color getSelectedColor() {

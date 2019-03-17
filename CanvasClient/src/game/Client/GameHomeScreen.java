@@ -1,4 +1,4 @@
-import javafx.scene.shape.Circle;
+package Client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class GameHomeScreen extends JFrame {
      */
     public static void main(String[] args) {
 //        Runnable gameRunnable = () -> {
-//            GameScreen gameScreen = GameScreen.getRef();
+//            Client.GameScreen gameScreen = Client.GameScreen.getRef();
 //            gameScreen.setVisible(true);
 //        };
         SwingUtilities.invokeLater(() -> {
@@ -64,7 +64,7 @@ public class GameHomeScreen extends JFrame {
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
-//        CircleButton cBtn = new CircleButton(Color.YELLOW);
+//        Client.CircleButton cBtn = new Client.CircleButton(Color.YELLOW);
 //        panel.add(cBtn);
 //
 //        cBtn.addActionListener((e) -> {
@@ -77,7 +77,7 @@ public class GameHomeScreen extends JFrame {
     }
 
     /**
-     * creates and returns a new instance of the GameHomeComponents
+     * creates and returns a new instance of the Client.GameHomeComponents
      * @return
      */
     public GameHomeComponents createMainMenu() {
@@ -87,7 +87,25 @@ public class GameHomeScreen extends JFrame {
     public void createNewGame(Player p) {
         GameScreen gameInstance = new GameScreen(p);
         this.drawNewScreenComponents(gameInstance);
-        gameInstance.initialiseGame(SERVER_ADDRESS, randomInactivePort());
+        gameInstance.initialiseGame(SERVER_ADDRESS, 8888);
+    }
+
+    public void joinExistingGame(Player p) {
+        try {
+//            ConnectionHandler connectionHandler = new ConnectionHandler(p,SERVER_ADDRESS,8888);
+//            connectionHandler.startClient();
+//            connectionHandler.sendPacket("JOINEXISTINGGAME");
+        } catch(Exception e) {
+
+        }
+
+
+        GameScreen gameInstance = new GameScreen(p);
+        this.drawNewScreenComponents(gameInstance);
+        int port = getRandomActivePort();
+
+        gameInstance.joinExistingGame(SERVER_ADDRESS, 8888);
+
     }
 
     public int randomInactivePort() {
@@ -98,6 +116,10 @@ public class GameHomeScreen extends JFrame {
         } else {
             return randomInactivePort();
         }
+    }
+
+    public int getRandomActivePort() {
+        return 8987;
     }
 
 

@@ -1,3 +1,5 @@
+package Client;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -45,7 +47,7 @@ public class BrushTools extends JPanel {
         brushSizePanel.setPreferredSize(new Dimension(width, height*4));
         brushSizePanel.setMaximumSize(new Dimension(width, height*4));
         brushSizePanel.setLayout(new GridLayout(4, 1));
-//        int colorNumber = BrushColor.values().length;
+//        int colorNumber = Client.BrushColor.values().length;
         int brushSizeLength = brushSizes.length;
         CircleButton[] brushSizeButtons = new CircleButton[brushSizeLength];
         for(int i = 0; i<brushSizeLength; i++) {

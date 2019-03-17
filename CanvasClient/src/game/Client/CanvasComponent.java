@@ -1,6 +1,7 @@
+package Client;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,6 +19,7 @@ public class CanvasComponent extends JPanel {
      * rendered by the users drawing
      */
     private CanvasToolsComponent tools;
+    private ChatComponent chatComponent;
     /**
      * brush tools not implemented atm, since they were included with the original
      * tool panel in one big tool panel.
@@ -27,17 +29,25 @@ public class CanvasComponent extends JPanel {
     private BrushColor brushColor;
 
 
-    public CanvasComponent() {
+    private ConnectionHandler connectionHandler;
+
+
+    public CanvasComponent(ConnectionHandler connectionHandler) {
         super();
+        this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
 
-//        drawingBoard = new CanvasDrawingBoard();
+//        drawingBoard = new Client.CanvasDrawingBoard();
 
         this.drawingBoard = initialiseDrawingBoard();
+//        this.chatComponent = new ChatComponent(new Player("Bob", 90, true));
 
 
         tools = new CanvasToolsComponent(this);
         tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+
+
 
         JLabel test = new JLabel("this is just a title test");
 
@@ -45,6 +55,7 @@ public class CanvasComponent extends JPanel {
 //        add(brushTools, BorderLayout.WEST);
         this.add(test, BorderLayout.NORTH);
         this.add(tools, BorderLayout.SOUTH);
+//        this.add(chatComponent, BorderLayout.EAST);
 
         this.canvasImage = new BufferedImage(CanvasComponent.screenWidth, CanvasComponent.screenHeight, BufferedImage.TYPE_INT_ARGB);
 
@@ -52,16 +63,25 @@ public class CanvasComponent extends JPanel {
         this.setEnabled(false);
     }
 
-    public void start(String serverAddress, int port) {
+    public void start(ConnectionHandler connectionHandler) {
         //create new Socket handler then pass into the start method
-        System.out.println("1 here");
+
+        this.connectionHandler = connectionHandler;
+
         this.setEnabled(true);
         this.mouseListenerSetup();
         this.clear();
     }
 
 
+    public CanvasToolsComponent getToolsPanel() {
+        return tools;
+    }
 
+
+    public ConnectionHandler getConnectionHandler() {
+        return connectionHandler;
+    }
 
 
     private final static int screenWidth = 600;
@@ -90,10 +110,9 @@ public class CanvasComponent extends JPanel {
             @Override
             protected void paintComponent(Graphics g)
             {
-                System.out.println("this is actually getting called");
+                System.out.println("testing");
                 super.paintComponent(g);
                 if (canvasImage == null) return;
-                System.out.println("width: " + getWidth() + " height: " + getHeight());
                 g.drawImage(canvasImage, 0, 0, getWidth(), getHeight(), null);
             }
         };
@@ -113,9 +132,10 @@ public class CanvasComponent extends JPanel {
         };
     }
 
-    public static void updateStroke(int brushSize) {
+    public void updateStroke(int brushSize) {
         stroke = new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f);
         System.out.println("Paint brush updated to size: " + brushSize);
+
     }
 
     public void start() {
@@ -126,7 +146,6 @@ public class CanvasComponent extends JPanel {
     }
 
     private void mouseListenerSetup() {
-        System.out.println(drawingBoard.getWidth() + "sfsojfois  " + drawingBoard.getHeight());
         this.canvasImage = new BufferedImage(drawingBoard.getWidth(), drawingBoard.getHeight(), BufferedImage.TYPE_INT_ARGB);
         drawingBoard.addMouseMotionListener(new MouseMotionListener()
         {
@@ -137,8 +156,11 @@ public class CanvasComponent extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                onDrag(e.getPoint());
 
+                if(connectionHandler.getIsDrawer()) {
+                    onDrag(e.getPoint());
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, e.getPoint()));
+                }
             }
 
             @Override
@@ -157,14 +179,21 @@ public class CanvasComponent extends JPanel {
             @Override
             public void mousePressed(MouseEvent e)
             {
-                onPress(e.getPoint());
+                if(connectionHandler.getIsDrawer()) {
+                    onPress(e.getPoint());
+
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
+                }
+
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                onRelease(e.getPoint());
-
+                if(connectionHandler.getIsDrawer()) {
+                    onRelease(e.getPoint());
+                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.RELEASED, e.getPoint()));
+                }
             }
 
             @Override
