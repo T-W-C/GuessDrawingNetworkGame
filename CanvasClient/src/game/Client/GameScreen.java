@@ -81,13 +81,6 @@ public class GameScreen extends JPanel {
 
     }
 
-    public void startGameLogic() {
-        // decide on random word
-        System.out.println("game logic started");
-        // ...
-    }
-
-
 
     public void handlePacket(Object packet) {
         if(packet instanceof String) {
