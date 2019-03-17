@@ -1,4 +1,4 @@
-package Client;
+package game.Client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,40 +46,25 @@ public class GameScreen extends JPanel {
         return false;
     }
 
-    public void initialiseGame(String serverAddress, int port) {
-        //create socket handler with the server address and port
-
-        System.out.println("Attempting to initiate Server...");
-        this.connectionHandler = new ConnectionHandler(p, serverAddress, port);
-        this.connectionHandler.setPacketHandler(this::handlePacket);
-
-
-
-//        this.connectionHandler.initiateServer(() -> {
-//            // could do another check to see if the amount of players is equal to 4
-//            //if it is equal to 4 then call the startGameLogic method.
-//            if(!isGameStarted) {
-//        //        this.canvasComponent.start(this.connectionHandler);        //
-//                System.out.println("woop");
-//                System.out.println("Started server...");
-//                startGameLogic();
-//            }
-//        });
-
-
-        this.canvasComponent.start(this.connectionHandler);
-    }
-
-    public void joinExistingGame(String serverAddress, int port) {
+    public void joinGame(String serverAddress, int port) {
         this.connectionHandler = new ConnectionHandler(this.p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
         canvasComponent.start(this.connectionHandler);
         chatComponent.start(this.connectionHandler);
         connectionHandler.startClient();
-        // start thte chat client when join the game also;
+        // start the chat client when join the game also;
 
+        //this.connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, new Point(100,100))); <-- example of sending a packet to the game server
 
+        // write code for when player joins send code and stuff to draw
     }
+
+    public void startGameLogic() {
+        // decide on random word
+        System.out.println("game logic started");
+        // ...
+    }
+
 
 
     public void handlePacket(Object packet) {

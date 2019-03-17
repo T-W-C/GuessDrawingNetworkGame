@@ -1,6 +1,8 @@
 package game.Client;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private String playerName;
     private int playerScore;
     private boolean isDrawer;

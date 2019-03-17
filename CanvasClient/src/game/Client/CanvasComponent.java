@@ -1,4 +1,6 @@
-package Client;
+package game.Client;
+
+import networking.Client;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -270,8 +272,5 @@ public class CanvasComponent extends JPanel {
         g.dispose();
         this.repaint();
     }
-
-
-
 
 }

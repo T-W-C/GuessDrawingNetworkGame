@@ -1,7 +1,5 @@
 package game.Client;
 
-import game.Client.Player;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -34,6 +32,12 @@ public class SideBar extends JPanel {
         this.setSize(width, height);
         this.setLayout(new GridLayout(1,1));
         this.add(names());
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+        //this.revalidate();
+        this.repaint(); // <-- do one of these
     }
 
     private JPanel names() {

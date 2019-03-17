@@ -1,4 +1,6 @@
-package Client;
+package game.Client;
+
+import networking.Client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,13 +86,7 @@ public class GameHomeScreen extends JFrame {
         return new GameHomeComponents();
     }
 
-    public void createNewGame(Player p) {
-        GameScreen gameInstance = new GameScreen(p);
-        this.drawNewScreenComponents(gameInstance);
-        gameInstance.initialiseGame(SERVER_ADDRESS, 8888);
-    }
-
-    public void joinExistingGame(Player p) {
+    public void joinGame(Player p) {
         try {
 //            ConnectionHandler connectionHandler = new ConnectionHandler(p,SERVER_ADDRESS,8888);
 //            connectionHandler.startClient();
@@ -104,7 +100,7 @@ public class GameHomeScreen extends JFrame {
         this.drawNewScreenComponents(gameInstance);
         int port = getRandomActivePort();
 
-        gameInstance.joinExistingGame(SERVER_ADDRESS, 8888);
+        gameInstance.joinGame(SERVER_ADDRESS, 8888);
 
     }
 
@@ -121,9 +117,4 @@ public class GameHomeScreen extends JFrame {
     public int getRandomActivePort() {
         return 8987;
     }
-
-
-
-
-
 }
