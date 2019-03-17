@@ -41,6 +41,7 @@ public class GameServer extends Thread {
     private String serverAddress;
     private int port;
 
+    ObjectInputStream inputStream;
 
     public GameServer setServerIP(String serverAddress) {
         this.serverAddress = serverAddress;
@@ -65,6 +66,17 @@ public class GameServer extends Thread {
                 try {
                     System.out.println("Listening for socket connection...");
                     Socket socket = server.accept();
+//                    Object o = null;
+//                    try {
+////                        inputStream = new ObjectInputStream(socket.getInputStream());
+////                        o = inputStream.readObject();
+//                    } catch(Exception e) {
+//
+//                    }
+//                    if(o instanceof String && o.equals("JOINEXISTINGGAME") && connectedPlayers.size() == 0) {
+////                        sendPacket("invalid_connection");
+//                        socket.close();
+//                    }
                     System.out.println("Socket connection: " + socket.getInetAddress().getHostName() + " has connected");
                     this.addClientSocket(socket);
 
@@ -135,6 +147,7 @@ public class GameServer extends Thread {
 //        sendPacket(packet);
         if(packet instanceof String) {
             //show message in chat
+
             System.out.println(packet);
             sendPacket(packet);
             // handle all of the game events and the messages in the chat client
@@ -151,14 +164,7 @@ public class GameServer extends Thread {
                     // update the side panel
                     // draw the canvas
 
-            } else if(connectedPlayers.size() == 3) {
-                player.setIsDrawer(false);
-                player.setIsHost(false);
-                connectedPlayers.add(player);
-                // START THE GAME LOOP
-            }
-
-            else if(connectedPlayers.size() < 4) {
+            } else if(connectedPlayers.size() < 4) {
                 player.setIsDrawer(false);
                 player.setIsHost(false);
                 connectedPlayers.add(player);
