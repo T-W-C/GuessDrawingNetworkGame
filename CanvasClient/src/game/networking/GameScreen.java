@@ -59,6 +59,7 @@ public class GameScreen extends JPanel {
         System.out.println("Attempting to Join Game...");
         this.connectionHandler = new ConnectionHandler(this.player, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
+
         canvasComponent.start(this.connectionHandler);
         chatComponent.start(this.connectionHandler);
         connectionHandler.startClient();

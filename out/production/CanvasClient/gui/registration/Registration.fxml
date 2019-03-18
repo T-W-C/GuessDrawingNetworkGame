@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.registration.Controller">
+   <children>
+      <AnchorPane prefHeight="659.0" prefWidth="593.0" style="-fx-background-color: #2A363F;">
+         <children>
+            <Button id="SubmitButton" onMouseClicked="#createAndSubmitClient" layoutX="173.0" layoutY="500.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #1e90ff;" text="SIGN UP" textFill="#fafafa">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Pane layoutX="173.0" layoutY="5.0" prefHeight="103.0" prefWidth="237.0">
+               <children>
+                  <Label layoutX="54.0" layoutY="33.0" prefHeight="44.0" prefWidth="176.0" text="Canvas.io">
+                     <textFill>
+                        <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="0.5625">
+                           <stops>
+                              <Stop color="#34c251" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Circle fill="#ff401f" layoutX="38.0" layoutY="68.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="DODGERBLUE" layoutX="14.0" layoutY="40.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#e0ff1f" layoutX="14.0" layoutY="68.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#1fff81" layoutX="38.0" layoutY="40.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+            </Pane>
+            <Line endX="300.0" layoutX="194.0" layoutY="100.0" startX="-100.0" stroke="#465058" strokeWidth="2.0" />
+            <TextField fx:id="usernameText" layoutX="173.0" layoutY="207.0" prefHeight="44.0" prefWidth="237.0" promptText="Username" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="emailText" layoutX="173.0" layoutY="125.0" prefHeight="44.0" prefWidth="237.0" promptText="Email Address" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button layoutX="173.0" layoutY="575.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="237.0" style="-fx-background-color: #ff401f;" text="RESET" textFill="#fafafa">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <CheckBox fx:id="termsCheckBox" layoutX="173.0" layoutY="421.0" mnemonicParsing="false" text="I Agree with the Term &amp; Conditions" textFill="#fbfcfc" />
+            <Label layoutX="137.0" layoutY="182.0" prefHeight="17.0" prefWidth="357.0" text="*Remember Username and Password should be in 1 word!" textFill="#eb0c0c" wrapText="true" />
+            <PasswordField fx:id="passwordText" layoutX="173.0" layoutY="275.0" prefHeight="44.0" prefWidth="237.0" promptText="Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="verifyPasswordText" layoutX="173.0" layoutY="350.0" prefHeight="44.0" prefWidth="237.0" promptText="Verify Password" style="-fx-background-color: #2A363F; -fx-border-color: #465058; -fx-text-inner-color: #fbfcfc;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+         </children></AnchorPane>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

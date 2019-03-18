@@ -27,7 +27,7 @@ public class Controller {
         if (termsCheckBox.isSelected()) {
             // Passed First Check (Email Valid Phase)
             RegistrationHandler registrationHandler = new RegistrationHandler();
-            Task<Void> sleeper = new Task<>() {
+            Task<Void> sleeper = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
                     try {

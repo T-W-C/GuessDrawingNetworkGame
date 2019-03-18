@@ -10,31 +10,31 @@ import java.util.Random;
 public class GameHomeScreen extends JFrame {
 
     private static GameHomeScreen ref = null;
-    //array list of active ports
+    // array list of active ports
     private ArrayList<Integer> activePorts = new ArrayList<>();
     private static final String SERVER_ADDRESS = "127.0.0.1";
 
     public static Player currentPlayer = null;
 
-
     /**
-     *  Swing data structures not thread safe - launch on the event dispatching
-     *  thread through invoke later.
+     * Swing data structures not thread safe - launch on the event dispatching
+     * thread through invoke later.
+     * 
      * @param args
      */
     public static void main(String[] args) {
-//        Runnable gameRunnable = () -> {
-//            networking.GameScreen gameScreen = networking.GameScreen.getRef();
-//            gameScreen.setVisible(true);
-//        };
+        // Runnable gameRunnable = () -> {
+        // networking.GameScreen gameScreen = networking.GameScreen.getRef();
+        // gameScreen.setVisible(true);
+        // };
         SwingUtilities.invokeLater(() -> {
-                GameHomeScreen gameScreen = GameHomeScreen.getRef();
-                gameScreen.setVisible(true);
+            GameHomeScreen gameScreen = GameHomeScreen.getRef();
+            gameScreen.setVisible(true);
         });
     }
 
     public static GameHomeScreen getRef() {
-        if(GameHomeScreen.ref == null) {
+        if (GameHomeScreen.ref == null) {
             GameHomeScreen.ref = new GameHomeScreen();
         }
         return GameHomeScreen.ref;
@@ -42,7 +42,7 @@ public class GameHomeScreen extends JFrame {
 
     public GameHomeScreen() {
         // set size and properties of the main game frame:
-        this.setSize(600,600);
+        this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,28 +57,29 @@ public class GameHomeScreen extends JFrame {
 
     }
 
-
     /**
-     * Responsible for redrawing the new screen - remove all components then
-     * redraw the new Panel passed in as an argument
+     * Responsible for redrawing the new screen - remove all components then redraw
+     * the new Panel passed in as an argument
+     * 
      * @param panel
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
-//        networking.CircleButton cBtn = new networking.CircleButton(Color.YELLOW);
-//        panel.add(cBtn);
-//
-//        cBtn.addActionListener((e) -> {
-//            System.out.println("pressed the button ennit");
-//        });
+        // networking.CircleButton cBtn = new networking.CircleButton(Color.YELLOW);
+        // panel.add(cBtn);
+        //
+        // cBtn.addActionListener((e) -> {
+        // System.out.println("pressed the button ennit");
+        // });
         getContentPane().add(panel, BorderLayout.CENTER);
         revalidate();
-        //calls the paint Component
+        // calls the paint Component
         repaint();
     }
 
     /**
      * creates and returns a new instance of the networking.GameHomeComponents
+     * 
      * @return
      */
     public GameHomeComponents createMainMenu() {
@@ -86,6 +87,14 @@ public class GameHomeScreen extends JFrame {
     }
 
     public void joinGame(Player p) {
+        try {
+            // ConnectionHandler connectionHandler = new
+            // ConnectionHandler(p,SERVER_ADDRESS,8888);
+            // connectionHandler.startClient();
+            // connectionHandler.sendPacket("JOINEXISTINGGAME");
+        } catch (Exception e) {
+
+        }
         GameScreen gameInstance = new GameScreen(p);
         this.drawNewScreenComponents(gameInstance);
         int port = getRandomActivePort();
@@ -95,7 +104,7 @@ public class GameHomeScreen extends JFrame {
     public int randomInactivePort() {
         Random random = new Random();
         int randomNum = random.nextInt(1000);
-        if(!activePorts.contains(randomNum)) {
+        if (!activePorts.contains(randomNum)) {
             return randomNum;
         } else {
             return randomInactivePort();

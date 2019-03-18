@@ -106,6 +106,10 @@ public class GameServer extends Thread {
         }
     }
 
+    public ArrayList<Socket> getConnectedClients() {
+        return clientsConnected;
+    }
+
     private void addOutputStream(Socket socket) throws IOException{
         outputStreams.add(new ObjectOutputStream(socket.getOutputStream()));
     }

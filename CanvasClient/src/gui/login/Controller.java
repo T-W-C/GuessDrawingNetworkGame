@@ -29,7 +29,7 @@ public class Controller {
         LoginHandler loginHandler = new LoginHandler();
 
         /* The purpose of Task is to give time for us to Send the Packets and get the results back from the networking before checking data*/
-        Task<Void> sleeper = new Task<>() {
+        Task<Void> sleeper = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
