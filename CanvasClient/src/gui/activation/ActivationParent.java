@@ -2,6 +2,7 @@ package gui.activation;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 
@@ -16,7 +17,7 @@ public class ActivationParent {
         return activationParent;
     }
 
-    public Parent getParent() {
+    private Parent getParent() {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("Activation.fxml"));
@@ -24,5 +25,8 @@ public class ActivationParent {
             e.printStackTrace();
         }
         return root;
+    }
+    public Scene getScene(){
+        return new Scene(this.getParent(), 590, 360);
     }
 }

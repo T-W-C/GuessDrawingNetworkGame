@@ -1,4 +1,7 @@
-package game.Client;
+package game.client;
+
+import game.client.objects.Player;
+import game.client.packets.PaintPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,6 +50,7 @@ public class GameScreen extends JPanel {
     }
 
     public void joinGame(String serverAddress, int port) {
+        System.out.println("Attempting to Join Game...");
         this.connectionHandler = new ConnectionHandler(this.p, serverAddress, port);
         this.connectionHandler.setPacketHandler(this::handlePacket);
         canvasComponent.start(this.connectionHandler);

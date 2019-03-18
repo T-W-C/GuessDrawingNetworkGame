@@ -1,4 +1,7 @@
-package Client;
+package game.client;
+
+import game.client.objects.Player;
+import game.client.packets.PaintPacket;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -62,7 +65,7 @@ public class ConnectionHandler {
 //        new Thread(() -> {
 //           try {
 //               server = new ServerSocket(port, 2);
-//               System.out.println("Server " + server.toString() + " has initiated.");
+//               System.out.println("server " + server.toString() + " has initiated.");
 //               while(true) {
 //                   try {
 //                       System.out.println("Waiting to accept sockets...");
@@ -175,10 +178,4 @@ public class ConnectionHandler {
     public void setPacketHandler(PacketHandler packetHandler) {
         this.packetHandler = packetHandler;
     }
-
-
-
-
-
-
 }

@@ -1,4 +1,4 @@
-package Client;
+package game.server.packets;
 
 import java.io.Serializable;
 
@@ -11,8 +11,5 @@ public class GamePacket implements Serializable {
     }
 
     private GameEvents eventTypes;
-
-
-
 
 }

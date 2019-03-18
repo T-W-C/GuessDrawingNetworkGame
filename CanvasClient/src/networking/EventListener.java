@@ -23,6 +23,7 @@ public class EventListener {
 						.with(SendUsernameCheckResult.class, this::handleSendUsernameCheckResult)
 						.with(SendEmailCheckResult.class, this::handleSendEmailCheckResult)
 						.with(SendLoginUsernameResult.class, this::handleSendLoginUsernameResult)
+						.with(SendPasswordHashConfirmation.class, this::handleSendPasswordHashConfirmation)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}

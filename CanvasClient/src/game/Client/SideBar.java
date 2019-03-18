@@ -1,4 +1,6 @@
-package game.Client;
+package game.client;
+
+import game.client.objects.Player;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

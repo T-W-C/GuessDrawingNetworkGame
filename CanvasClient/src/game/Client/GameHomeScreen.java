@@ -1,6 +1,6 @@
-package game.Client;
+package game.client;
 
-import networking.Client;
+import game.client.objects.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class GameHomeScreen extends JFrame {
      */
     public static void main(String[] args) {
 //        Runnable gameRunnable = () -> {
-//            Client.GameScreen gameScreen = Client.GameScreen.getRef();
+//            client.GameScreen gameScreen = client.GameScreen.getRef();
 //            gameScreen.setVisible(true);
 //        };
         SwingUtilities.invokeLater(() -> {
@@ -66,7 +66,7 @@ public class GameHomeScreen extends JFrame {
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
-//        Client.CircleButton cBtn = new Client.CircleButton(Color.YELLOW);
+//        client.CircleButton cBtn = new client.CircleButton(Color.YELLOW);
 //        panel.add(cBtn);
 //
 //        cBtn.addActionListener((e) -> {
@@ -79,7 +79,7 @@ public class GameHomeScreen extends JFrame {
     }
 
     /**
-     * creates and returns a new instance of the Client.GameHomeComponents
+     * creates and returns a new instance of the client.GameHomeComponents
      * @return
      */
     public GameHomeComponents createMainMenu() {

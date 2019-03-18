@@ -8,9 +8,6 @@ import java.sql.SQLException;
 
 public class StartServer {
 	public static void main(String[] args) {
-		Server server = new Server(1337);
-		server.start();
-		/*
 		try (Connection activeConnection = DatabaseHandler.getInstance()
 				.getConnection()) {
 			if (!activeConnection.isClosed()){
@@ -21,6 +18,6 @@ public class StartServer {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		*/
+
 	}
 }

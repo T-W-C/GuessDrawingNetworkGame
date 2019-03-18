@@ -1,6 +1,6 @@
-package game.Client;
+package game.client;
 
-import networking.Client;
+import game.client.objects.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +39,7 @@ public class GameHomeComponents extends JPanel {
         joinGame.addActionListener((e) -> {
             remove(centredComponents);
             remove(title);
-            GameHomeScreen.getRef().joinExistingGame(new Player("tr",  false));
+            //GameHomeScreen.getRef().joinExistingGame(new Player("tr",  false));
             revalidate();
             repaint();
         });
@@ -49,7 +49,7 @@ public class GameHomeComponents extends JPanel {
 //            remove(centredComponents);
 //            remove(title);
 //            add(createGame, BorderLayout.CENTER);
-            GameHomeScreen.getRef().createNewGame(new Player("fjoi", true));
+            //GameHomeScreen.getRef().createNewGame(new Player("fjoi", true));
 
             revalidate();
             repaint();

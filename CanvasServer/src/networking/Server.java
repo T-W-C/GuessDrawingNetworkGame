@@ -30,7 +30,7 @@ public class Server implements Runnable{
 	@Override
 	public void run() {
 		running = true;
-		System.out.println("Server started on port: " + port);
+		System.out.println("server started on port: " + port);
 		
 		while(running) {
 			try {

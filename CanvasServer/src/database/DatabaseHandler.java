@@ -27,7 +27,7 @@ public class DatabaseHandler {
                     // What driver we're using, in this case our database system is PostgreSQL
                     .setDriverClass("org.postgresql.Driver");
             comboPooledDataSource
-                    // URI, Which includes the Host (IP+PORT) of Database Server + Database Name
+                    // URI, Which includes the Host (IP+PORT) of Database server + Database Name
                     .setJdbcUrl("jdbc:postgresql://mod-msc-sw1.cs.bham.ac.uk:5432/group1");
             // Username of Database
             comboPooledDataSource.setUser("group1");

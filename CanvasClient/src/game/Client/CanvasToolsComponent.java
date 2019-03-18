@@ -1,4 +1,6 @@
-package Client;
+package game.client;
+
+import game.client.packets.PaintPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +37,7 @@ public class CanvasToolsComponent extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
 
-//        Client.CircleButton clearCanvas = new Client.CircleButton(Color.WHITE, "Clear", 20);
+//        client.CircleButton clearCanvas = new client.CircleButton(Color.WHITE, "Clear", 20);
         SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
@@ -67,13 +69,13 @@ public class CanvasToolsComponent extends JPanel {
         colorPalette.setPreferredSize(new Dimension(width*4, height));
         colorPalette.setMaximumSize(new Dimension(width*4, height));
         colorPalette.setLayout(new GridLayout(2, 7));
-//        int colorNumber = Client.BrushColor.values().length;
+//        int colorNumber = client.BrushColor.values().length;
         int colorNumber = brushColors.length;
-//        Client.CircleButton[] colorPaletteButtons = new Client.CircleButton[colorNumber];
+//        client.CircleButton[] colorPaletteButtons = new client.CircleButton[colorNumber];
         SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
         for(int i = 0; i<colorNumber; i++) {
             final int j = i;
-//            colorPaletteButtons[i] = new Client.CircleButton(brushColors[i], 20);
+//            colorPaletteButtons[i] = new client.CircleButton(brushColors[i], 20);
             colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
 
 //            System.out.println(colorPaletteButtons[i].getColor());
@@ -98,10 +100,10 @@ public class CanvasToolsComponent extends JPanel {
 
 
 
-//        Client.CircleButton[] brushSizeButtons = new Client.CircleButton[brushSizes.length];
+//        client.CircleButton[] brushSizeButtons = new client.CircleButton[brushSizes.length];
 //        for(int i = 0; i<brushSizes.length; i++) {
 //            final int j = i;
-//            brushSizeButtons[i] = new Client.CircleButton(brushSizes[i]);
+//            brushSizeButtons[i] = new client.CircleButton(brushSizes[i]);
 ////            System.out.println(colorPaletteButtons[i].getColor());
 //            brushSize = brushSizes[i];
 //            /**

@@ -1,4 +1,4 @@
-package Server;
+package game.server;
 
 public class Run {
 

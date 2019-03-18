@@ -1,17 +1,16 @@
+package game.server;
 
 
-package Server;
+import game.server.objects.Player;
+import game.server.packets.PaintPacket;
 
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import Client.Player;
-import Client.PaintPacket;
+
 
 
 public class GameServer extends Thread {
@@ -184,7 +183,7 @@ public class GameServer extends Thread {
 
     public void sendPacket(Object packet) {
         try {
-//            if(Client.PaintPacket.class.isInstance(packet)) {
+//            if(client.PaintPacket.class.isInstance(packet)) {
                 //handle if the player is a drawer
                 for(ObjectOutputStream os: outputStreams) {
                     System.out.println("writing: " + packet + ", to client: " + os.toString());
@@ -196,11 +195,4 @@ public class GameServer extends Thread {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
 }

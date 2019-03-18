@@ -1,4 +1,4 @@
-package Client;
+package game.server.packets;
 
 import java.awt.*;
 import java.io.Serializable;

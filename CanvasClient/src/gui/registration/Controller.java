@@ -55,7 +55,7 @@ public class Controller {
                                 registrationHandler.SendCreateAccountPacket(emailText.getText(), usernameText.getText(), hashedPassword);
                                 alert.showAndWait();
                                 System.out.println("Created Account for username " + usernameText.getText());
-                                Main.getPrimaryStage().setScene(new Scene(ActivationParent.getInstance().getParent(), 590, 360));
+                                Main.getPrimaryStage().setScene(ActivationParent.getInstance().getScene());
                                 /* Send Activation Email */
                                 registrationHandler.SendEmailActivationPacket(emailText.getText());
                             } else {

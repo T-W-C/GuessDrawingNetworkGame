@@ -1,6 +1,6 @@
-package game.Client;
+package game.client;
 
-import networking.Client;
+import game.client.packets.PaintPacket;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

@@ -27,7 +27,7 @@ public class ChatServer {
 
             /**
              * This while loop loops continuously, waiting for new clients to join. If a new user joins, create a new
-             * user and add it to the arraylist of clients, stored in this Server object.
+             * user and add it to the arraylist of clients, stored in this server object.
              */
             while (true) {
                 client = SSocket.accept();
@@ -45,7 +45,7 @@ public class ChatServer {
     }
 
     /**
-     *  Main method that creates and runs a new Server.
+     *  Main method that creates and runs a new server.
      *  To run entire program, first run this method, then ClientMain.
      */
     public static void main(String[] args) {

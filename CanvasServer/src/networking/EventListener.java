@@ -75,7 +75,7 @@ public class EventListener {
 		System.out.println("Got Packet to Check Login Attempt....  ");
 		SendPasswordHashConfirmation response = new SendPasswordHashConfirmation();
 		response.passwordResult = PasswordManager.isValidPassword(p.username, p.password);
-		System.out.println("Passwords Match So Login Result is... " + response.passwordResult);
+		System.out.println("Login Attempt Result is... " + response.passwordResult);
 		// Send back result
 		connection.sendObject(response);
 	}
