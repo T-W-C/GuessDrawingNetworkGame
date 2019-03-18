@@ -1,6 +1,7 @@
 package game.networking;
 
 import game.networking.objects.Player;
+import javafx.concurrent.Task;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,12 +38,12 @@ public class GameHomeComponents extends JPanel {
 
         // if user clicks on join game button - launch join game logic
         joinGame.addActionListener((e) -> {
-            remove(centredComponents);
-            remove(title);
-            GameHomeScreen.getRef().joinGame(GameHomeScreen.currentPlayer);
-            revalidate();
-            repaint();
-        });
+                    remove(centredComponents);
+                    remove(title);
+                    GameHomeScreen.getRef().joinGame(GameHomeScreen.currentPlayer);
+                    revalidate();
+                    repaint();
+                });
 
         // if user clicks on create game button - launch create game logic
         createGame.addActionListener((e) -> {
@@ -63,11 +64,5 @@ public class GameHomeComponents extends JPanel {
             revalidate();
             repaint();
         });
-
-
-
-
-
     }
-
 }

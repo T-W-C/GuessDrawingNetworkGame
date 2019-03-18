@@ -1,7 +1,10 @@
 package game.networking;
 
 
+import game.networking.objects.MatchManager;
 import game.networking.objects.Player;
+import game.networking.packets.FindActiveMatchPacket;
+import game.networking.packets.FindActiveMatchPacketResult;
 import game.networking.packets.PaintPacket;
 import networking.EventListener;
 
@@ -152,7 +155,14 @@ public class GameServer extends Thread {
         } else if(packet.getClass().equals(PaintPacket.class)) {
             sendPacket(packet);
 
-        } else if(packet instanceof Player) {
+        } else if(packet instanceof FindActiveMatchPacket){
+            FindActiveMatchPacketResult response = new FindActiveMatchPacketResult();
+            response.activeMatchID = MatchManager.ReturnActiveMatch();
+            sendPacket(response);
+        }
+
+        // Host Logic (Use this for CreateGame)
+        else if(packet instanceof Player) {
             Player player = (Player)packet;
             if(connectedPlayers.size() == 0) {
                 player.setIsDrawer(true);
