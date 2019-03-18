@@ -1,6 +1,8 @@
 package gui.login;
 
 import chat.Login;
+import game.networking.GameHomeScreen;
+import game.networking.objects.Player;
 import gui.activation.ActivationParent;
 import gui.registration.RegistrationParent;
 import javafx.concurrent.Task;
@@ -13,6 +15,8 @@ import javafx.scene.control.TextField;
 import networking.Connection;
 import networking.ConnectionHandler;
 
+import javax.swing.*;
+
 public class Controller {
 
     @FXML
@@ -24,12 +28,12 @@ public class Controller {
     public void loginAction(){
         LoginHandler loginHandler = new LoginHandler();
 
-        /* The purpose of Task is to give time for us to Send the Packets and get the results back from the server before checking data*/
+        /* The purpose of Task is to give time for us to Send the Packets and get the results back from the networking before checking data*/
         Task<Void> sleeper = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 try {
-                    /* Send all Packets to server for Login */
+                    /* Send all Packets to networking for Login */
                     loginHandler.SendLoginUsernameCheck(usernameText.getText());
                     loginHandler.SendCheckPasswordHashCheck(usernameText.getText(), passwordText.getText());
                     // Enforced delay to wait for results
@@ -47,7 +51,15 @@ public class Controller {
                 // Password Matches
                 if (LoginHandler.passwordMatches){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Logged in!", ButtonType.OK);
-                    alert.showAndWait();                }
+                    alert.showAndWait();
+                    Main.getPrimaryStage().close();
+                    SwingUtilities.invokeLater(() -> {
+                        GameHomeScreen gameScreen = GameHomeScreen.getRef();
+                        Player playerInstance = new Player(usernameText.getText());
+                        GameHomeScreen.currentPlayer = playerInstance;
+                        gameScreen.setVisible(true);
+                    });
+                }
                 // Incorrect Password
                 else {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Password entered does not exist!", ButtonType.OK);

@@ -1,7 +1,7 @@
-package game.client;
+package game.networking;
 
-import game.client.objects.Player;
-import game.client.packets.PaintPacket;
+import game.networking.objects.Player;
+import game.networking.packets.PaintPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,9 +56,9 @@ public class GameScreen extends JPanel {
         canvasComponent.start(this.connectionHandler);
         chatComponent.start(this.connectionHandler);
         connectionHandler.startClient();
-        // start the chat client when join the game also;
+        // start the chat networking when join the game also;
 
-        //this.connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, new Point(100,100))); <-- example of sending a packet to the game server
+        //this.connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, new Point(100,100))); <-- example of sending a packet to the game networking
 
         // write code for when player joins send code and stuff to draw
     }
@@ -76,7 +76,7 @@ public class GameScreen extends JPanel {
             //show message in chat
             System.out.println(packet);
             chatComponent.showMessage((String)packet);
-            // handle all of the game events and the messages in the chat client
+            // handle all of the game events and the messages in the chat networking
         } else if(packet instanceof PaintPacket) {
             PaintPacket p = (PaintPacket) packet;
             switch(p.eventType) {
@@ -104,7 +104,7 @@ public class GameScreen extends JPanel {
             // - correct guess
             // - game end
             // - player won
-            // - player leaves the game - handle the client getting closed
+            // - player leaves the game - handle the networking getting closed
         }
     }
 }

@@ -1,11 +1,16 @@
-package game.client;
+package game.networking;
+
+import game.networking.objects.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameMenu extends JPanel {
+/**
+ * contains components of the game screen
+ */
+public class GameHomeComponents extends JPanel {
 
-    public GameMenu() {
+    public GameHomeComponents() {
         setLayout(new BorderLayout(10,10));
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
@@ -34,16 +39,18 @@ public class GameMenu extends JPanel {
         joinGame.addActionListener((e) -> {
             remove(centredComponents);
             remove(title);
-            add(joinGame, BorderLayout.CENTER);
+            GameHomeScreen.getRef().joinGame(GameHomeScreen.currentPlayer);
             revalidate();
             repaint();
         });
 
         // if user clicks on create game button - launch create game logic
         createGame.addActionListener((e) -> {
-            remove(centredComponents);
-            remove(title);
-            add(createGame, BorderLayout.CENTER);
+//            remove(centredComponents);
+//            remove(title);
+//            add(createGame, BorderLayout.CENTER);
+            //GameHomeScreen.getRef().createNewGame(new Player("fjoi", true));
+
             revalidate();
             repaint();
         });
@@ -52,7 +59,7 @@ public class GameMenu extends JPanel {
         privateGame.addActionListener((e) -> {
             remove(centredComponents);
             remove(title);
-            add(privateGame, BorderLayout.CENTER);
+            this.add(privateGame, BorderLayout.CENTER);
             revalidate();
             repaint();
         });

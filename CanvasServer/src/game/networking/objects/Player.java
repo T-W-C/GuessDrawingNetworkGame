@@ -1,8 +1,10 @@
-package game.server.objects;
+package game.networking.objects;
 
 import java.io.Serializable;
 
 public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String playerName;
     private int playerScore;
     private boolean isDrawer;

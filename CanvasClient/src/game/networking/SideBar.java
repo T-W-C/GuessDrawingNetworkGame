@@ -1,6 +1,6 @@
-package game.client;
+package game.networking;
 
-import game.client.objects.Player;
+import game.networking.objects.Player;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -87,6 +87,7 @@ public class SideBar extends JPanel {
         return namesPanel;
     }
 
+    /*
     public static void main(String[] args) throws Exception {
         Player tommy = new Player("tommy", false);
         tommy.updatePlayerScore(50);
@@ -114,4 +115,5 @@ public class SideBar extends JPanel {
         pan.setSize(500, 500);
         f.add(pan);
     }
+    */
 }

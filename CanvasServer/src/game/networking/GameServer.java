@@ -1,8 +1,9 @@
-package game.server;
+package game.networking;
 
 
-import game.server.objects.Player;
-import game.server.packets.PaintPacket;
+import game.networking.objects.Player;
+import game.networking.packets.PaintPacket;
+import networking.EventListener;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,7 +20,6 @@ public class GameServer extends Thread {
 
     private boolean isGameInitiated = false;
 
-
     private ArrayList<Player> connectedPlayers = new ArrayList<>();
 
     public static GameServer getInstance() {
@@ -33,7 +33,6 @@ public class GameServer extends Thread {
     private ArrayList<Socket> clientsConnected = new ArrayList<>();
     private ArrayList<ObjectOutputStream> outputStreams = new ArrayList<>();
     private ArrayList<ObjectInputStream> inputStreams = new ArrayList<>();
-
 
     private ServerSocket server;
 
@@ -126,7 +125,7 @@ public class GameServer extends Thread {
             do {
                 try {
                     packet = is.readObject();
-                    System.out.println("Object has been received on server");
+                    System.out.println("Object has been received on networking");
                     //handle the packet that is coming in - checks what type of packet it is
                     handlePacket(packet);
                 } catch(IOException e) {
@@ -149,7 +148,7 @@ public class GameServer extends Thread {
 
             System.out.println(packet);
             sendPacket(packet);
-            // handle all of the game events and the messages in the chat client
+            // handle all of the game events and the messages in the chat networking
         } else if(packet.getClass().equals(PaintPacket.class)) {
             sendPacket(packet);
 
@@ -172,7 +171,7 @@ public class GameServer extends Thread {
                 // draw the canvas
             } else {
                 //send refused connection packet
-                    //when refused connection packet sent client attempts to reestablish
+                    //when refused connection packet sent networking attempts to reestablish
                     //connection with a different port binding...
 //                sendPacket()
             }
@@ -183,10 +182,10 @@ public class GameServer extends Thread {
 
     public void sendPacket(Object packet) {
         try {
-//            if(client.PaintPacket.class.isInstance(packet)) {
+//            if(networking.PaintPacket.class.isInstance(packet)) {
                 //handle if the player is a drawer
                 for(ObjectOutputStream os: outputStreams) {
-                    System.out.println("writing: " + packet + ", to client: " + os.toString());
+                    System.out.println("writing: " + packet + ", to networking: " + os.toString());
                     os.writeObject(packet);
                     os.flush();
                 }

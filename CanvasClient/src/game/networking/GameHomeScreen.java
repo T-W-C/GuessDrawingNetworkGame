@@ -1,6 +1,6 @@
-package game.client;
+package game.networking;
 
-import game.client.objects.Player;
+import game.networking.objects.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +14,7 @@ public class GameHomeScreen extends JFrame {
     private ArrayList<Integer> activePorts = new ArrayList<>();
     private static final String SERVER_ADDRESS = "127.0.0.1";
 
+    public static Player currentPlayer = null;
 
 
     /**
@@ -23,7 +24,7 @@ public class GameHomeScreen extends JFrame {
      */
     public static void main(String[] args) {
 //        Runnable gameRunnable = () -> {
-//            client.GameScreen gameScreen = client.GameScreen.getRef();
+//            networking.GameScreen gameScreen = networking.GameScreen.getRef();
 //            gameScreen.setVisible(true);
 //        };
         SwingUtilities.invokeLater(() -> {
@@ -51,8 +52,6 @@ public class GameHomeScreen extends JFrame {
 
         componentPanel.setLayout(new BorderLayout());
 
-
-
         // create the main menu component
         this.drawNewScreenComponents(createMainMenu());
 
@@ -66,7 +65,7 @@ public class GameHomeScreen extends JFrame {
      */
     public void drawNewScreenComponents(JPanel panel) {
         getContentPane().removeAll();
-//        client.CircleButton cBtn = new client.CircleButton(Color.YELLOW);
+//        networking.CircleButton cBtn = new networking.CircleButton(Color.YELLOW);
 //        panel.add(cBtn);
 //
 //        cBtn.addActionListener((e) -> {
@@ -79,7 +78,7 @@ public class GameHomeScreen extends JFrame {
     }
 
     /**
-     * creates and returns a new instance of the client.GameHomeComponents
+     * creates and returns a new instance of the networking.GameHomeComponents
      * @return
      */
     public GameHomeComponents createMainMenu() {
@@ -95,13 +94,10 @@ public class GameHomeScreen extends JFrame {
 
         }
 
-
         GameScreen gameInstance = new GameScreen(p);
         this.drawNewScreenComponents(gameInstance);
         int port = getRandomActivePort();
-
         gameInstance.joinGame(SERVER_ADDRESS, 8888);
-
     }
 
     public int randomInactivePort() {

@@ -18,8 +18,8 @@ public class ChatClient {
             try {
                 /**
                  * This while loop loops continuously, waiting for user input, and once the user has input a message,
-                 * the content is stored in the message variable. It gets the list of chat clients from the server,
-                 * and then sends the message to each of these clients, and writes it to the output stream of each client.
+                 * the content is stored in the message variable. It gets the list of chat clients from the networking,
+                 * and then sends the message to each of these clients, and writes it to the output stream of each networking.
                  */
                 while(true) {
                     message = datais.readUTF();

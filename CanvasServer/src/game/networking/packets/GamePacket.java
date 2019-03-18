@@ -1,8 +1,9 @@
-package game.server.packets;
+package game.networking.packets;
 
 import java.io.Serializable;
 
 public class GamePacket implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public enum GameEvents {
         CHANGE_TURN,

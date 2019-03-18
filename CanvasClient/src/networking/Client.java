@@ -34,7 +34,7 @@ public class Client implements Runnable{
 			listener = new EventListener();
 			new Thread(this).start();
 		}catch(ConnectException e) {
-			System.out.println("Unable to connect to the server");
+			System.out.println("Unable to connect to the networking");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

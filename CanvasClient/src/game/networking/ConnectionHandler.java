@@ -1,7 +1,8 @@
-package game.client;
+package game.networking;
 
-import game.client.objects.Player;
-import game.client.packets.PaintPacket;
+import game.networking.objects.Player;
+import game.networking.packets.PaintPacket;
+import networking.EventListener;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -29,15 +30,10 @@ public class ConnectionHandler {
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
 
-
     public ConnectionHandler(Player p, String serverAddress, int port) {
-//        outputStreams = new ArrayList<>();
-//        inputStreams = new ArrayList<>();
-
         ConnectionHandler.serverAddress = serverAddress;
         this.p = p;
         this.port = port;
-
     }
 
     public ObjectOutputStream getOutputStream() {
@@ -48,9 +44,6 @@ public class ConnectionHandler {
         return inputStream;
     }
 
-
-
-
     public boolean getIsDrawer() {
         return isDrawer;
     }
@@ -60,16 +53,16 @@ public class ConnectionHandler {
 //    public void initiateServer(Runnable onClientConnection) {
 //        this.isDrawer = true;
 //        this.isServer = true;
-//        System.out.println("Started initiation of server...");
-//        //launch new thread for initiation of server
+//        System.out.println("Started initiation of networking...");
+//        //launch new thread for initiation of networking
 //        new Thread(() -> {
 //           try {
-//               server = new ServerSocket(port, 2);
-//               System.out.println("server " + server.toString() + " has initiated.");
+//               networking = new ServerSocket(port, 2);
+//               System.out.println("networking " + networking.toString() + " has initiated.");
 //               while(true) {
 //                   try {
 //                       System.out.println("Waiting to accept sockets...");
-//                       Socket socket = server.accept();
+//                       Socket socket = networking.accept();
 //                       addOutputStream(socket);
 //                       // create a new thread to handle the inputs from the socket
 //                       // that has been accepted above.
@@ -110,8 +103,8 @@ public class ConnectionHandler {
     }
 
 //    /**
-//     * for each of the client (socket connections) that have connected
-//     * to the server then they need to be added to the arraylist of socket
+//     * for each of the networking (socket connections) that have connected
+//     * to the networking then they need to be added to the arraylist of socket
 //     * connections.
 //     * @param socket
 //     * @throws IOException
@@ -129,7 +122,6 @@ public class ConnectionHandler {
         Thread listener = new Thread(() -> {
             Object packet = "";
             try {
-//                outputStream =  new ObjectOutputStream(socket.getOutputStream());
                 inputStream = new ObjectInputStream(socket.getInputStream());
                 System.out.println("OUTPUT AND INPUT STREAMS INITIATED");
             } catch(IOException e) {

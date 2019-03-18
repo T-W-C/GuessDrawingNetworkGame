@@ -1,10 +1,7 @@
-package game.client;
+package game.networking;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 
 /**
  * adapted class obtained from:

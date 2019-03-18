@@ -5,6 +5,7 @@ import database.domain.Player;
 import database.manager.PasswordManager;
 import database.manager.PlayerManager;
 import email.EmailHandler;
+import game.networking.GameServer;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.*;
 import networking.packets.outgoing.*;
@@ -38,7 +39,6 @@ public class EventListener {
 
 	private void handleAddConnection(AddConnectionPacket p) {
 		AddConnectionPacket packet = p;
-		packet.playerID = connection.id;
 		for (int i = 0; i < ConnectionHandler.connections.size(); i++) {
 			Connection c = ConnectionHandler.connections.get(i);
 			if (c != connection) {

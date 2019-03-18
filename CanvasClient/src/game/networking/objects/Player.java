@@ -1,15 +1,17 @@
-package game.client.objects;
+package game.networking.objects;
 
 import java.io.Serializable;
 
 public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String playerName;
     private int playerScore;
     private boolean isDrawer;
     private boolean isHost;
     private boolean guessedWordCorrectly;
 
-    public Player(String playerName, boolean isDrawer) {
+    public Player(String playerName) {
         this.playerName = playerName;
         this.playerScore = 0;
         this.isDrawer = false;

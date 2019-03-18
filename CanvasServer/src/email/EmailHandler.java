@@ -23,7 +23,7 @@ public class EmailHandler {
     }
 
     /**
-     * This method will connect to the Google's SMTP server and allow the application to send emails
+     * This method will connect to the Google's SMTP networking and allow the application to send emails
      * @param targetEmail Target email to send email to, this is an array, so you can a email to multiple addresses
      * @param subject The subject title of the email
      * @param body Body of the email
@@ -32,7 +32,7 @@ public class EmailHandler {
 
         Properties emailProperties = System.getProperties();
 
-        /* Credentials for Email server */
+        /* Credentials for Email networking */
         String emailHost = "smtp.gmail.com";
         String emailUsername = "group1swproject";
         String emailPassword = "Lol123!$!";

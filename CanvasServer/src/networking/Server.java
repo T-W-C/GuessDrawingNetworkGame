@@ -30,7 +30,7 @@ public class Server implements Runnable{
 	@Override
 	public void run() {
 		running = true;
-		System.out.println("server started on port: " + port);
+		System.out.println("networking started on port: " + port);
 		
 		while(running) {
 			try {
@@ -46,7 +46,7 @@ public class Server implements Runnable{
 	private void initSocket(Socket socket) {
 		Connection connection = new Connection(socket, id);
 		ConnectionHandler.connections.put(id,connection);
-		System.out.println(id + " Has connected to the server");
+		System.out.println(id + " Has connected to the networking");
 		currentID = this.id;
 		new Thread(connection).start();
 		id++;

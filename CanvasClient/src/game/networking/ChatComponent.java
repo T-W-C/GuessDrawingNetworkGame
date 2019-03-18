@@ -1,6 +1,6 @@
-package game.client;
+package game.networking;
 
-import game.client.objects.Player;
+import game.networking.objects.Player;
 
 import javax.swing.*;
 import java.awt.*;

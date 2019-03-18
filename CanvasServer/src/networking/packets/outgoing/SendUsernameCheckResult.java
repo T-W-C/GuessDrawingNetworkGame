@@ -3,6 +3,8 @@ package networking.packets.outgoing;
 import java.io.Serializable;
 
 public class SendUsernameCheckResult implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     public int playerID;
     public boolean result;
 

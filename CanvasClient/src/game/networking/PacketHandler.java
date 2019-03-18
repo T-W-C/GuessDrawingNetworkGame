@@ -1,4 +1,4 @@
-package game.client;
+package game.networking;
 
 public interface PacketHandler {
 

@@ -1,6 +1,6 @@
-package game.client;
+package game.networking;
 
-import game.client.packets.PaintPacket;
+import game.networking.packets.PaintPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ public class CanvasToolsComponent extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         this.setLayout(new FlowLayout());
 
-//        client.CircleButton clearCanvas = new client.CircleButton(Color.WHITE, "Clear", 20);
+//        networking.CircleButton clearCanvas = new networking.CircleButton(Color.WHITE, "Clear", 20);
         SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
@@ -69,13 +69,13 @@ public class CanvasToolsComponent extends JPanel {
         colorPalette.setPreferredSize(new Dimension(width*4, height));
         colorPalette.setMaximumSize(new Dimension(width*4, height));
         colorPalette.setLayout(new GridLayout(2, 7));
-//        int colorNumber = client.BrushColor.values().length;
+//        int colorNumber = networking.BrushColor.values().length;
         int colorNumber = brushColors.length;
-//        client.CircleButton[] colorPaletteButtons = new client.CircleButton[colorNumber];
+//        networking.CircleButton[] colorPaletteButtons = new networking.CircleButton[colorNumber];
         SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
         for(int i = 0; i<colorNumber; i++) {
             final int j = i;
-//            colorPaletteButtons[i] = new client.CircleButton(brushColors[i], 20);
+//            colorPaletteButtons[i] = new networking.CircleButton(brushColors[i], 20);
             colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
 
 //            System.out.println(colorPaletteButtons[i].getColor());
@@ -100,10 +100,10 @@ public class CanvasToolsComponent extends JPanel {
 
 
 
-//        client.CircleButton[] brushSizeButtons = new client.CircleButton[brushSizes.length];
+//        networking.CircleButton[] brushSizeButtons = new networking.CircleButton[brushSizes.length];
 //        for(int i = 0; i<brushSizes.length; i++) {
 //            final int j = i;
-//            brushSizeButtons[i] = new client.CircleButton(brushSizes[i]);
+//            brushSizeButtons[i] = new networking.CircleButton(brushSizes[i]);
 ////            System.out.println(colorPaletteButtons[i].getColor());
 //            brushSize = brushSizes[i];
 //            /**
@@ -128,7 +128,7 @@ public class CanvasToolsComponent extends JPanel {
                 String buttonText = brushSizes[j].getText();
                 switch(buttonText) {
                     /**
-                     * TODO: still to send the server information for the brush size
+                     * TODO: still to send the networking information for the brush size
                      */
                     case "S":
                         selectedBrushSize = 5;

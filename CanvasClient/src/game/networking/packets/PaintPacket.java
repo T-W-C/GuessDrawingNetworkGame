@@ -1,11 +1,10 @@
-package game.server.packets;
+package game.networking.packets;
 
 import java.awt.*;
 import java.io.Serializable;
 
 public class PaintPacket implements Serializable {
-
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 1L;
 
     public enum PaintEvents {
         RELEASED,
@@ -45,7 +44,4 @@ public class PaintPacket implements Serializable {
         this.eventType = eventType;
         this.index = index;
     }
-
-
-
 }
