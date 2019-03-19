@@ -1,5 +1,6 @@
 package game.networking;
 
+import game.networking.objects.Player;
 import game.networking.packets.PaintPacket;
 
 import javax.swing.*;
@@ -30,12 +31,14 @@ public class CanvasComponent extends JPanel {
 
     private ConnectionHandler connectionHandler;
 
+    private Player player;
 
-    public CanvasComponent(ConnectionHandler connectionHandler) {
+
+    public CanvasComponent(ConnectionHandler connectionHandler, Player player) {
         super();
         this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
-
+        this.player = player;
         this.drawingBoard = initialiseDrawingBoard();
 
 
@@ -57,6 +60,7 @@ public class CanvasComponent extends JPanel {
         this.setEnabled(false);
     }
 
+
     public void start(ConnectionHandler connectionHandler) {
         //create new Socket handler then pass into the start method
 
@@ -77,6 +81,9 @@ public class CanvasComponent extends JPanel {
         return connectionHandler;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 
     private final static int screenWidth = 600;
     private final static int screenHeight = 400;
@@ -98,6 +105,11 @@ public class CanvasComponent extends JPanel {
             new BasicStroke(40, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 30f)};
 
 
+    public void updateDrawer(Player player) {
+        if(player.equals(this.player)) {
+            this.player.setIsDrawer(true);
+        }
+    }
 
     public JPanel initialiseDrawingBoard() {
         return new JPanel() {
@@ -148,10 +160,8 @@ public class CanvasComponent extends JPanel {
              * @param e
              */
             @Override
-            public void mouseDragged(MouseEvent e)
-            {
-
-                if(connectionHandler.getIsDrawer()) {
+            public void mouseDragged(MouseEvent e) {
+                if(player.getIsDrawer()) {
                     onDrag(e.getPoint());
                     connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.DRAG, e.getPoint()));
                 }
@@ -173,18 +183,18 @@ public class CanvasComponent extends JPanel {
             @Override
             public void mousePressed(MouseEvent e)
             {
-                if(connectionHandler.getIsDrawer()) {
-                    onPress(e.getPoint());
-
-                    connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
-                }
+                    if(player.getIsDrawer()) {
+                        onPress(e.getPoint());
+                        connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.PRESSED, e.getPoint()));
+                    }
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                if(connectionHandler.getIsDrawer()) {
+
+                if(player.getIsDrawer()) {
                     onRelease(e.getPoint());
                     connectionHandler.sendPacket(new PaintPacket(PaintPacket.PaintEvents.RELEASED, e.getPoint()));
                 }

@@ -1,17 +1,21 @@
 package game.networking;
+import game.networking.objects.Player;
+import game.networking.packets.UpdateChatDrawerPacket;
+
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class GamePlay {
 
-    private ArrayList<Socket> activeConnections = new ArrayList<>();
+//    private ArrayList<Socket> activeConnections = new ArrayList<>();
+
+
+
 
     private int round = 0;
     private int turn = 0;
     private boolean gameRunning;
 
-    //store the drawer as a socket? for now at least
-    private Socket drawer;
 
     //defines the connected server
     private GameServer server;
@@ -19,7 +23,8 @@ public class GamePlay {
     //THIS VARIABLE FOR NOW IS REDUNDANT - COULD MAYBE BE USED AT A LATER DATE
     private boolean roundActive = false;
 
-    private String word;
+
+    private String word = "bob";
 
     private boolean hasGuessed;
     private boolean timerActive;
@@ -37,14 +42,20 @@ public class GamePlay {
 
      */
 
-    public static void main(String[] args) {
-        GamePlay gp = new GamePlay();
-        gp.start();
+
+
+    public String getWord() {
+        return word;
     }
 
-    public GamePlay( ) {
+    public void updateWord() {
+//        FETCH RANDOM WORD FROM THE DATABASE HERE AND SET IT TO WORD INSTANCE VARIABLE
+    }
+
+
+    public GamePlay(GameServer server) {
         this.server = server;
-        activeConnections = server.getConnectedClients();
+//        activeConnections = server.getConnectedClients();
         gameRunning = true;
     }
 
@@ -57,7 +68,7 @@ public class GamePlay {
             return;
         }
 
-        endGame();
+//        endGame();
         return;
     }
 
@@ -97,9 +108,20 @@ public class GamePlay {
         startRound();
     }
 
+    public void resetDrawers() {
+        for(Player player: server.getConnectedPlayers()) {
+            player.setIsDrawer(false);
+        }
+    }
+
 
 
     public void startTurn() {
+        resetDrawers();
+        updateWord();
+        server.getConnectedPlayers().get(turn).setIsDrawer(true);
+        server.sendPacket(new UpdateChatDrawerPacket(server.getConnectedPlayers().get(turn)));
+        hasGuessed = false;
         if(turn > 3) {
             System.out.println("All players have had their turn, end the round.");
             endRound();
@@ -110,12 +132,16 @@ public class GamePlay {
         //send packet to set drawer of player whose turn it is
         //send packet to update the side panel (so it indicates whose active turn it is) and updates word and timer
 
-        //this empty while loop executed until the player has guessed or timer is no longer active (triggered by packets)
-        while(!hasGuessed && timerActive) {
-            System.out.println("Waiting for correct guess or timer to run out...");
+//        //this empty while loop executed until the player has guessed or timer is no longer active (triggered by packets)
+//        while(!hasGuessed && timerActive) {
+//            System.out.println("Waiting for correct guess or timer to run out...");
+//        }
+        //below is just testing the guess functionality above uncommented
+        while(!hasGuessed) {
+//            System.out.println("Waiting for correct guess or timer to run out...");
         }
 
-
+        System.out.println("player has guessed correctly... ending turn");
         endTurn();
         return;
     }
@@ -155,11 +181,8 @@ public class GamePlay {
 
 
     //may not be needed if its handled client sided
-    public void handleGuess(String guess) {
-        if(guess.equals(word)) {
-            //send boolean that the player has guessed correctly
-            //this boolean value will then be interpreted by the server and a winner packet distributed
-        }
+    public void guessedCorrect() {
+        hasGuessed = true;
     }
 
 }

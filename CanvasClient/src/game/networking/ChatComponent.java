@@ -1,6 +1,7 @@
 package game.networking;
 
 import game.networking.objects.Player;
+import game.networking.packets.GuessPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +45,21 @@ public class ChatComponent extends JPanel {
 
     }
 
+    public void updateDrawer(Player player) {
+        if(player.equals(this.player)) {
+            this.player.setIsDrawer(true);
+        }
+    }
+
     private void sendMessage(String message) {
         message = player.getPlayerName() + ": " + message;
-        this.connectionHandler.sendPacket(message);
+//        this.connectionHandler.sendPacket(message);
+        GuessPacket guess = new GuessPacket(player, message);
+        if(!player.getIsDrawer()) {
+            System.out.println("player isnt a drawer so should send message");
+            this.connectionHandler.sendPacket(guess);
+        }
+
 //        showMessage(message);
     }
 
