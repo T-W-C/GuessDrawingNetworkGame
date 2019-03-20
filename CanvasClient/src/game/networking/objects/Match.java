@@ -3,6 +3,7 @@ package game.networking.objects;
 import java.io.Serializable;
 
 public class Match implements Serializable {
+    private static final long serialVersionUID = 30L;
 
     private int matchID;
     private int playerCount;

@@ -5,6 +5,8 @@ import game.networking.packets.GuessPacket;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ChatComponent extends JPanel {
 
@@ -34,6 +36,15 @@ public class ChatComponent extends JPanel {
                     userMessage.setText("");
                 }
         );
+        userMessage.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(userMessage.getText().equals("Enter your message")) {
+                    userMessage.setText("");
+                }
+            }
+        });
+
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         chatArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));

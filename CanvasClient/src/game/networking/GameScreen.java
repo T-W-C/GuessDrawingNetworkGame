@@ -3,9 +3,7 @@ package game.networking;
 import game.networking.objects.ActiveMatches;
 import game.networking.objects.Match;
 import game.networking.objects.Player;
-import game.networking.packets.GameEventPacket;
-import game.networking.packets.PaintPacket;
-import game.networking.packets.UpdateChatDrawerPacket;
+import game.networking.packets.*;
 import networking.Client;
 import networking.packets.outgoing.SendFindMatchPacket;
 
@@ -24,7 +22,7 @@ public class GameScreen extends JPanel {
     private CanvasComponent canvasComponent;
     private ChatComponent chatComponent;
 
-    public GameScreen(Player player) {
+    public GameScreen(Player player) throws Exception {
         super();
         this.player = player;
         if (isValidPlayer(player)) {
@@ -85,7 +83,7 @@ public class GameScreen extends JPanel {
         // ...
     }
 
-    public void handlePacket(Object packet) {
+    public void handlePacket(Object packet) throws Exception {
         if (packet instanceof String) {
             // show message in chat
             System.out.println(packet);
@@ -104,6 +102,13 @@ public class GameScreen extends JPanel {
             this.chatComponent.updateDrawer(((UpdateChatDrawerPacket) packet).getPlayer());
             this.canvasComponent.updateDrawer(((UpdateChatDrawerPacket) packet).getPlayer());
         }
+        else if(packet instanceof GameServerArrayListPacket) { // received arrayList of players from gameServer
+            this.canvasComponent.updateSideBar(((GameServerArrayListPacket) packet).getPlayers());
+        }
+        else if(packet instanceof SendWordPacket) { // received word so update wordbar
+            this.canvasComponent.updateWordBar(((SendWordPacket) packet).getWord());
+        }
+
 
         else if (packet instanceof PaintPacket) {
             PaintPacket p = (PaintPacket) packet;

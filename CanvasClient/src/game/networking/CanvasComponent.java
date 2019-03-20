@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class CanvasComponent extends JPanel {
 
@@ -31,10 +32,12 @@ public class CanvasComponent extends JPanel {
 
     private ConnectionHandler connectionHandler;
 
+    private SideBar sidebar;
+    private WordBar wordbar;
     private Player player;
 
 
-    public CanvasComponent(ConnectionHandler connectionHandler, Player player) {
+    public CanvasComponent(ConnectionHandler connectionHandler, Player player) throws Exception {
         super();
         this.connectionHandler = connectionHandler;
         this.setLayout(new BorderLayout());
@@ -49,19 +52,45 @@ public class CanvasComponent extends JPanel {
         tools.setBackground(new Color(91, 154, 212));
         tools.setBorder(border);
 
-
-
-
         JLabel test = new JLabel("this is just a title test");
+
+        ArrayList<Player> tempPlayers = new ArrayList<Player>();
+        for(int i=0; i<4; i++) {
+            tempPlayers.add(new Player("tempPlayer" + i));
+        }
+
+        String tempWord = "tempWord";
+
+        sidebar = new SideBar(player, tempPlayers,150, 700); // construct a side bar with the current player passed in
+        wordbar = new WordBar(tempWord, 500, 200); // construct a word bar
+
 
         this.add(drawingBoard, BorderLayout.CENTER);
         this.add(test, BorderLayout.NORTH);
         this.add(tools, BorderLayout.SOUTH);
+        this.add(sidebar, BorderLayout.WEST);
+        this.add(wordbar, BorderLayout.NORTH);
 
         this.canvasImage = new BufferedImage(CanvasComponent.screenWidth, CanvasComponent.screenHeight, BufferedImage.TYPE_INT_ARGB);
 
         this.clear();
         this.setEnabled(false);
+    }
+
+    public void updateSideBar(ArrayList<Player> newPlayers) {
+        this.remove(this.sidebar);
+        this.invalidate();
+        SideBar newSidebar = new SideBar(this.player, newPlayers, 150, 700);
+        this.add(newSidebar, BorderLayout.WEST);
+        this.revalidate();
+    }
+
+    public void updateWordBar(String newWord) throws Exception {
+        this.remove(this.wordbar);
+        this.invalidate();
+        WordBar newWordbar = new WordBar(newWord, 500, 500);
+        this.add(newWordbar, BorderLayout.NORTH);
+        this.revalidate();
     }
 
 
