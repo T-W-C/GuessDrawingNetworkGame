@@ -3,7 +3,7 @@ package networking.packets.outgoing;
 import java.io.Serializable;
 
 public class SendCreateAccountPacket implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 9L;
 
     // Connection ID (doesn't go into database)
     public int playerID;

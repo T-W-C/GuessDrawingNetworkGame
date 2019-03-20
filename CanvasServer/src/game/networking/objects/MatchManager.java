@@ -1,25 +1,38 @@
 package game.networking.objects;
 
-import java.util.ArrayList;
+import database.dao.MatchDAO;
+
+import java.util.*;
 
 public class MatchManager {
     /**
      * ArrayList which stores all the Active Matches on the Server
      */
-    public static ArrayList<Match> ActiveMatches = new ArrayList<>();
+    private static ArrayList<Match> ActiveMatches = new ArrayList<>();
 
+    private static HashMap<Integer, ArrayList<Player>> playersInMatch = new HashMap<>();
     /**
      * Finds a MatchID which has less than four players, so a user can get assigned to this Match when attempting to find a game
      * @return
      */
-    public static int ReturnActiveMatch(){
-        for (Match p : ActiveMatches){
-            if(p.getPlayerCount() < 4){
-                return p.getMatchID();
+    public static Match ReturnActiveMatch(){
+        // Sort Matches by Match ID
+        //Collections.sort(ActiveMatches, SortedMatches);
+
+        MatchDAO matchDAO = new MatchDAO();
+
+        for (Map.Entry<Integer,Integer> matches : matchDAO.getPlayersInMatch().entrySet()) {
+            // Match ID
+            int key = matches.getKey();
+            // Player Count
+            int value = matches.getValue();
+            // If PlayerCount is less than 0
+            if (value < 4){
+                return matchDAO.GetMatch(key);
             }
         }
-        // -1 = No Matches Found :(
-        return -1;
+        // No Matches Found :(
+        return null;
     }
 
     /**
@@ -34,26 +47,29 @@ public class MatchManager {
         }
     }
 
-    /**
-     * Adds a New Active Match into the ArrayList
-     * @param matchID
-     * @param playerCount
-     */
-    public static void AddActiveMatch(int matchID, int playerCount){
-        Match activeMatch = new Match(matchID, playerCount, true);
-        ActiveMatches.add(activeMatch);
+    public static Map<Integer, ArrayList<Player>> GetPlayersInMatch() {
+        return playersInMatch;
     }
 
     /**
-     * Updates the Player Count of the Match (I.e when a Player Leaves or Joins)
+     * Adds a New Active Match into the ArrayList
+     * @param match
+     */
+    public static void AddActiveMatch(Match match){
+        ActiveMatches.add(match);
+    }
+
+    /**
+     * Updates the PlayerDomain Count of the Match (I.e when a PlayerDomain Leaves or Joins)
      * @param matchID of the match we want to update the playerCount of
      * @param newPlayerCount the new playerCount
      */
     public static void UpdatePlayerCount(int matchID, int newPlayerCount){
-        for (Match p : ActiveMatches){
-            if(p.getMatchID() == matchID){
-                p.setPlayerCount(newPlayerCount);
-            }
-        }
+        MatchDAO.UpdatePlayerCount(matchID, newPlayerCount);
     }
+
+    /**
+     * Comparator to sort Matches in a Link by using the MatchID
+     */
+    private static Comparator<Match> SortedMatches = Comparator.comparingInt(Match::getMatchID);
 }

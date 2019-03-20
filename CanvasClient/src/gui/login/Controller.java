@@ -25,7 +25,7 @@ public class Controller {
     public PasswordField passwordText;
 
     @FXML
-    public void loginAction(){
+    public void loginAction() {
         LoginHandler loginHandler = new LoginHandler();
 
         /* The purpose of Task is to give time for us to Send the Packets and get the results back from the networking before checking data*/
@@ -46,10 +46,10 @@ public class Controller {
         // Actions to complete after delay
         sleeper.setOnSucceeded(event -> {
             // Username exists
-            if (LoginHandler.userExisting){
+            if (LoginHandler.userExisting) {
                 // Check if password Matches
                 // Password Matches
-                if (LoginHandler.passwordMatches){
+                if (LoginHandler.passwordMatches) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Logged in!", ButtonType.OK);
                     alert.showAndWait();
                     Main.getPrimaryStage().close();
@@ -76,7 +76,7 @@ public class Controller {
         new Thread(sleeper).start();
     }
 
-    public void registrationButton(){
+    public void registrationButton() {
         Main.getPrimaryStage().setScene(RegistrationParent.getInstance().getScene());
     }
 }

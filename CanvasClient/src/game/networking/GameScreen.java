@@ -3,11 +3,11 @@ package game.networking;
 import game.networking.objects.ActiveMatches;
 import game.networking.objects.Match;
 import game.networking.objects.Player;
-import game.networking.packets.FindActiveMatchPacket;
-import game.networking.packets.FindActiveMatchPacketResult;
 import game.networking.packets.GameEventPacket;
 import game.networking.packets.PaintPacket;
 import game.networking.packets.UpdateChatDrawerPacket;
+import networking.Client;
+import networking.packets.outgoing.SendFindMatchPacket;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,23 +55,27 @@ public class GameScreen extends JPanel {
         return false;
     }
 
-    public void joinGame(String serverAddress, int port) {
-        System.out.println("Attempting to Join Game...");
-        this.connectionHandler = new ConnectionHandler(this.player, serverAddress, port);
-        this.connectionHandler.setPacketHandler(this::handlePacket);
+    public void joinGame(String serverAddress) throws InterruptedException {
+        /* The purpose of Task is to give time for us to Send the Packets and get the results back from the networking before checking data*/
 
+        /* Send all Packets to networking for Login */
+        // Find a Active MatchID
+        SendFindMatchPacket packet = new SendFindMatchPacket();
+        packet.player = this.player;
+        Client.sendObject(packet);
+        Thread.sleep(500);
+
+        this.match = ActiveMatches.GetCurrentMatch();
+
+        //this.canvasComponent.updateSideBar(ActiveMatches.GetPlayersInMatch());
+
+        this.connectionHandler = new ConnectionHandler(this.player, serverAddress, match.getMatchPort());
+        this.connectionHandler.setPacketHandler(this::handlePacket);
         canvasComponent.start(this.connectionHandler);
         chatComponent.start(this.connectionHandler);
         connectionHandler.startClient();
-
-        // Find a Active MatchID
-//        connectionHandler.sendPacket(new FindActiveMatchPacket());
+        System.out.println("Attempting to Join Game on Port " + match.getMatchPort());
         // start the chat networking when join the game also;
-
-        // this.connectionHandler.sendPacket(new
-        // PaintPacket(PaintPacket.PaintEvents.DRAG, new Point(100,100))); <-- example
-        // of sending a packet to the game networking
-
         // write code for when player joins send code and stuff to draw
     }
 
@@ -123,9 +127,6 @@ public class GameScreen extends JPanel {
             case CHANGE_BRUSH_SIZE:
                 this.canvasComponent.updateStroke(p.index);
             }
-        } else if (packet instanceof FindActiveMatchPacketResult) {
-            FindActiveMatchPacketResult p = (FindActiveMatchPacketResult) packet;
-            match = ActiveMatches.GetActiveMatches().get(p.activeMatchID);
         }
         // else if packet is instance of the game event
         // game events such as:

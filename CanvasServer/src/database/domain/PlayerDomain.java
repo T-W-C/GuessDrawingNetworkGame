@@ -1,13 +1,13 @@
 package database.domain;
 
-public class Player {
+public class PlayerDomain {
     /**
-     * The ID of the Player, this variable will be unique and cannot be modified
+     * The ID of the PlayerDomain, this variable will be unique and cannot be modified
      */
     private int playerID;
 
     /**
-     * The username of the Player, this can be used for signing into the game
+     * The username of the PlayerDomain, this can be used for signing into the game
      */
     private String username;
 
@@ -35,7 +35,7 @@ public class Player {
      * @param level to set
      * @param totalScore to set
      */
-    public Player(int playerID, String username, String email, int level, int totalScore) {
+    public PlayerDomain(int playerID, String username, String email, int level, int totalScore) {
         this.playerID = playerID;
         this.username = username;
         this.email = email;

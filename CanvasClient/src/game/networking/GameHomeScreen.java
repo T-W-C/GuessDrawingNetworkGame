@@ -136,30 +136,11 @@ public class GameHomeScreen extends JFrame {
 
     public void joinGame(Player p) {
         try {
-            // ConnectionHandler connectionHandler = new
-            // ConnectionHandler(p,SERVER_ADDRESS,8888);
-            // connectionHandler.startClient();
-            // connectionHandler.sendPacket("JOINEXISTINGGAME");
+            GameScreen gameInstance = new GameScreen(p);
+            this.drawNewScreenComponents(gameInstance);
+            gameInstance.joinGame(SERVER_ADDRESS);
         } catch (Exception e) {
 
         }
-        GameScreen gameInstance = new GameScreen(p);
-        this.drawNewScreenComponents(gameInstance);
-        int port = getRandomActivePort();
-        gameInstance.joinGame(SERVER_ADDRESS, 8888);
-    }
-
-    public int randomInactivePort() {
-        Random random = new Random();
-        int randomNum = random.nextInt(1000);
-        if (!activePorts.contains(randomNum)) {
-            return randomNum;
-        } else {
-            return randomInactivePort();
-        }
-    }
-
-    public int getRandomActivePort() {
-        return 8987;
     }
 }

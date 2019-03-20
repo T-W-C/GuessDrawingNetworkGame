@@ -1,14 +1,19 @@
 package networking;
 
+import database.dao.MatchDAO;
 import database.dao.PlayerDAO;
-import database.domain.Player;
 import database.manager.PasswordManager;
 import database.manager.PlayerManager;
 import email.EmailHandler;
-import game.networking.GameServer;
+
+import game.networking.objects.Match;
+import game.networking.objects.MatchManager;
+import game.networking.objects.Player;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.*;
 import networking.packets.outgoing.*;
+
+import java.util.ArrayList;
 
 import static networking.helper.ClassMatcher.match;
 
@@ -29,6 +34,7 @@ public class EventListener {
 						.with(CheckCreateAccountPacket.class, this::handleCheckCreateAccountPacket)
 						.with(CheckActivationEmail.class, this::handleCheckActivationEmail)
 						.with(LoginUsernamePacket.class, this::handleLoginUsernamePacket)
+						.with(SendFindMatchPacket.class, this::handleSendFindMatchPacket)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -49,8 +55,8 @@ public class EventListener {
 
 	private void handleRemoveConnection(RemoveConnectionPacket p) {
 		RemoveConnectionPacket packet = p;
-		System.out.println("Connection: " + packet.playerID + " has disconnected");
-		ConnectionHandler.connections.remove(packet.playerID);
+		//System.out.println("Connection: " + packet.playerID + " has disconnected");
+		//ConnectionHandler.connections.remove(packet.playerID);
 	}
 
 	private void handleCheckUsername(CheckUsernamePacket p) {
@@ -76,6 +82,12 @@ public class EventListener {
 		SendPasswordHashConfirmation response = new SendPasswordHashConfirmation();
 		response.passwordResult = PasswordManager.isValidPassword(p.username, p.password);
 		System.out.println("Login Attempt Result is... " + response.passwordResult);
+
+		// If passwords match, then user is going to login anyway, so we can put them into the active users array list
+		if(response.passwordResult){
+			game.networking.objects.Player newPlayer = new game.networking.objects.Player(p.username);
+			//CurrentActivePlayers.playerArrayList.add(newPlayer);
+		}
 		// Send back result
 		connection.sendObject(response);
 	}
@@ -99,5 +111,37 @@ public class EventListener {
 		connection.sendObject(response);
 		System.out.println("Got request to check if username " + p.username + " exists.\nResult is " + response.result);
 
+	}
+
+	private void handleSendFindMatchPacket(SendFindMatchPacket p){
+		CheckFindMatchResult response = new CheckFindMatchResult();
+		response.activeMatch = MatchManager.ReturnActiveMatch();
+
+		int newPlayerCount = response.activeMatch.getPlayerCount() + 1;
+		MatchDAO.UpdatePlayerCount(response.activeMatch.getMatchID(), newPlayerCount);
+
+		// Get existing people in match
+		ArrayList<Player> value = MatchManager.GetPlayersInMatch().get(response.activeMatch.getMatchID());
+
+		// Match Already Exists in ArrayList
+		if(value != null){
+			ArrayList<Player> peopleInMatch = MatchManager.GetPlayersInMatch().get(response.activeMatch.getMatchID());
+			// Add new player
+			peopleInMatch.add(p.player);
+			// Update List with New Player
+			MatchManager.GetPlayersInMatch().put(response.activeMatch.getMatchID(), peopleInMatch);
+			response.setPlayers(peopleInMatch);
+		}
+		// No Existing Match in HashMap
+		else {
+			ArrayList<Player> peopleInMatch = new ArrayList<>();
+			// Add new player
+			peopleInMatch.add(p.player);
+			// Update List with New Player
+			MatchManager.GetPlayersInMatch().put(response.activeMatch.getMatchID(), peopleInMatch);
+			response.setPlayers(peopleInMatch);
+		}
+
+		this.connection.sendObject(response);
 	}
 }

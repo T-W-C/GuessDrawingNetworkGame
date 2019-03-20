@@ -1,9 +1,11 @@
 package networking;
 
+import game.networking.objects.ActiveMatches;
 import gui.login.LoginHandler;
 import gui.registration.RegistrationHandler;
 import networking.helper.ClassMatchCache;
 import networking.packets.incoming.AddConnectionPacket;
+import networking.packets.incoming.CheckFindMatchResult;
 import networking.packets.incoming.RemoveConnectionPacket;
 import networking.packets.outgoing.SendEmailCheckResult;
 import networking.packets.outgoing.SendLoginUsernameResult;
@@ -24,6 +26,7 @@ public class EventListener {
 						.with(SendEmailCheckResult.class, this::handleSendEmailCheckResult)
 						.with(SendLoginUsernameResult.class, this::handleSendLoginUsernameResult)
 						.with(SendPasswordHashConfirmation.class, this::handleSendPasswordHashConfirmation)
+						.with(CheckFindMatchResult.class, this::handleCheckFindMatchResult)
 						.fallthrough(this::fallthrough))
 				.exec(packet);
 	}
@@ -62,5 +65,12 @@ public class EventListener {
 
 	private void handleSendPasswordHashConfirmation(SendPasswordHashConfirmation p){
 		LoginHandler.passwordMatches = p.passwordResult;
+	}
+
+	private void handleCheckFindMatchResult(CheckFindMatchResult p){
+		ActiveMatches.GetActiveMatches().add(p.activeMatch);
+		ActiveMatches.SetCurrentMatch(p.activeMatch);
+		ActiveMatches.SetCurrentPlayers(p.players);
+		System.out.println("Got Match with ID " +  p.activeMatch.getMatchID());
 	}
 }

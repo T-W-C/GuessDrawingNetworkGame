@@ -1,13 +1,13 @@
 package database.dao;
 
 import database.domain.CodeVerification;
-import database.domain.Player;
+import database.domain.PlayerDomain;
 
 public class CodeVerificationDAO implements  IDAO {
 
     private CodeVerification codeVerification;
 
-    public CodeVerificationDAO(Player player){
+    public CodeVerificationDAO(PlayerDomain playerDomain){
 
     }
     @Override

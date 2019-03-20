@@ -1,16 +1,15 @@
 package database.dao;
 
 import database.DatabaseHandler;
-import database.domain.Player;
-import org.apache.commons.codec.digest.DigestUtils;
+import database.domain.PlayerDomain;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDAO implements IDAO<Player> {
+public class PlayerDAO implements IDAO<PlayerDomain> {
 
-    private Player currentPlayer;
+    private PlayerDomain currentPlayerDomain;
 
     public PlayerDAO(int playerID) {
         try (Connection activeConnection = DatabaseHandler.getInstance()
@@ -20,7 +19,7 @@ public class PlayerDAO implements IDAO<Player> {
                 statement = activeConnection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM player WHERE pid='" + playerID + "'");
                 while (resultSet.next()) {
-                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                    currentPlayerDomain = new PlayerDomain(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
                 }
             }
         } catch (SQLException e) {
@@ -35,7 +34,7 @@ public class PlayerDAO implements IDAO<Player> {
                 statement = activeConnection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM player WHERE username='" + username + "'");
                 while (resultSet.next()) {
-                    currentPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                    currentPlayerDomain = new PlayerDomain(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"),resultSet.getInt("level"), resultSet.getInt("totalScore"));
                 }
             }
         } catch (SQLException e) {
@@ -45,7 +44,7 @@ public class PlayerDAO implements IDAO<Player> {
 
     public static void createPlayer(String username, String password, String email){
         if(!isPlayerExisting(username)){
-            // Player doesn't exist, so we can insert them into database
+            // PlayerDomain doesn't exist, so we can insert them into database
             try (Connection activeConnection = DatabaseHandler.getInstance()
                     .getConnection()) {
                 PreparedStatement preparedStatement = null;
@@ -63,28 +62,28 @@ public class PlayerDAO implements IDAO<Player> {
         }
     }
 
-    public List<Player> getAll() {
-        ArrayList<Player> playerList = new ArrayList<>();
+    public List<PlayerDomain> getAll() {
+        ArrayList<PlayerDomain> playerDomainList = new ArrayList<>();
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             Statement statement = null;
             statement = activeConnection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM player");
             while (resultSet.next()) {
-                Player tempPlayer = new Player(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
+                PlayerDomain tempPlayerDomain = new PlayerDomain(resultSet.getInt("pid"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getInt("level"), resultSet.getInt("totalScore"));
 
-                playerList.add(tempPlayer);
+                playerDomainList.add(tempPlayerDomain);
             }
 
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
-        return playerList;
+        return playerDomainList;
     }
 
     @Override
-    public Player get() {
-        return currentPlayer;
+    public PlayerDomain get() {
+        return currentPlayerDomain;
     }
 
 
@@ -93,11 +92,11 @@ public class PlayerDAO implements IDAO<Player> {
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             PreparedStatement preparedStatement = null;
-            preparedStatement = activeConnection.prepareStatement("UPDATE player SET username = ?, level = ?, totalScore = ? WHERE pid = '" + currentPlayer.getPlayerID() + "'");
-            preparedStatement.setString(1, currentPlayer.getUsername());
-            preparedStatement.setInt(2, currentPlayer.getLevel());
-            preparedStatement.setInt(3, currentPlayer.getTotalScore());
-            preparedStatement.setInt(4, currentPlayer.getPlayerID());
+            preparedStatement = activeConnection.prepareStatement("UPDATE player SET username = ?, level = ?, totalScore = ? WHERE pid = '" + currentPlayerDomain.getPlayerID() + "'");
+            preparedStatement.setString(1, currentPlayerDomain.getUsername());
+            preparedStatement.setInt(2, currentPlayerDomain.getLevel());
+            preparedStatement.setInt(3, currentPlayerDomain.getTotalScore());
+            preparedStatement.setInt(4, currentPlayerDomain.getPlayerID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -109,7 +108,7 @@ public class PlayerDAO implements IDAO<Player> {
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             PreparedStatement preparedStatement = null;
-            preparedStatement = activeConnection.prepareStatement("DELETE FROM player WHERE pid = '" + currentPlayer.getPlayerID() + "'");
+            preparedStatement = activeConnection.prepareStatement("DELETE FROM player WHERE pid = '" + currentPlayerDomain.getPlayerID() + "'");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

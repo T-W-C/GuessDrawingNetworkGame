@@ -18,7 +18,6 @@ public class Match implements Serializable {
 
     /**
      * This instance is used to created a active match
-     * 
      * @param matchID
      */
     public Match(int matchID) {

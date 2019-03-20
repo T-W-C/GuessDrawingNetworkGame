@@ -24,7 +24,6 @@ public class ActiveMatches {
     public static void SetCurrentMatch(Match match) {
         currentMatch = match;
     }
-
     public static void SetCurrentPlayers(ArrayList<Player> players) {
         playersInMatch = players;
     }

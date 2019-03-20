@@ -15,9 +15,6 @@ public class StartServer {
 			if (!activeConnection.isClosed()) {
 				Server mainServer = new Server(1337);
 				mainServer.start();
-
-				GameServer gameServer = GameServer.getInstance().setServerIP("127.0.0.1").setPort(8888);
-				gameServer.start();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

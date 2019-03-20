@@ -3,7 +3,7 @@ package networking.packets.outgoing;
 import java.io.Serializable;
 
 public class SendEmailCheckResult implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 10L;
 
     public int playerID;
     public boolean result;

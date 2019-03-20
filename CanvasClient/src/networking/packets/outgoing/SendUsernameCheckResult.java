@@ -5,7 +5,7 @@ import gui.registration.RegistrationHandler;
 import java.io.Serializable;
 
 public class SendUsernameCheckResult implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 11L;
 
     public int playerID;
     public boolean result;

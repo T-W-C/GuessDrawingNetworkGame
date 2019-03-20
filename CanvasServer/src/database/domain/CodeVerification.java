@@ -1,22 +1,22 @@
 package database.domain;
 
 public class CodeVerification {
-    private Player player;
+    private PlayerDomain playerDomain;
     private int activationCode;
     private boolean codeUsed;
 
-    public CodeVerification(Player player, int activationCode, boolean codeUsed) {
-        this.player = player;
+    public CodeVerification(PlayerDomain playerDomain, int activationCode, boolean codeUsed) {
+        this.playerDomain = playerDomain;
         this.activationCode = activationCode;
         this.codeUsed = codeUsed;
     }
 
-    public Player getPlayer() {
-        return player;
+    public PlayerDomain getPlayerDomain() {
+        return playerDomain;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerDomain(PlayerDomain playerDomain) {
+        this.playerDomain = playerDomain;
     }
 
     public int getActivationCode() {
