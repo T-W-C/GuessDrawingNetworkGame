@@ -1,6 +1,9 @@
 package game.networking;
 import game.networking.objects.Player;
+import game.networking.packets.GameServerArrayListPacket;
+import game.networking.packets.SendWordPacket;
 import game.networking.packets.UpdateChatDrawerPacket;
+import game.networking.packets.UpdateSideBarPacket;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -122,8 +125,14 @@ public class GamePlay {
         updateWord();
         server.getConnectedPlayers().get(turn).setIsDrawer(true);
         server.sendPacket(new UpdateChatDrawerPacket(server.getConnectedPlayers().get(turn)));
-        hasGuessed = false;
 
+        GameServerArrayListPacket alp = new GameServerArrayListPacket(); // create new packet to send arraylist
+        alp.setPlayers(this.server.getConnectedPlayers()); // set arraylist of packet to updated arraylist of server
+        SendWordPacket wp = new SendWordPacket(); // create new packet to send new word
+        wp.setWord(word); // set word of packet to be updated word of this class
+        server.sendPacket(alp); // send array list packet
+        server.sendPacket(wp); // send word packet
+        hasGuessed = false;
 
         System.out.println("Player start on turn: " + (turn+1) + " now they can draw");
         //send packet to set drawer of player whose turn it is
