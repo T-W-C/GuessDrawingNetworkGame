@@ -75,6 +75,10 @@ public class GameScreen extends JPanel {
         System.out.println("Attempting to Join Game on Port " + match.getMatchPort());
         // start the chat networking when join the game also;
         // write code for when player joins send code and stuff to draw
+
+//        MatchIDPacket mid = new MatchIDPacket(); // create match id packet to send to server
+//        mid.setMatchID(this.match.getMatchID()); // get the match id to send from the match field variable
+//        this.connectionHandler.sendPacket(mid); // send the packet to the server
     }
 
     public void startGameLogic() {
@@ -103,6 +107,8 @@ public class GameScreen extends JPanel {
             this.canvasComponent.updateDrawer(((UpdateChatDrawerPacket) packet).getPlayer());
         }
         else if(packet instanceof GameServerArrayListPacket) { // received arrayList of players from gameServer
+            System.out.println("this happened"); // this line is for test purposes only
+            System.out.println("size of array list received = " + ((GameServerArrayListPacket) packet).getPlayers().size()); // this line is for test purposes only
             this.canvasComponent.updateSideBar(((GameServerArrayListPacket) packet).getPlayers());
         }
         else if(packet instanceof SendWordPacket) { // received word so update wordbar

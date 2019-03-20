@@ -144,8 +144,4 @@ public class EventListener {
 
 		this.connection.sendObject(response);
 	}
-
-	private void sendToAllInMatch(ArrayList<Player> players, Match match) {
-
-	}
 }

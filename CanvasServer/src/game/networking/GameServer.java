@@ -1,5 +1,6 @@
 package game.networking;
 
+import game.networking.objects.MatchManager;
 import game.networking.objects.Player;
 import game.networking.packets.PaintPacket;
 import game.networking.packets.*;
@@ -130,7 +131,11 @@ public class GameServer extends Thread {
                 packet = is.readObject();
                 Player p = (Player) packet;
                 synchronized (connectedPlayers) {
-                    connectedPlayers.add(p);
+                    connectedPlayers.add(p); // add player to players array list
+
+                    GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
+                    gsalp.setPlayers(connectedPlayers); // set the list of the packet to the updated player list in the game server
+                    sendPacket(gsalp); // send packet to all clients
                 }
 
                 if (connectedPlayers.size() == 2) {
@@ -214,6 +219,13 @@ public class GameServer extends Thread {
             sendPacket(packet);
 
         }
+//        else if (packet instanceof MatchIDPacket) {
+//            this.connectedPlayers = MatchManager.GetPlayersInMatch().get(((MatchIDPacket) packet).getMatchID());
+//
+//            GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
+//            gsalp.setPlayers(this.connectedPlayers); // set the list of the packet to the updated player list in the game server
+//            sendPacket(gsalp); // send packet to all clients
+//        }
         // Host Logic (Use this for CreateGame)
         else if (packet instanceof Player) {
             Player player = (Player) packet;

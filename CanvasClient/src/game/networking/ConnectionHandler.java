@@ -84,6 +84,8 @@ public class ConnectionHandler {
                     e.printStackTrace();
                 } catch(ClassNotFoundException e) {
                     e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } while(!packet.equals("Exit"));
             // close all
