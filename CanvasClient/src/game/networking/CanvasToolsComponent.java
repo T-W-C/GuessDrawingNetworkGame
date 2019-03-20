@@ -38,7 +38,8 @@ public class CanvasToolsComponent extends JPanel {
         this.setLayout(new FlowLayout());
 
 //        networking.CircleButton clearCanvas = new networking.CircleButton(Color.WHITE, "Clear", 20);
-        SquareButton clearCanvas = new SquareButton(Color.WHITE,"Clear");
+        JButton clearCanvas = new JButton("Clear");
+        clearCanvas.setBackground(Color.LIGHT_GRAY);
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
             if(cc.getPlayer().getIsDrawer()) {
@@ -66,19 +67,29 @@ public class CanvasToolsComponent extends JPanel {
 
     private JPanel colorPalette(int width, int height ) {
         JPanel colorPalette = new JPanel();
-
+        colorPalette.setBackground(new Color(91, 154, 212));
         colorPalette.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        colorPalette.setPreferredSize(new Dimension(width*4, height));
-        colorPalette.setMaximumSize(new Dimension(width*4, height));
+        colorPalette.setPreferredSize(new Dimension(width*6, height*2));
+        colorPalette.setMaximumSize(new Dimension(width*6, height*2));
         colorPalette.setLayout(new GridLayout(2, 7));
 //        int colorNumber = networking.BrushColor.values().length;
         int colorNumber = brushColors.length;
 //        networking.CircleButton[] colorPaletteButtons = new networking.CircleButton[colorNumber];
-        SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
+//        SquareButton[] colorPaletteButtons = new SquareButton[colorNumber];
+        JButton[] colorPaletteButtons = new JButton[colorNumber];
         for(int i = 0; i<colorNumber; i++) {
             final int j = i;
 //            colorPaletteButtons[i] = new networking.CircleButton(brushColors[i], 20);
-            colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
+//            colorPaletteButtons[i] = new SquareButton(brushColors[i], "");
+            if(brushColors[i].equals(Color.WHITE)) {
+                colorPaletteButtons[i] = new JButton("Eraser");
+
+            } else {
+                colorPaletteButtons[i] = new JButton("");
+            }
+
+            colorPaletteButtons[i].setBackground(brushColors[i]);
+
 
 //            System.out.println(colorPaletteButtons[i].getColor());
 //            brushColor = brushColors[i];

@@ -43,7 +43,11 @@ public class CanvasComponent extends JPanel {
 
 
         tools = new CanvasToolsComponent(this);
-        tools.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+        AdvancedBevelBorder border = new AdvancedBevelBorder(new Color(120, 172, 220), new Color(55, 93, 128),
+                new Color(73, 124, 169), new Color(150, 191, 229), new Color(36, 83, 126), 20);
+        tools.setBackground(new Color(91, 154, 212));
+        tools.setBorder(border);
 
 
 
@@ -106,8 +110,10 @@ public class CanvasComponent extends JPanel {
 
 
     public void updateDrawer(Player player) {
-        if(player.equals(this.player)) {
+        if(player.getPlayerName().equals(this.player.getPlayerName())) {
             this.player.setIsDrawer(true);
+        } else {
+            this.player.setIsDrawer(false);
         }
     }
 

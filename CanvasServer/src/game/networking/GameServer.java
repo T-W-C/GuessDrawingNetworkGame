@@ -137,7 +137,7 @@ public class GameServer extends Thread {
                     connectedPlayers.add(p);
                 }
 
-                if (connectedPlayers.size() == 4) {
+                if (connectedPlayers.size() == 2) {
                     new Thread(() -> {
                         gameLogic.start();
                     }).start();
@@ -195,6 +195,8 @@ public class GameServer extends Thread {
             if (guess.toLowerCase().equals(chatMsg)) {
                 String message = "Player: " + gp.getPlayer().getPlayerName() + " has guessed the word!";
                 sendPacket(new GameEventPacket(GameEventPacket.EventType.GUESS_CORRECT, message));
+                System.out.println(message);
+
                 gameLogic.guessedCorrect();
                 // little delay here
 
@@ -250,7 +252,8 @@ public class GameServer extends Thread {
             // if(networking.PaintPacket.class.isInstance(packet)) {
             // handle if the player is a drawer
             for (ObjectOutputStream os : outputStreams) {
-                System.out.println("writing: " + packet + ", to networking: " + os.toString());
+                // System.out.println("writing: " + packet + ", to networking: " +
+                // os.toString());
                 os.writeObject(packet);
                 os.flush();
             }

@@ -1,9 +1,12 @@
 package game.networking;
 
 import game.networking.objects.Player;
+import javafx.scene.Parent;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,8 +44,25 @@ public class GameHomeScreen extends JFrame {
     }
 
     public GameHomeScreen() {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
+
         // set size and properties of the main game frame:
-        this.setSize(600, 600);
+        this.setSize(1000, 750);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +74,34 @@ public class GameHomeScreen extends JFrame {
 
         // create the main menu component
         this.drawNewScreenComponents(createMainMenu());
+
+        // JButton btn = new JButton("Ok");
+        // setSize(400, 300);
+        // setLayout(new FlowLayout());
+        // getContentPane().add(btn);
+        // setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // btn.addActionListener(new ActionListener() {
+        //
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // final JDialog dialog = new GameNotifications(GameHomeScreen.this, true,
+        // "Hello javaknowledge!");
+        // Timer timer = new Timer(GameNotifications.LENGTH_LONG, new ActionListener() {
+        //
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // dialog.setVisible(false);
+        // dialog.dispose();
+        // }
+        // });
+        // timer.setRepeats(false);
+        // timer.start();
+        //
+        // dialog.setVisible(true); // if modal, application will pause here
+        // }
+        // });
+        // this.add(btn);
 
     }
 

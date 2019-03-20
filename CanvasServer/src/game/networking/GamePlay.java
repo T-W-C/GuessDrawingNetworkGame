@@ -26,8 +26,9 @@ public class GamePlay {
 
     private String word = "bob";
 
-    private boolean hasGuessed;
+    private volatile boolean hasGuessed;
     private boolean timerActive;
+
 
     //get each socket, send a packet to each socket to determine whether they are a drawer or not
     //  implement a drawer boolean value within the canvascomponent? to enable whoever is a drawer to send events to canvas and tool component
@@ -122,11 +123,7 @@ public class GamePlay {
         server.getConnectedPlayers().get(turn).setIsDrawer(true);
         server.sendPacket(new UpdateChatDrawerPacket(server.getConnectedPlayers().get(turn)));
         hasGuessed = false;
-        if(turn > 3) {
-            System.out.println("All players have had their turn, end the round.");
-            endRound();
-            return;
-        }
+
 
         System.out.println("Player start on turn: " + (turn+1) + " now they can draw");
         //send packet to set drawer of player whose turn it is
@@ -161,6 +158,11 @@ public class GamePlay {
     public void endTurn() {
         System.out.println("Player turn: " + (turn+1) + " has ended");
         turn++;
+        if(turn > 1) {
+            System.out.println("All players have had their turn, end the round.");
+            endRound();
+            return;
+        }
         startTurn();
         return;
     }
@@ -182,6 +184,7 @@ public class GamePlay {
 
     //may not be needed if its handled client sided
     public void guessedCorrect() {
+        System.out.println("Player has guessed changing guess state...");
         hasGuessed = true;
     }
 
