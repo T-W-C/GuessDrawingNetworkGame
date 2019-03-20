@@ -65,7 +65,7 @@ public class GameScreen extends JPanel {
         connectionHandler.startClient();
 
         // Find a Active MatchID
-        connectionHandler.sendPacket(new FindActiveMatchPacket());
+//        connectionHandler.sendPacket(new FindActiveMatchPacket());
         // start the chat networking when join the game also;
 
         // this.connectionHandler.sendPacket(new
