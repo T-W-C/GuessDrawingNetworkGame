@@ -8,15 +8,11 @@ public class Player implements Serializable {
     private String playerName;
     private int playerScore;
     private boolean isDrawer;
-    private boolean isHost;
-    private boolean guessedWordCorrectly;
 
     public Player(String playerName) {
         this.playerName = playerName;
         this.playerScore = 0;
         this.isDrawer = false;
-        this.isHost = false;
-        this.guessedWordCorrectly = false;
     }
 
     public String getPlayerName() {
@@ -35,23 +31,6 @@ public class Player implements Serializable {
     public void setIsDrawer(boolean isDrawer) {
         this.isDrawer = isDrawer;
     }
-
-    public boolean getIsHost() {
-        return isHost;
-    }
-
-    public void setIsHost(boolean host) {
-        isHost = host;
-    }
-
-    public boolean getGuessedWordCorrectly() { // every time a player guesses a word correctly change this variable for that specific word
-        return this.guessedWordCorrectly;
-    }
-
-    public void setGuessedWordCorrectly(boolean guessedWordCorrectly) {
-        this.guessedWordCorrectly = guessedWordCorrectly;
-    }
-
 
     public int getPlayerScore() {
         return this.playerScore;

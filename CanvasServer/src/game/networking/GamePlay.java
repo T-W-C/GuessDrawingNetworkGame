@@ -127,10 +127,24 @@ public class GamePlay {
         server.sendPacket(new UpdateChatDrawerPacket(server.getConnectedPlayers().get(turn)));
 
         GameServerArrayListPacket alp = new GameServerArrayListPacket(); // create new packet to send arraylist
+        //ArrayList<Integer> bla = new ArrayList<>();
+        //bla.add(1);
+        //bla.add(2);
+        //alp.setTestBool(true);
+        //alp.setTestInts(bla);
+        //server.sendPacket("sending a boolean of true and a list {1,2} from the gameplay class to the gamescreen");
         alp.setPlayers(this.server.getConnectedPlayers()); // set arraylist of packet to updated arraylist of server
         SendWordPacket wp = new SendWordPacket(); // create new packet to send new word
         wp.setWord(word); // set word of packet to be updated word of this class
+
+        server.sendPacket("about to send a GameServerArrayListPacket from the gameplay class");
+        server.sendPacket("with arraylist of size: " + alp.getPlayers().size()); // this line is for testing purposes only
+        for(int i=0; i<alp.getPlayers().size(); i++) { // this line is for testing purposes only
+            server.sendPacket("player" + i + " is drawer = " + alp.getPlayers().get(i).getIsDrawer() + " and player score = " + alp.getPlayers().get(i).getPlayerScore()); // this line is for testing purposes only
+        } // this line is for testing purposes only
+
         server.sendPacket(alp); // send array list packet
+        server.sendPacket("just sent an GameServerArrayListPacket packet from the gameplay class"); // this line is for testing purposes only
         server.sendPacket(wp); // send word packet
         hasGuessed = false;
 

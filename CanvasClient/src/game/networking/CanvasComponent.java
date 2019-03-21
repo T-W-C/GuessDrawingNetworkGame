@@ -36,6 +36,9 @@ public class CanvasComponent extends JPanel {
     private WordBar wordbar;
     private Player player;
 
+    private SideBar currentSidebar;
+    private WordBar currentWordbar;
+
 
     public CanvasComponent(ConnectionHandler connectionHandler, Player player) throws Exception {
         super();
@@ -61,7 +64,7 @@ public class CanvasComponent extends JPanel {
 
         String tempWord = "tempWord";
 
-        sidebar = new SideBar(player, tempPlayers,150, 700); // construct a side bar with the current player passed in
+        sidebar = new SideBar(player.getPlayerName(), tempPlayers,150, 700); // construct a side bar with the current player passed in
         wordbar = new WordBar(tempWord, 500, 200); // construct a word bar
 
 
@@ -71,6 +74,9 @@ public class CanvasComponent extends JPanel {
         this.add(sidebar, BorderLayout.WEST);
         this.add(wordbar, BorderLayout.NORTH);
 
+        this.currentSidebar = sidebar;
+        this.currentWordbar = wordbar;
+
         this.canvasImage = new BufferedImage(CanvasComponent.screenWidth, CanvasComponent.screenHeight, BufferedImage.TYPE_INT_ARGB);
 
         this.clear();
@@ -78,19 +84,25 @@ public class CanvasComponent extends JPanel {
     }
 
     public void updateSideBar(ArrayList<Player> newPlayers) {
-        this.remove(this.sidebar);
+        //this.remove(this.sidebar);
         this.invalidate();
-        SideBar newSidebar = new SideBar(this.player, newPlayers, 150, 700);
+        this.currentSidebar.setVisible(false);
+        SideBar newSidebar = new SideBar(this.player.getPlayerName(), newPlayers, 200, 750);
         this.add(newSidebar, BorderLayout.WEST);
+        this.currentSidebar = newSidebar;
         this.revalidate();
+        System.out.println("revalidate sidebar was called fine");
     }
 
     public void updateWordBar(String newWord) throws Exception {
-        this.remove(this.wordbar);
+        //this.remove(this.wordbar);
         this.invalidate();
-        WordBar newWordbar = new WordBar(newWord, 500, 500);
+        this.currentWordbar.setVisible(false);
+        WordBar newWordbar = new WordBar(newWord, 1000, 150);
         this.add(newWordbar, BorderLayout.NORTH);
+        this.currentWordbar = newWordbar;
         this.revalidate();
+        System.out.println("revalidate word was called fine");
     }
 
 
@@ -151,7 +163,7 @@ public class CanvasComponent extends JPanel {
             @Override
             protected void paintComponent(Graphics g)
             {
-                System.out.println("testing");
+                //System.out.println("testing"); commented out for testing purposes only
                 super.paintComponent(g);
                 if (canvasImage == null) return;
                 g.drawImage(canvasImage, 0, 0, getWidth(), getHeight(), null);

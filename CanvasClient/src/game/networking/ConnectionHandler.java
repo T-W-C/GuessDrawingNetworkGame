@@ -96,7 +96,7 @@ public class ConnectionHandler {
     public void sendPacket(Object packet) {
         try {
 
-            System.out.println(outputStream.toString() + " is the output stream");
+            //System.out.println(outputStream.toString() + " is the output stream");  commented out for testing purposes
 
             outputStream.writeObject(packet);
             outputStream.flush();

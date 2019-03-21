@@ -48,6 +48,7 @@ public class ChatComponent extends JPanel {
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         chatArea.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
+        chatArea.setLineWrap(true);
         JScrollPane scrollPane = new JScrollPane(chatArea);
         scrollPane.setMinimumSize(new Dimension( 250, 150));
         scrollPane.setPreferredSize(new Dimension( 250, 150));

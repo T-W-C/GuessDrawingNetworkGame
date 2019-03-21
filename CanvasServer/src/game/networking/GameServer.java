@@ -133,7 +133,7 @@ public class GameServer extends Thread {
                 synchronized (connectedPlayers) {
                     connectedPlayers.add(p); // add player to players array list
 
-                    if(this.connectedPlayers.size() == 4) { // only tell players to update their sidebar once all 4 players are in since game doesnt start until then anyways
+                    if(this.connectedPlayers.size() == 2) { // only tell players to update their sidebar once all 4 players are in since game doesnt start until then anyway
                         GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
                         gsalp.setPlayers(connectedPlayers); // set the list of the packet to the updated player list in the game server
                         sendPacket(gsalp); // send packet to all clients
@@ -253,6 +253,7 @@ public class GameServer extends Thread {
             for (ObjectOutputStream os : outputStreams) {
                 // System.out.println("writing: " + packet + ", to networking: " +
                 // os.toString());
+                os.reset(); // testing purposes only
                 os.writeObject(packet);
                 os.flush();
             }

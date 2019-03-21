@@ -44,8 +44,8 @@ public class WordBar extends JPanel {
 
         JLabel word = new JLabel(sb.toString(), SwingConstants.CENTER);
         JLabel time = new JLabel("Time: 60", SwingConstants.CENTER);
-        word.setFont(new Font("SansSerif", 1, 15));
-        time.setFont(new Font("SansSerif", 1, 15));
+        word.setFont(new Font("Trebuchet MS", Font.BOLD, 28));
+        time.setFont(new Font("Trebuchet MS", Font.BOLD, 28));
         mainInnerPanel.add(time, BorderLayout.LINE_START);
         mainInnerPanel.add(word, BorderLayout.CENTER);
 
