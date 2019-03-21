@@ -133,9 +133,11 @@ public class GameServer extends Thread {
                 synchronized (connectedPlayers) {
                     connectedPlayers.add(p); // add player to players array list
 
-                    GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
-                    gsalp.setPlayers(connectedPlayers); // set the list of the packet to the updated player list in the game server
-                    sendPacket(gsalp); // send packet to all clients
+                    if(this.connectedPlayers.size() == 4) { // only tell players to update their sidebar once all 4 players are in since game doesnt start until then anyways
+                        GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
+                        gsalp.setPlayers(connectedPlayers); // set the list of the packet to the updated player list in the game server
+                        sendPacket(gsalp); // send packet to all clients
+                    }
                 }
 
                 if (connectedPlayers.size() == 2) {
@@ -219,13 +221,7 @@ public class GameServer extends Thread {
             sendPacket(packet);
 
         }
-//        else if (packet instanceof MatchIDPacket) {
-//            this.connectedPlayers = MatchManager.GetPlayersInMatch().get(((MatchIDPacket) packet).getMatchID());
-//
-//            GameServerArrayListPacket gsalp = new GameServerArrayListPacket(); // create new packet to send the updated list
-//            gsalp.setPlayers(this.connectedPlayers); // set the list of the packet to the updated player list in the game server
-//            sendPacket(gsalp); // send packet to all clients
-//        }
+
         // Host Logic (Use this for CreateGame)
         else if (packet instanceof Player) {
             Player player = (Player) packet;
