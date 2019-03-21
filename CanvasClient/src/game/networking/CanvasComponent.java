@@ -88,6 +88,9 @@ public class CanvasComponent extends JPanel {
         this.invalidate();
         this.currentSidebar.setVisible(false);
         SideBar newSidebar = new SideBar(this.player.getPlayerName(), newPlayers, 200, 750);
+        AdvancedBevelBorder border = new AdvancedBevelBorder(new Color(120, 172, 220), new Color(55, 93, 128),
+                new Color(73, 124, 169), new Color(150, 191, 229), new Color(36, 83, 126), 20);
+        newSidebar.setBorder(border);
         this.add(newSidebar, BorderLayout.WEST);
         this.currentSidebar = newSidebar;
         this.revalidate();
