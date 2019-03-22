@@ -29,26 +29,33 @@ public class SideBar extends JPanel {
         height = h;
         this.players = players;
 
+        AdvancedBevelBorder border = new AdvancedBevelBorder(new Color(120, 172, 220), new Color(55, 93, 128),
+                new Color(73, 124, 169), new Color(150, 191, 229), new Color(150, 202, 243), 10);
+
+        this.setBorder(border);
         this.setSize(width, height);
         this.setLayout(new GridLayout(1,1));
+        this.setBackground(new Color(156,202,243));
         this.add(names());
     }
 
     private JPanel names() {
         JPanel namesPanel = new JPanel();
         namesPanel.setSize(width, height);
+        namesPanel.setBackground(new Color(156,202,243));
         namesPanel.setLayout(new GridLayout(10,1)); // change this 12 if you want to make the sizes of each username box bigger/smaller
         for(int i=0; i<players.size(); i++) {
             JPanel user = new JPanel();
+            user.setBackground(new Color(156,202,243));
             user.setLayout(new GridLayout(2, 1, 10, 0));
             user.setSize(SideBar.width, SideBar.height);
-            user.setBorder(new LineBorder(Color.GRAY));
+            user.setBorder(new LineBorder(new Color(156,202,243), 3));
 
             if (players.get(i).getIsDrawer()) {
-                user.setBorder(new LineBorder(Color.YELLOW)); // set the border of the drawer's username box to yellow
+                user.setBorder(new LineBorder(Color.YELLOW, 3)); // set the border of the drawer's username box to yellow
             }
             else if (i % 2 == 0) {
-                user.setBackground(Color.GRAY); // every other user background should be gray
+                user.setBackground(new Color(156,202,243)); // every other user background should be gray
             }
             if (players.get(i).getPlayerName().equals(currentUserName)) { // if the current player in the array is the user who this instance is open for
                 JLabel name = new JLabel(players.get(i).getPlayerName() + " (You)", SwingConstants.CENTER); // create a new label to represent the username

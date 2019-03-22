@@ -26,6 +26,7 @@ public class WordBar extends JPanel {
         width = w;
         height = h;
 
+        this.setBackground(new Color(156,202,243));
         this.setSize(width, height);
         this.setLayout(new FlowLayout());
         this.add(mainPanel());
@@ -34,7 +35,7 @@ public class WordBar extends JPanel {
 
     private JPanel mainPanel() {
         JPanel mainInnerPanel = new JPanel();
-
+        mainInnerPanel.setBackground(new Color(156,202,243));
         String[] wordOutput = new String[lengthOfCurrentWord];
         for(int i=0; i<wordOutput.length; i++) {
             wordOutput[i] = "_";
@@ -43,7 +44,9 @@ public class WordBar extends JPanel {
         sb.append(String.join(" ", wordOutput)); // join the array into a string and append it to the string buffer
 
         JLabel word = new JLabel(sb.toString(), SwingConstants.CENTER);
-        JLabel time = new JLabel("Time: 60", SwingConstants.CENTER);
+        JLabel time = new JLabel("Time: 60    ", SwingConstants.CENTER);
+        word.setBackground(new Color(156,202,243));
+        time.setBackground(new Color(156,202,243));
         word.setFont(new Font("Trebuchet MS", Font.BOLD, 28));
         time.setFont(new Font("Trebuchet MS", Font.BOLD, 28));
         mainInnerPanel.add(time, BorderLayout.LINE_START);
@@ -65,7 +68,7 @@ public class WordBar extends JPanel {
                         numOfRevealedLetters++;
                     }
                 }
-                time.setText("Time: " + timeRemaining);
+                time.setText("Time: " + timeRemaining + "    ");
                 timeRemaining--;
             }
         });

@@ -51,22 +51,26 @@ public class CanvasComponent extends JPanel {
         tools = new CanvasToolsComponent(this);
 
         AdvancedBevelBorder border = new AdvancedBevelBorder(new Color(120, 172, 220), new Color(55, 93, 128),
-                new Color(73, 124, 169), new Color(150, 191, 229), new Color(36, 83, 126), 20);
-        tools.setBackground(new Color(91, 154, 212));
+                new Color(73, 124, 169), new Color(150, 191, 229), new Color(150, 202, 243), 20);
+        tools.setBackground(new Color(150, 202, 243));
+        AdvancedBevelBorder border2 = new AdvancedBevelBorder(new Color(120, 172, 220), new Color(55, 93, 128),
+                new Color(73, 124, 169), new Color(150, 191, 229), new Color(150, 202, 243), 20);
+        tools.setBackground(new Color(150, 202, 243));
         tools.setBorder(border);
 
         JLabel test = new JLabel("this is just a title test");
 
         ArrayList<Player> tempPlayers = new ArrayList<Player>();
         for(int i=0; i<4; i++) {
-            tempPlayers.add(new Player("tempPlayer" + i));
+            tempPlayers.add(new Player("******" + i));
         }
 
         String tempWord = "tempWord";
 
         sidebar = new SideBar(player.getPlayerName(), tempPlayers,150, 700); // construct a side bar with the current player passed in
-        wordbar = new WordBar(tempWord, 500, 200); // construct a word bar
+        wordbar = new WordBar("", 500, 200); // construct a word bar
 
+        sidebar.setBorder(border2);
 
         this.add(drawingBoard, BorderLayout.CENTER);
         this.add(test, BorderLayout.NORTH);

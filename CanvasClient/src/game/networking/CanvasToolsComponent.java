@@ -39,7 +39,7 @@ public class CanvasToolsComponent extends JPanel {
 
 //        networking.CircleButton clearCanvas = new networking.CircleButton(Color.WHITE, "Clear", 20);
         JButton clearCanvas = new JButton("Clear");
-        clearCanvas.setBackground(Color.LIGHT_GRAY);
+        clearCanvas.setBackground(new Color(156,202,243));
         clearCanvas.setSize(new Dimension(60,60));
         clearCanvas.addActionListener((e) -> {
             if(cc.getPlayer().getIsDrawer()) {
@@ -67,7 +67,7 @@ public class CanvasToolsComponent extends JPanel {
 
     private JPanel colorPalette(int width, int height ) {
         JPanel colorPalette = new JPanel();
-        colorPalette.setBackground(new Color(91, 154, 212));
+        colorPalette.setBackground(new Color(156, 202, 243));
         colorPalette.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         colorPalette.setPreferredSize(new Dimension(width*6, height*2));
         colorPalette.setMaximumSize(new Dimension(width*6, height*2));

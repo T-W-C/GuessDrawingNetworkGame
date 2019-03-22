@@ -61,6 +61,7 @@ public class GameHomeScreen extends JFrame {
             // handle exception
         }
 
+        this.setBackground(new Color(42,54,63));
         // set size and properties of the main game frame:
         this.setSize(1000, 750);
         this.setLocationRelativeTo(null);

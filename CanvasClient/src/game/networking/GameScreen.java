@@ -24,6 +24,7 @@ public class GameScreen extends JPanel {
 
     public GameScreen(Player player) throws Exception {
         super();
+        this.setBackground(new Color(156,202,243));
         this.player = player;
         if (isValidPlayer(player)) {
             players.add(player);
