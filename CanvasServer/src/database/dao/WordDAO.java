@@ -17,7 +17,7 @@ public class WordDAO {
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             // Get all active matches
-            try (PreparedStatement stmt = activeConnection.prepareStatement("SELECT * FROM word WHERE wordId = '" +randomNumber+"'");
+            try (PreparedStatement stmt = activeConnection.prepareStatement("SELECT * FROM word WHERE wid = '" +randomNumber+"'");
                  ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     word = rs.getNString("word");
