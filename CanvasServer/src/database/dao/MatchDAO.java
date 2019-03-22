@@ -114,12 +114,17 @@ public class MatchDAO implements IDAO<MatchDomain> {
     }
 
     @Override
-    public void saveOrUpdate() {
+    public void insert(MatchDomain domain) {
 
     }
 
     @Override
-    public void delete() {
+    public void update(MatchDomain domain) {
+
+    }
+
+    @Override
+    public void delete(MatchDomain domain) {
 
     }
 }

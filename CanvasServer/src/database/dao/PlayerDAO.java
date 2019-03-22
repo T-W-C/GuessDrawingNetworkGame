@@ -2,6 +2,7 @@ package database.dao;
 
 import database.DatabaseHandler;
 import database.domain.PlayerDomain;
+import game.networking.objects.Player;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -86,13 +87,18 @@ public class PlayerDAO implements IDAO<PlayerDomain> {
         return currentPlayerDomain;
     }
 
+    @Override
+    public void insert(PlayerDomain domain) {
+
+    }
+
 
     @Override
-    public void saveOrUpdate() {
+    public void update(PlayerDomain player) {
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             PreparedStatement preparedStatement = null;
-            preparedStatement = activeConnection.prepareStatement("UPDATE player SET username = ?, level = ?, totalScore = ? WHERE pid = '" + currentPlayerDomain.getPlayerID() + "'");
+            preparedStatement = activeConnection.prepareStatement("UPDATE player SET username = ?, level = ?, totalScore = ? WHERE pid = '" + player.getPlayerID() + "'");
             preparedStatement.setString(1, currentPlayerDomain.getUsername());
             preparedStatement.setInt(2, currentPlayerDomain.getLevel());
             preparedStatement.setInt(3, currentPlayerDomain.getTotalScore());
@@ -104,11 +110,11 @@ public class PlayerDAO implements IDAO<PlayerDomain> {
     }
 
     @Override
-    public void delete() {
+    public void delete(PlayerDomain player) {
         try (Connection activeConnection = DatabaseHandler.getInstance()
                 .getConnection()) {
             PreparedStatement preparedStatement = null;
-            preparedStatement = activeConnection.prepareStatement("DELETE FROM player WHERE pid = '" + currentPlayerDomain.getPlayerID() + "'");
+            preparedStatement = activeConnection.prepareStatement("DELETE FROM player WHERE pid = '" + player.getPlayerID() + "'");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

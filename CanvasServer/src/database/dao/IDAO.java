@@ -12,12 +12,17 @@ public interface IDAO<T> {
     T get();
 
     /**
-     * Saves the instance of the object within the database
+     * Inserts the instance of the object within the database
      */
-    void saveOrUpdate();
+    void insert(T domain);
 
     /**
-     * Deeletes the object from the database
+     * Updates the instance of the object within the database
      */
-    void delete();
+    void update(T domain);
+
+    /**
+     * Delete's the object from the database
+     */
+    void delete(T domain);
 }

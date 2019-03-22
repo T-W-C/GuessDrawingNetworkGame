@@ -62,12 +62,17 @@ public class PortDomainDAO implements IDAO<PortDomain>{
     }
 
     @Override
-    public void saveOrUpdate() {
+    public void insert(PortDomain domain) {
 
     }
 
     @Override
-    public void delete() {
+    public void update(PortDomain domain) {
+
+    }
+
+    @Override
+    public void delete(PortDomain domain) {
 
     }
 }

@@ -3,7 +3,7 @@ package database.dao;
 import database.domain.CodeVerification;
 import database.domain.PlayerDomain;
 
-public class CodeVerificationDAO implements  IDAO {
+public class CodeVerificationDAO implements IDAO {
 
     private CodeVerification codeVerification;
 
@@ -16,12 +16,19 @@ public class CodeVerificationDAO implements  IDAO {
     }
 
     @Override
-    public void saveOrUpdate() {
+    public void insert(Object domain) {
 
     }
 
     @Override
-    public void delete() {
+    public void update(Object domain) {
 
     }
+
+    @Override
+    public void delete(Object domain) {
+
+    }
+
+
 }
